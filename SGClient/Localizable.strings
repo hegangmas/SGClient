@@ -1,0 +1,30 @@
+/* 
+  File.strings
+  SGClient
+
+  Created by JY on 14-5-5.
+  Copyright (c) 2014年 XLDZ. All rights reserved.
+*/
+
+DB_NAME = "data.sqlite";
+
+
+//******************************************** MainPage *****************************************************
+/*－－－－－－－－－－－－－－－－－
+ SQL 获得指定ROOM ID 的DEVICE列表
+ INPUT: ROOM_ID (INT)
+ －－－－－－－－－－－－－－－－－*/
+MP_GetDevicelistForRoom  = "select room.room_id as roomid,room.name as roomname,cubicle.cubicle_id as cubicleid,cubicle.name as cubiclename,device.device_id as deviceid,device.description as devicename from device,cubicle,room where room.room_id = cubicle.room_id and device.cubicle_id = cubicle.cubicle_id and cubicle.room_id = ?  and device.device_id !=2 order by room.room_id, cubicle.cubicle_id, device.cubicle_pos";
+
+
+/*－－－－－－－－－－－－－－－－－
+ SQL 获得ROOM ID ＝ 0 设备列表
+ INPUT: NULL
+ －－－－－－－－－－－－－－－－－*/
+MP_GetDevicelistForOuterRoom = "select cubicle.cubicle_id as cubicleid,cubicle.name as cubiclename,device.device_id as deviceid,device.description as devicename from device,cubicle where device.cubicle_id = cubicle.cubicle_id and cubicle.room_id = 0  and device.device_id !=2 order by  cubicle.cubicle_id, device.cubicle_pos";
+
+//******************************************** MainPage *****************************************************
+
+
+
+

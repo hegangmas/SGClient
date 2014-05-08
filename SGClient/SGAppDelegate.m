@@ -7,12 +7,15 @@
 //
 
 #import "SGAppDelegate.h"
+#import "SGAPPConfig.h"
 
 @implementation SGAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [SGAPPConfig sharedSGAPPConfig];
     return YES;
 }
 							

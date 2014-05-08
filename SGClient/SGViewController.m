@@ -7,6 +7,7 @@
 //
 
 #import "SGViewController.h"
+#import "SGMainPageBussiness.h"
 
 @interface SGViewController ()
 
@@ -17,7 +18,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    NSLog(@"%@",[[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForRoomWithRoomId:1]);
 }
 
 - (void)didReceiveMemoryWarning

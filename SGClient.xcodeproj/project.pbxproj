@@ -21,6 +21,19 @@
 		C9F03C4B19170F5400355991 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2D19170F5400355991 /* UIKit.framework */; };
 		C9F03C5319170F5400355991 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9F03C5119170F5400355991 /* InfoPlist.strings */; };
 		C9F03C5519170F5400355991 /* SGClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C5419170F5400355991 /* SGClientTests.m */; };
+		C9F03C6019170F8A00355991 /* data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C9F03C5F19170F8A00355991 /* data.sqlite */; };
+		C9F03C6F1917108F00355991 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C661917108F00355991 /* FMDatabase.m */; };
+		C9F03C701917108F00355991 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C681917108F00355991 /* FMResultSet.m */; };
+		C9F03C711917108F00355991 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C6A1917108F00355991 /* FMDatabaseQueue.m */; };
+		C9F03C721917108F00355991 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C6C1917108F00355991 /* FMDatabaseAdditions.m */; };
+		C9F03C731917108F00355991 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C6E1917108F00355991 /* FMDatabasePool.m */; };
+		C9F03C761917113400355991 /* SGDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C751917113400355991 /* SGDataBase.m */; };
+		C9F03C801917142C00355991 /* SGUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C7F1917142C00355991 /* SGUtility.m */; };
+		C9F03C821917168800355991 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9F03C811917168800355991 /* Localizable.strings */; };
+		C9F03C8619171B4200355991 /* SGMainPageBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C8519171B4200355991 /* SGMainPageBussiness.m */; };
+		C9F03C8919171C0700355991 /* SGAPPConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C8819171C0700355991 /* SGAPPConfig.m */; };
+		C9F03C8E19171F9200355991 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C8D19171F9200355991 /* libsqlite3.dylib */; };
+		C9F03C911917737C00355991 /* SGBaseBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C901917737C00355991 /* SGBaseBussiness.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +66,32 @@
 		C9F03C5019170F5400355991 /* SGClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SGClientTests-Info.plist"; sourceTree = "<group>"; };
 		C9F03C5219170F5400355991 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C9F03C5419170F5400355991 /* SGClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SGClientTests.m; sourceTree = "<group>"; };
+		C9F03C5F19170F8A00355991 /* data.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = data.sqlite; sourceTree = "<group>"; };
+		C9F03C641917108F00355991 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		C9F03C651917108F00355991 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		C9F03C661917108F00355991 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		C9F03C671917108F00355991 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		C9F03C681917108F00355991 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		C9F03C691917108F00355991 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		C9F03C6A1917108F00355991 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		C9F03C6B1917108F00355991 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		C9F03C6C1917108F00355991 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		C9F03C6D1917108F00355991 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		C9F03C6E1917108F00355991 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		C9F03C741917113400355991 /* SGDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDataBase.h; sourceTree = "<group>"; };
+		C9F03C751917113400355991 /* SGDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDataBase.m; sourceTree = "<group>"; };
+		C9F03C7A191711C600355991 /* NUSynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NUSynthesizeSingleton.h; sourceTree = "<group>"; };
+		C9F03C7B191711C600355991 /* NUGCDSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NUGCDSingleton.h; sourceTree = "<group>"; };
+		C9F03C7E1917142C00355991 /* SGUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGUtility.h; sourceTree = "<group>"; };
+		C9F03C7F1917142C00355991 /* SGUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGUtility.m; sourceTree = "<group>"; };
+		C9F03C811917168800355991 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		C9F03C8419171B4200355991 /* SGMainPageBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGMainPageBussiness.h; sourceTree = "<group>"; };
+		C9F03C8519171B4200355991 /* SGMainPageBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGMainPageBussiness.m; sourceTree = "<group>"; };
+		C9F03C8719171C0700355991 /* SGAPPConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGAPPConfig.h; sourceTree = "<group>"; };
+		C9F03C8819171C0700355991 /* SGAPPConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGAPPConfig.m; sourceTree = "<group>"; };
+		C9F03C8D19171F9200355991 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		C9F03C8F1917737C00355991 /* SGBaseBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGBaseBussiness.h; sourceTree = "<group>"; };
+		C9F03C901917737C00355991 /* SGBaseBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGBaseBussiness.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9F03C8E19171F9200355991 /* libsqlite3.dylib in Frameworks */,
 				C9F03C2C19170F5400355991 /* CoreGraphics.framework in Frameworks */,
 				C9F03C2E19170F5400355991 /* UIKit.framework in Frameworks */,
 				C9F03C2A19170F5400355991 /* Foundation.framework in Frameworks */,
@@ -101,6 +141,7 @@
 		C9F03C2819170F5400355991 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9F03C8D19171F9200355991 /* libsqlite3.dylib */,
 				C9F03C2919170F5400355991 /* Foundation.framework */,
 				C9F03C2B19170F5400355991 /* CoreGraphics.framework */,
 				C9F03C2D19170F5400355991 /* UIKit.framework */,
@@ -112,12 +153,12 @@
 		C9F03C2F19170F5400355991 /* SGClient */ = {
 			isa = PBXGroup;
 			children = (
-				C9F03C3819170F5400355991 /* SGAppDelegate.h */,
-				C9F03C3919170F5400355991 /* SGAppDelegate.m */,
-				C9F03C3B19170F5400355991 /* Main.storyboard */,
-				C9F03C3E19170F5400355991 /* SGViewController.h */,
-				C9F03C3F19170F5400355991 /* SGViewController.m */,
-				C9F03C4119170F5400355991 /* Images.xcassets */,
+				C9F03C8B19171EC900355991 /* AppDelegate */,
+				C9F03C8C19171ED600355991 /* ViewController */,
+				C9F03C6219170FAA00355991 /* External */,
+				C9F03C6119170F9C00355991 /* Model */,
+				C9F03C771917117000355991 /* Helper */,
+				C9F03C5E19170F8000355991 /* Resource */,
 				C9F03C3019170F5400355991 /* Supporting Files */,
 			);
 			path = SGClient;
@@ -150,6 +191,119 @@
 				C9F03C5119170F5400355991 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C9F03C5E19170F8000355991 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C8A19171EAE00355991 /* Nibs */,
+				C9F03C831917168C00355991 /* Stings */,
+				C9F03C791917119A00355991 /* Images */,
+				C9F03C781917118C00355991 /* Data */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		C9F03C6119170F9C00355991 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C741917113400355991 /* SGDataBase.h */,
+				C9F03C751917113400355991 /* SGDataBase.m */,
+				C9F03C8F1917737C00355991 /* SGBaseBussiness.h */,
+				C9F03C901917737C00355991 /* SGBaseBussiness.m */,
+				C9F03C8419171B4200355991 /* SGMainPageBussiness.h */,
+				C9F03C8519171B4200355991 /* SGMainPageBussiness.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C9F03C6219170FAA00355991 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C631917108600355991 /* FMDB */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		C9F03C631917108600355991 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C641917108F00355991 /* FMDB.h */,
+				C9F03C651917108F00355991 /* FMDatabase.h */,
+				C9F03C661917108F00355991 /* FMDatabase.m */,
+				C9F03C671917108F00355991 /* FMResultSet.h */,
+				C9F03C681917108F00355991 /* FMResultSet.m */,
+				C9F03C691917108F00355991 /* FMDatabaseQueue.h */,
+				C9F03C6A1917108F00355991 /* FMDatabaseQueue.m */,
+				C9F03C6B1917108F00355991 /* FMDatabaseAdditions.h */,
+				C9F03C6C1917108F00355991 /* FMDatabaseAdditions.m */,
+				C9F03C6D1917108F00355991 /* FMDatabasePool.h */,
+				C9F03C6E1917108F00355991 /* FMDatabasePool.m */,
+			);
+			name = FMDB;
+			sourceTree = "<group>";
+		};
+		C9F03C771917117000355991 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C7A191711C600355991 /* NUSynthesizeSingleton.h */,
+				C9F03C7B191711C600355991 /* NUGCDSingleton.h */,
+				C9F03C7E1917142C00355991 /* SGUtility.h */,
+				C9F03C7F1917142C00355991 /* SGUtility.m */,
+				C9F03C8719171C0700355991 /* SGAPPConfig.h */,
+				C9F03C8819171C0700355991 /* SGAPPConfig.m */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		C9F03C781917118C00355991 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C5F19170F8A00355991 /* data.sqlite */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		C9F03C791917119A00355991 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C4119170F5400355991 /* Images.xcassets */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		C9F03C831917168C00355991 /* Stings */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C811917168800355991 /* Localizable.strings */,
+			);
+			name = Stings;
+			sourceTree = "<group>";
+		};
+		C9F03C8A19171EAE00355991 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C3B19170F5400355991 /* Main.storyboard */,
+			);
+			name = Nibs;
+			sourceTree = "<group>";
+		};
+		C9F03C8B19171EC900355991 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C3819170F5400355991 /* SGAppDelegate.h */,
+				C9F03C3919170F5400355991 /* SGAppDelegate.m */,
+			);
+			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		C9F03C8C19171ED600355991 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C9F03C3E19170F5400355991 /* SGViewController.h */,
+				C9F03C3F19170F5400355991 /* SGViewController.m */,
+			);
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,8 +384,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9F03C4219170F5400355991 /* Images.xcassets in Resources */,
+				C9F03C6019170F8A00355991 /* data.sqlite in Resources */,
 				C9F03C3419170F5400355991 /* InfoPlist.strings in Resources */,
 				C9F03C3D19170F5400355991 /* Main.storyboard in Resources */,
+				C9F03C821917168800355991 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +408,17 @@
 			files = (
 				C9F03C3A19170F5400355991 /* SGAppDelegate.m in Sources */,
 				C9F03C4019170F5400355991 /* SGViewController.m in Sources */,
+				C9F03C911917737C00355991 /* SGBaseBussiness.m in Sources */,
 				C9F03C3619170F5400355991 /* main.m in Sources */,
+				C9F03C6F1917108F00355991 /* FMDatabase.m in Sources */,
+				C9F03C701917108F00355991 /* FMResultSet.m in Sources */,
+				C9F03C8919171C0700355991 /* SGAPPConfig.m in Sources */,
+				C9F03C731917108F00355991 /* FMDatabasePool.m in Sources */,
+				C9F03C721917108F00355991 /* FMDatabaseAdditions.m in Sources */,
+				C9F03C8619171B4200355991 /* SGMainPageBussiness.m in Sources */,
+				C9F03C761917113400355991 /* SGDataBase.m in Sources */,
+				C9F03C801917142C00355991 /* SGUtility.m in Sources */,
+				C9F03C711917108F00355991 /* FMDatabaseQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +625,7 @@
 				C9F03C5A19170F5400355991 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C9F03C5B19170F5400355991 /* Build configuration list for PBXNativeTarget "SGClientTests" */ = {
 			isa = XCConfigurationList;
@@ -467,6 +634,7 @@
 				C9F03C5D19170F5400355991 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
