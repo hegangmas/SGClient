@@ -18,8 +18,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSLog(@"%@",[[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForRoomWithRoomId:1]);
+ 
+    NSLog(@"开始%@",[NSDate date]);
+    NSLog(@"%@",[[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom]);
+    NSLog(@"结束%@",[NSDate date]);
 }
 
 - (void)didReceiveMemoryWarning

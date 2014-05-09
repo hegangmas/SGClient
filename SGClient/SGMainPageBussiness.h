@@ -16,18 +16,24 @@
 
 /*－－－－－－－－－－－－－－－－－
  获得指定ROOM ID 的DEVICE列表
- INPUT: ROOM_ID (INT)
  －－－－－－－－－－－－－－－－－*/
 -(NSString*)queryDevicelistForRoomWithRoomId:(NSInteger)roomId;
 
 
+
 /*－－－－－－－－－－－－－－－－－
- 获得ROOM ID ＝ 0 DEVICE列表
- INPUT: NULL
+ 获得ALL INNER ROOM DEVICE列表
+ －－－－－－－－－－－－－－－－－*/
+-(NSString*)queryDevicelistForAllInnerRoom;
+
+
+
+
+/*－－－－－－－－－－－－－－－－－
+ 获得OUTTER ROOM  DEVICE列表
  －－－－－－－－－－－－－－－－－*/
 -(NSString*)queryDevicelistForOuterRoom;
 
--(NSString*)buildXMLForResultSet:(FMResultSet*)fmResultSet;
 
 @end
 
