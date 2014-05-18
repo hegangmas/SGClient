@@ -20,7 +20,7 @@
     [super viewDidLoad];
  
     NSLog(@"开始%@",[NSDate date]);
-    NSLog(@"%@",[[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom]);
+    NSLog(@"%@",[[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForOuterRoom]);
     NSLog(@"结束%@",[NSDate date]);
 }
 

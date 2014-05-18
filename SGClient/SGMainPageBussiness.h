@@ -19,15 +19,10 @@
  －－－－－－－－－－－－－－－－－*/
 -(NSString*)queryDevicelistForRoomWithRoomId:(NSInteger)roomId;
 
-
-
 /*－－－－－－－－－－－－－－－－－
  获得ALL INNER ROOM DEVICE列表
  －－－－－－－－－－－－－－－－－*/
 -(NSString*)queryDevicelistForAllInnerRoom;
-
-
-
 
 /*－－－－－－－－－－－－－－－－－
  获得OUTTER ROOM  DEVICE列表

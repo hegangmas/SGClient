@@ -49,7 +49,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGMainPageBussiness)
                                  [NSNumber numberWithInteger:roomId]];
 
     NSArray* resultList = [self getResultlistForFMSet:fmResultSet];
-    
+
     return [self buildXMLForResultSet:resultList];
 }
 
@@ -63,7 +63,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGMainPageBussiness)
     FMResultSet * fmResultSet = [self.dataBase executeQuery:@MP_GetDevicelistForAllInnerRoom];
 
     NSArray* resultList = [self getResultlistForFMSet:fmResultSet];
-    
+
     return [self buildXMLForResultSet:resultList];
 }
 
@@ -99,6 +99,55 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGMainPageBussiness)
         [resultList addObject:resultItem];}
     return resultList;
 }
+
+/*－－－－－－－－－－－－－－－－－
+ 根据RESULT LIST 生成XML
+ －－－－－－－－－－－－－－－－－*/
+-(NSString*)buildJSONForResultSet:(NSArray*)resultList{
+    
+    __block NSPredicate* predicate;
+    NSMutableString* jsonString = [NSMutableString stringWithString:@"{\"Data\":["];
+    
+    NSArray* resultListArray = [resultList valueForKeyPath:@"@distinctUnionOfObjects.roomid"];
+    [[resultListArray sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        predicate = [NSPredicate predicateWithFormat:@"roomid == %@",
+                     (NSString*)obj];
+        NSArray* firstClasslist = [resultList filteredArrayUsingPredicate:predicate];
+        [jsonString appendString:[NSString stringWithFormat:@"{\"roomid\":\"%@\",\"roomname\":\"%@\",\"cubicles\":[",
+                                 [(SGDataBaseRowItem*)[firstClasslist objectAtIndex:0] roomid],
+                                 [(SGDataBaseRowItem*)[firstClasslist objectAtIndex:0] roomname]]];
+        
+        
+        NSArray* firstClasslistArray = [firstClasslist valueForKeyPath:@"@distinctUnionOfObjects.cubicleid"];
+        [[firstClasslistArray sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            predicate = [NSPredicate predicateWithFormat:@"cubicleid == %@",
+                         (NSString*)obj];
+            NSArray* secondClasslist = [firstClasslist filteredArrayUsingPredicate:predicate];
+            [jsonString appendString:[NSString stringWithFormat:@"{\"cubicleid\":\"%@\",\"cubiclename\":\"%@\",\"devices\":[",
+                                     [(SGDataBaseRowItem*)[secondClasslist objectAtIndex:0] cubicleid],
+                                     [(SGDataBaseRowItem*)[secondClasslist objectAtIndex:0] cubiclename]]];
+            
+            [secondClasslist enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                [jsonString appendString:@"{\"deviceid\":\""];
+                [jsonString appendString:[(SGDataBaseRowItem*)obj deviceid]];
+                [jsonString appendString:@"\",\"devicename\":\""];
+                [jsonString appendString:[(SGDataBaseRowItem*)obj devicename]];
+                [jsonString appendString:@"\"}"];
+                
+                if (idx!=[secondClasslist count]-1) {[jsonString appendString:@","];
+                }else{ [jsonString appendString:@"]}"]; }}];
+            
+            if (idx!=[firstClasslistArray count]-1) {[jsonString appendString:@","];
+            }else{[jsonString appendString:@"]"];}}];
+        
+        if (idx!=[resultListArray count]-1) {[jsonString appendString:@","];
+        }else{[jsonString appendString:@"}"];}}];
+ 
+    [jsonString appendString:@"]}"]; return jsonString;
+}
+
 
 /*－－－－－－－－－－－－－－－－－
  根据RESULT LIST 生成XML
