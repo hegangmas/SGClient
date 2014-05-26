@@ -6,7 +6,6 @@
 //  Copyright (c) 2014年 XLDZ. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "SGBaseBussiness.h"
 
 @interface SGMainPageBussiness : SGBaseBussiness

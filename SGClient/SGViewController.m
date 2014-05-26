@@ -8,6 +8,7 @@
 
 #import "SGViewController.h"
 #import "SGMainPageBussiness.h"
+#import "SGCablePageBussiness.h"
 
 @interface SGViewController ()
 
@@ -19,9 +20,8 @@
 {
     [super viewDidLoad];
  
-    NSLog(@"开始%@",[NSDate date]);
-    NSLog(@"%@",[[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForOuterRoom]);
-    NSLog(@"结束%@",[NSDate date]);
+    
+    [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:22];
 }
 
 - (void)didReceiveMemoryWarning
