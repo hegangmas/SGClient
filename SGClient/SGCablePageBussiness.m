@@ -143,7 +143,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     NSArray* type0List = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE0];
     NSArray* type1List = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE1];
     
-    NSArray* type2List = [self getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleItem(cubicleId, CABLETYPE2)] withEntity:@"SGCPDataItem"];
+    NSArray* type2List = [self getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleItem(cubicleId, CABLETYPE2)]
+                                          withEntity:@"SGCPDataItem"];
     
     NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:type0List,@"type0",
                             type1List,@"type1",
@@ -202,7 +203,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
         }
         
         connection = [NSMutableArray array];
-        kvPairs = [NSMutableDictionary dictionary];
+        kvPairs    = [NSMutableDictionary dictionary];
         
         //获取主CubicleId在连接顺序表中的位置
         indexInOrderList = [self getIndexOfCurrentCubicleWithConnItem:connectionItem
@@ -280,24 +281,40 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                         [connectionCubicles addObject:[cableItem objectAtIndex:0]];
                         [connectionCubicles addObject:[cableItem objectAtIndex:1]];
                     }
-                } else {
-                    break;
-                }
+                } else { break;}
             }
         }
         if (connectionCubicles) {
             if ([connectionCubicles count]>0) {
                 if (![self checkConnectionExistsWithList:retList
-                                            withSubList:connectionCubicles]) {
+                                             withSubList:connectionCubicles]) {
                     
                     //尾缆调整顺序 如请求Cubicle在尾部 倒转顺序
                     if (type == CABLETYPE1) {
                         SGCPDataItem* cubicle = [connectionCubicles objectAtIndex:[connectionCubicles count]-1];
                         if ([cubicle.cubicle_id integerValue] == cubicleId) {
+                            
+                            SGCPDataItem* tmp;
                             connectionCubicles = [[[connectionCubicles reverseObjectEnumerator] allObjects] mutableCopy];
-                        }
-
-                    }
+                            
+                            for(int i = 0; i<[connectionCubicles count]-1;i++){
+                                SGCPDataItem* cubicle1 = [connectionCubicles objectAtIndex:i];
+                                SGCPDataItem* cubicle2 = [connectionCubicles objectAtIndex:i+1];
+                                SGCPDataItem* _tmp;
+                                
+                                if (!i) {_tmp = cubicle1;} else
+                                        {_tmp = tmp;}
+                                
+                                tmp = cubicle2;
+                                cubicle2.cable_id   = _tmp.cable_id;
+                                cubicle2.cable_type = _tmp.cable_type;
+                                cubicle2.cable_name = _tmp.cable_name;
+                            }
+                            tmp = [connectionCubicles objectAtIndex:0];
+                            tmp.cable_type = @"";
+                            tmp.cable_name = @"";
+                            tmp.cable_id   = @"";
+                        }}
                     [retList addObject:connectionCubicles];
                 }
             }
