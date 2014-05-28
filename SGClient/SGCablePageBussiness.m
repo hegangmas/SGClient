@@ -153,8 +153,9 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return [self buildXMLForResultSet:result];
 }
 
-
-
+/*－－－－－－－－－－－－－－－－－
+ 连接是否已添加
+ －－－－－－－－－－－－－－－－－*/
 -(BOOL)checkConnectionExistsWithList:(NSArray*)list withSubList:(NSArray*)slist{
     
     NSArray* idlist1;
@@ -178,6 +179,10 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return NO;
 }
 
+/*－－－－－－－－－－－－－－－－－
+ 根据CubicleId Type 获取List
+ 
+ －－－－－－－－－－－－－－－－－*/
 -(NSArray*)requestListWithCubicleId:(NSInteger)cubicleId WithType:(NSInteger)type{
     
     NSInteger indexInOrderList;
@@ -281,6 +286,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                         [connectionCubicles addObject:[cableItem objectAtIndex:0]];
                         [connectionCubicles addObject:[cableItem objectAtIndex:1]];
                     }
+                //否则中止
                 } else { break;}
             }
         }
@@ -302,8 +308,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                                 SGCPDataItem* cubicle2 = [connectionCubicles objectAtIndex:i+1];
                                 SGCPDataItem* _tmp;
                                 
-                                if (!i) {_tmp = cubicle1;} else
-                                        {_tmp = tmp;}
+                                if (!i) {_tmp = cubicle1;} else {_tmp = tmp;}
                                 
                                 tmp = cubicle2;
                                 cubicle2.cable_id   = _tmp.cable_id;
@@ -323,7 +328,10 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return retList;
 }
 
-//获取CubicleId在连接顺序中的索引
+
+/*－－－－－－－－－－－－－－－－－
+ 获取CubicleId在连接顺序中的索引
+ －－－－－－－－－－－－－－－－－*/
 -(NSInteger)getIndexOfCurrentCubicleWithConnItem:(SGCPConnectionItem*)item
                                           withId:(NSInteger)cubcleId{
     unsigned int outCount;
@@ -341,7 +349,11 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return -1;
 }
 
-//判断两个Field之间的光缆类型 Or 排序时判断是否同一边
+/*－－－－－－－－－－－－－－－－－
+ 判断两个Field之间的光缆类型
+ Or
+ 排序时判断是否同一边
+ －－－－－－－－－－－－－－－－－*/
 -(NSInteger)getCableTypeBetweenField1:(NSString*)field1
                                field2:(NSString*)field2
                           withUseOdf1:(NSInteger)useOdf1
@@ -359,6 +371,11 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return 0;
 }
 
+/*－－－－－－－－－－－－－－－－－
+ 根据cubicleid1 cubicleid2 type 
+ 
+ 获取Cable信息
+ －－－－－－－－－－－－－－－－－*/
 -(NSArray*)getConnectedCubicleInfoWithTmpId:(NSInteger)tid1
                                   withTmpId:(NSInteger)tid2
                                   withPairs:(NSDictionary*)dic
@@ -433,7 +450,9 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return retList;
 }
 
-
+/*－－－－－－－－－－－－－－－－－
+ 重新排序
+ －－－－－－－－－－－－－－－－－*/
 -(NSArray*)resortConnectionOrderWithArray:(NSArray*)array
                                 withPairs:(NSDictionary*)pair
                             withCubicleId:(NSInteger)cubicleId{
@@ -460,7 +479,9 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return array;
 }
 
-
+/*－－－－－－－－－－－－－－－－－
+ 根据DB结果集和实体名称返回列表
+ －－－－－－－－－－－－－－－－－*/
 -(NSArray*)getResultlistForFMSet:(FMResultSet*)fmResultSet withEntity:(NSString*)entity{
     
     NSMutableArray* resultList = [NSMutableArray array];
@@ -495,7 +516,6 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                 [connItem enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     
                     [xMLString appendString:@"<cubicle>"];
-                    
                     SGCPDataItem* cubicle = (SGCPDataItem*)obj;
                     unsigned int outCount;
                     objc_property_t *properties;
@@ -505,9 +525,11 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                     
                     for(int i = 0; i < outCount;i++){
                         property = [NSString stringWithUTF8String:property_getName(properties[i])];
-                        [xMLString appendString:[NSString stringWithFormat:@"<%@>",property]];
-                        [xMLString appendString:[cubicle valueForKey:property]];
-                        [xMLString appendString:[NSString stringWithFormat:@"</%@>",property]];
+                        
+                        [xMLString appendString:[NSString stringWithFormat:@"<%@>%@</%@>",
+                                                 property,
+                                                 [cubicle valueForKey:property],
+                                                 property]];
                     }
                     
                     [xMLString appendString:@"</cubicle>"];}];
