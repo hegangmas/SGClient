@@ -19,8 +19,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- 
-    
+
+    [[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom];
     [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:22];
 }
 

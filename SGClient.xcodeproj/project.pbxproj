@@ -34,6 +34,7 @@
 		C9F03C8919171C0700355991 /* SGAPPConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C8819171C0700355991 /* SGAPPConfig.m */; };
 		C9F03C8E19171F9200355991 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C8D19171F9200355991 /* libsqlite3.dylib */; };
 		C9F03C911917737C00355991 /* SGBaseBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C901917737C00355991 /* SGBaseBussiness.m */; };
+		C9F26F341929EDB4006A4BAC /* SGCablePageBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F26F331929EDB4006A4BAC /* SGCablePageBussiness.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,8 @@
 		C9F03C8D19171F9200355991 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C9F03C8F1917737C00355991 /* SGBaseBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGBaseBussiness.h; sourceTree = "<group>"; };
 		C9F03C901917737C00355991 /* SGBaseBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGBaseBussiness.m; sourceTree = "<group>"; };
+		C9F26F321929EDB4006A4BAC /* SGCablePageBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGCablePageBussiness.h; sourceTree = "<group>"; };
+		C9F26F331929EDB4006A4BAC /* SGCablePageBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGCablePageBussiness.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +216,8 @@
 				C9F03C901917737C00355991 /* SGBaseBussiness.m */,
 				C9F03C8419171B4200355991 /* SGMainPageBussiness.h */,
 				C9F03C8519171B4200355991 /* SGMainPageBussiness.m */,
+				C9F26F321929EDB4006A4BAC /* SGCablePageBussiness.h */,
+				C9F26F331929EDB4006A4BAC /* SGCablePageBussiness.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 				C9F03C4019170F5400355991 /* SGViewController.m in Sources */,
 				C9F03C911917737C00355991 /* SGBaseBussiness.m in Sources */,
 				C9F03C3619170F5400355991 /* main.m in Sources */,
+				C9F26F341929EDB4006A4BAC /* SGCablePageBussiness.m in Sources */,
 				C9F03C6F1917108F00355991 /* FMDatabase.m in Sources */,
 				C9F03C701917108F00355991 /* FMResultSet.m in Sources */,
 				C9F03C8919171C0700355991 /* SGAPPConfig.m in Sources */,

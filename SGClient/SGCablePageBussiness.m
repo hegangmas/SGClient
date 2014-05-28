@@ -119,7 +119,6 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                                             and cable_type = %d",v,v,v,v,t]
 
 
-
 /*－－－－－－－－－－－－－－－－－－－－－
  根据请求CubicleId返回XML STRING
  
@@ -139,7 +138,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                                              withEntity:@"SGCPDataBaseRowItem"];
     //连接关系列表
     self.connectionList   = [self getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleConnect(cubicleId)]
-                                           withEntity:@"SGCPConnectionItem"];
+                                             withEntity:@"SGCPConnectionItem"];
     
     NSArray* type0List = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE0];
     NSArray* type1List = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE1];
@@ -153,6 +152,30 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return [self buildXMLForResultSet:result];
 }
 
+
+
+-(BOOL)checkConnectionExistsWithList:(NSArray*)list withSubList:(NSArray*)slist{
+    
+    NSArray* idlist1;
+    NSArray* slistId = [slist valueForKeyPath:@"@distinctUnionOfObjects.cubicle_id"];
+    BOOL flag = YES;
+    for(NSArray* cubicles in list){
+        idlist1 = [cubicles valueForKeyPath:@"@distinctUnionOfObjects.cubicle_id"];
+        
+        flag = YES;
+        if ([idlist1 count] == [slistId count]) {
+            for(NSString* cubicleId in idlist1){
+                if (![slistId containsObject:cubicleId]) {
+                    flag = NO;
+                }
+            }
+            if (flag) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
 
 -(NSArray*)requestListWithCubicleId:(NSInteger)cubicleId WithType:(NSInteger)type{
     
@@ -169,6 +192,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     BOOL isContainsGLConn = NO;   //连接关系是否连有光缆
     
     retList = [NSMutableArray array];
+    
     //遍历连接关系表
     for(SGCPConnectionItem* connectionItem in self.connectionList){
         isContainsGLConn = NO;
@@ -227,11 +251,10 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
         connection = [[self resortConnectionOrderWithArray:connection
                                                  withPairs:kvPairs
                                              withCubicleId:cubicleId] mutableCopy];
-        
+
         //有和指定Cubicle连接的
         if ([connection count] > 1) {
-            
-            if (type == 0) {
+            if (type == CABLETYPE0) {
                 if (!isContainsGLConn) {
                     continue;
                 }
@@ -264,7 +287,19 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
         }
         if (connectionCubicles) {
             if ([connectionCubicles count]>0) {
-                [retList addObject:connectionCubicles];
+                if (![self checkConnectionExistsWithList:retList
+                                            withSubList:connectionCubicles]) {
+                    
+                    //尾缆调整顺序 如请求Cubicle在尾部 倒转顺序
+                    if (type == CABLETYPE1) {
+                        SGCPDataItem* cubicle = [connectionCubicles objectAtIndex:[connectionCubicles count]-1];
+                        if ([cubicle.cubicle_id integerValue] == cubicleId) {
+                            connectionCubicles = [[[connectionCubicles reverseObjectEnumerator] allObjects] mutableCopy];
+                        }
+
+                    }
+                    [retList addObject:connectionCubicles];
+                }
             }
         }
     }
@@ -341,11 +376,11 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     
     switch (type) {
             //光缆
-        case 0:
+        case CABLETYPE0:
             filteredList = [self.cableOfType0List filteredArrayUsingPredicate:predicate];
             break;
             //尾缆
-        case 1:
+        case CABLETYPE1:
             filteredList = [self.cableOfType1List filteredArrayUsingPredicate:predicate];
             break;
         default:
@@ -437,15 +472,18 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
 
             NSArray* connList = [resultList valueForKey:(NSString*)obj];
             [connList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                
                 [xMLString appendString:@"<connection>"];
                 NSArray* connItem = (NSArray*)obj;
                 [connItem enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    
                     [xMLString appendString:@"<cubicle>"];
                     
                     SGCPDataItem* cubicle = (SGCPDataItem*)obj;
                     unsigned int outCount;
                     objc_property_t *properties;
                     NSString* property;
+                    
                     properties = class_copyPropertyList([SGCPDataItem class], &outCount);
                     
                     for(int i = 0; i < outCount;i++){
@@ -454,10 +492,9 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                         [xMLString appendString:[cubicle valueForKey:property]];
                         [xMLString appendString:[NSString stringWithFormat:@"</%@>",property]];
                     }
-                    [xMLString appendString:@"</cubicle>"];
-                }];
-                [xMLString appendString:@"</connection>"];
-            }];
+                    
+                    [xMLString appendString:@"</cubicle>"];}];
+                    [xMLString appendString:@"</connection>"];}];
             
         }else {
             
@@ -471,12 +508,10 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                                          dataItem.cable_id,
                                          dataItem.cable_type,
                                          dataItem.cable_name]];
-            }];
-            [xMLString appendString:@"</cubicle>"];
-        }
-        [xMLString appendString:[NSString stringWithFormat:@"</%@>",(NSString*)obj]];
-    }];
-    [xMLString appendString:@"</root>"];
+            }];[xMLString appendString:@"</cubicle>"];}
+               [xMLString appendString:[NSString stringWithFormat:@"</%@>",(NSString*)obj]];}];
+               [xMLString appendString:@"</root>"];
+    
     return xMLString;
 }
 @end
