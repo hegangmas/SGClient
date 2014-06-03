@@ -10,11 +10,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SGClient/SGCablePageBussiness.m"
-            timestampString = "422930284.065913"
+            timestampString = "423492301.568748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
+            landmarkName = "-verifyType0ListWithCubicleId:withList:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SGClient/SGCablePageBussiness.m"
+            timestampString = "423490203.218923"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "-queryCablelistWithCubicleId:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,26 +42,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SGClient/SGCablePageBussiness.m"
-            timestampString = "422943630.95893"
+            timestampString = "423492301.568748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "539"
-            endingLineNumber = "539">
+            startingLineNumber = "618"
+            endingLineNumber = "618"
+            landmarkName = "-buildXMLForResultSet:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SGClient/SGCablePageBussiness.m"
-            timestampString = "422943595.041094"
+            timestampString = "423492187.156485"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "533"
-            endingLineNumber = "533"
-            landmarkName = "-buildXMLForResultSet:"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "-verifyType0ListWithCubicleId:withList:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

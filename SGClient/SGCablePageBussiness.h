@@ -39,13 +39,15 @@
 @property(nonatomic,strong) NSString *cable_type;
 @property(nonatomic,strong) NSString *cubicle_id;
 @property(nonatomic,strong) NSString *cubicle_name;
+@property(nonatomic,strong) NSString *drawFlag;
 
 
 -(id)initWithCableId:(NSString*)cableId
        withCableName:(NSString*)cableName
        withCableType:(NSString*)cableType
        withCubicleId:(NSString*)cubicleId
-     withCubicleName:(NSString*)cubicleName;
+     withCubicleName:(NSString*)cubicleName
+        withDrawFlag:(NSString*)drawFlag;
 
 @end
 

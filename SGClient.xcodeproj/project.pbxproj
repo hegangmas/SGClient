@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C9026392193D7F6A0020428E /* SGFiberPageBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9026391193D7F6A0020428E /* SGFiberPageBussiness.m */; };
 		C9F03C2A19170F5400355991 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2919170F5400355991 /* Foundation.framework */; };
 		C9F03C2C19170F5400355991 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2B19170F5400355991 /* CoreGraphics.framework */; };
 		C9F03C2E19170F5400355991 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2D19170F5400355991 /* UIKit.framework */; };
@@ -48,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C9026390193D7F6A0020428E /* SGFiberPageBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGFiberPageBussiness.h; sourceTree = "<group>"; };
+		C9026391193D7F6A0020428E /* SGFiberPageBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGFiberPageBussiness.m; sourceTree = "<group>"; };
 		C9F03C2619170F5400355991 /* SGClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SGClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9F03C2919170F5400355991 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9F03C2B19170F5400355991 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -218,6 +221,8 @@
 				C9F03C8519171B4200355991 /* SGMainPageBussiness.m */,
 				C9F26F321929EDB4006A4BAC /* SGCablePageBussiness.h */,
 				C9F26F331929EDB4006A4BAC /* SGCablePageBussiness.m */,
+				C9026390193D7F6A0020428E /* SGFiberPageBussiness.h */,
+				C9026391193D7F6A0020428E /* SGFiberPageBussiness.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 				C9F03C731917108F00355991 /* FMDatabasePool.m in Sources */,
 				C9F03C721917108F00355991 /* FMDatabaseAdditions.m in Sources */,
 				C9F03C8619171B4200355991 /* SGMainPageBussiness.m in Sources */,
+				C9026392193D7F6A0020428E /* SGFiberPageBussiness.m in Sources */,
 				C9F03C761917113400355991 /* SGDataBase.m in Sources */,
 				C9F03C801917142C00355991 /* SGUtility.m in Sources */,
 				C9F03C711917108F00355991 /* FMDatabaseQueue.m in Sources */,

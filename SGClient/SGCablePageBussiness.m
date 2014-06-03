@@ -20,7 +20,8 @@
 -(id)initWithCableId:(NSString*)cableId withCableName:(NSString*)cableName
        withCableType:(NSString*)cableType
        withCubicleId:(NSString*)cubicleId
-     withCubicleName:(NSString*)cubicleName{
+     withCubicleName:(NSString*)cubicleName
+        withDrawFlag:(NSString *)drawFlag{
     
     if (self = [super init]) {
         _cable_id = cableId;
@@ -28,6 +29,7 @@
         _cable_type = cableType;
         _cubicle_id = cubicleId;
         _cubicle_name = cubicleName;
+        _drawFlag = drawFlag;
     }
     return self;
 }
@@ -145,12 +147,72 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     
     NSArray* type2List = [self getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleItem(cubicleId, CABLETYPE2)]
                                           withEntity:@"SGCPDataItem"];
+    type0List = [self verifyType0ListWithCubicleId:cubicleId withList:type0List];
     
     NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:type0List,@"type0",
                             type1List,@"type1",
                             type2List,@"type2",
                             nil];
     return [self buildXMLForResultSet:result];
+}
+
+
+/*－－－－－－－－－－－－－－－－－
+ 请求Cubicle直连的左右两边光缆 
+ 如有重复只需绘制一次
+ 
+ 如直连的左右两边没有光缆 删除此条记录
+ －－－－－－－－－－－－－－－－－*/
+-(NSArray*)verifyType0ListWithCubicleId:(NSInteger)cubicleId withList:(NSArray*)list{
+    
+    NSMutableDictionary* cachedSet = [NSMutableDictionary dictionary];
+    NSMutableArray* _list = [list mutableCopy];
+    NSString* key;
+    NSInteger index;
+    SGCPDataItem* tmpItem1;
+    SGCPDataItem* tmpItem2;
+    BOOL flag = NO;
+    
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"cubicle_id == %@",
+                              [NSString stringWithFormat:@"%d",cubicleId]];
+    for(NSArray* connection in [NSArray arrayWithArray:_list]){
+        NSArray* tmp = [connection filteredArrayUsingPredicate:predicate];
+        index = [connection indexOfObject:[tmp objectAtIndex:0]];
+ 
+        if ((index-1)>=0) {
+            
+            tmpItem1 = [connection objectAtIndex:index-1];
+            key = [NSString stringWithFormat:@"%@##%d",tmpItem1.cubicle_id,cubicleId];
+            if ([tmpItem1.cable_type integerValue] == 0) {
+                flag = YES;
+            } else { flag = NO;}
+
+            if ([cachedSet valueForKey:key]) {
+                [(SGCPDataItem*)[connection objectAtIndex:index-1] setValue:@"0" forKey:@"drawFlag"];
+            } else {
+                [cachedSet setObject:@"Y" forKey:key];
+            }
+        }
+        if ((index+1)<[connection count]) {
+            tmpItem2 = [connection objectAtIndex:index+1];
+            key = [NSString stringWithFormat:@"%d##%@",cubicleId,
+                   tmpItem2.cubicle_id];
+            if ([tmpItem2.cable_type integerValue] == 0) {
+                flag = YES;
+            } else { flag = NO;}
+            
+            if ([cachedSet valueForKey:key]) {
+                [tmpItem2 setValue:@"0" forKey:@"drawFlag"];
+            } else {
+                [cachedSet setObject:@"Y" forKey:key];
+            }
+        }
+        if (!flag) {
+            [_list removeObject:connection];
+        }
+    }
+
+    return _list;
 }
 
 /*－－－－－－－－－－－－－－－－－
@@ -392,7 +454,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                                          withUseOdf2:useOdf2];
     
     //如果是只绘制尾缆 跳过光缆
-    if (_type) {
+    if (_type == CABLETYPE1) {
         if (type!=_type) {
             return nil;
         }
@@ -433,7 +495,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                                                     withCableName:@""
                                                     withCableType:@""
                                                     withCubicleId:stid1
-                                                  withCubicleName:cubicleName];
+                                                  withCubicleName:cubicleName
+                                                     withDrawFlag:@""];
                 [retList addObject:basicItem];
                 
                 cubicleName = ([stid2 isEqualToString:cableRowItem.cubicle1_id])? cableRowItem.cubicle1_name:
@@ -442,7 +505,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                                                     withCableName:cableRowItem.cable_name
                                                     withCableType:cableRowItem.cable_type
                                                     withCubicleId:stid2
-                                                  withCubicleName:cubicleName];
+                                                  withCubicleName:cubicleName
+                                                     withDrawFlag:@"1"];
                 [retList addObject:basicItem];
             }
         }
