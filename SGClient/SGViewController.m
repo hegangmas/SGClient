@@ -9,6 +9,7 @@
 #import "SGViewController.h"
 #import "SGMainPageBussiness.h"
 #import "SGCablePageBussiness.h"
+#import "SGFiberPageBussiness.h"
 
 @interface SGViewController ()
 
@@ -20,8 +21,9 @@
 {
     [super viewDidLoad];
 
-    [[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom];
-    [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:22];
+//    [[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom];
+//    [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:22];
+    [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:4486];
 }
 
 - (void)didReceiveMemoryWarning

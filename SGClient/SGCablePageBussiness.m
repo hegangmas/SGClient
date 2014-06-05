@@ -49,22 +49,6 @@
 #define CABLETYPE1 1
 #define CABLETYPE2 2
 
-@implementation SGCablePageBussiness
-
-GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
-
--(id)init{
-    if (self = [super init]) {
-        //连接顺序
-        _connectionOrder = [NSArray arrayWithObjects:
-                            @"cubicle1_id",
-                            @"passcubicle1_id",
-                            @"passcubicle2_id",
-                            @"cubicle2_id", nil];
-    }
-    return self;
-}
-
 /*－－－－－－－－－－－－－－－－－
  SQL 根据Cubicleidid
  
@@ -121,6 +105,24 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                                             and cable_type = %d",v,v,v,v,t]
 
 
+
+@implementation SGCablePageBussiness
+
+GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
+
+-(id)init{
+    if (self = [super init]) {
+        //连接顺序
+        _connectionOrder = [NSArray arrayWithObjects:
+                            @"cubicle1_id",
+                            @"passcubicle1_id",
+                            @"passcubicle2_id",
+                            @"cubicle2_id", nil];
+    }
+    return self;
+}
+
+
 /*－－－－－－－－－－－－－－－－－－－－－
  根据请求CubicleId返回XML STRING
  
@@ -133,19 +135,19 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     NSLog(@"%@",CP_GetCubicleConnect(cubicleId));
     
     //光缆列表
-    self.cableOfType0List = [self getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCablelist(cubicleId,CABLETYPE0)]
+    self.cableOfType0List = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCablelist(cubicleId,CABLETYPE0)]
                                              withEntity:@"SGCPDataBaseRowItem"];
     //尾缆列表
-    self.cableOfType1List = [self getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCablelist(cubicleId,CABLETYPE1)]
+    self.cableOfType1List = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCablelist(cubicleId,CABLETYPE1)]
                                              withEntity:@"SGCPDataBaseRowItem"];
     //连接关系列表
-    self.connectionList   = [self getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleConnect(cubicleId)]
+    self.connectionList   = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleConnect(cubicleId)]
                                              withEntity:@"SGCPConnectionItem"];
     
     NSArray* type0List = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE0];
     NSArray* type1List = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE1];
     
-    NSArray* type2List = [self getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleItem(cubicleId, CABLETYPE2)]
+    NSArray* type2List = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleItem(cubicleId, CABLETYPE2)]
                                           withEntity:@"SGCPDataItem"];
     type0List = [self verifyType0ListWithCubicleId:cubicleId withList:type0List];
     
@@ -541,24 +543,6 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
         }
     }
     return array;
-}
-
-/*－－－－－－－－－－－－－－－－－
- 根据DB结果集和实体名称返回列表
- －－－－－－－－－－－－－－－－－*/
--(NSArray*)getResultlistForFMSet:(FMResultSet*)fmResultSet withEntity:(NSString*)entity{
-    
-    NSMutableArray* resultList = [NSMutableArray array];
-    while ([fmResultSet next]) {
-        Class _class = NSClassFromString(entity);
-        id _entity = [[_class alloc] init];
-        for(int i = 0; i < [fmResultSet columnCount];i++){
-            
-            [_entity setValue:[fmResultSet stringForColumn:[fmResultSet columnNameForIndex:i]]
-                       forKey:[fmResultSet columnNameForIndex:i]];
-        }
-        [resultList addObject:_entity];}
-    return resultList;
 }
 
 /*－－－－－－－－－－－－－－－－－

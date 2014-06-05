@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <objc/message.h>
+#import "FMDatabase.h"
 
 @interface SGUtility : NSObject
 
 + (NSURL *)applicationDocumentsDirectory;
 + (NSString *)dataBasePath;
+
++ (NSArray*)getResultlistForFMSet:(FMResultSet*)fmResultSet
+                       withEntity:(NSString*)entity;
 @end
