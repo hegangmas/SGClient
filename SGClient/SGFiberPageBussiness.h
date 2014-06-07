@@ -13,7 +13,7 @@
 /*－－－－－－－－－－－－－－－－－
  根据CableId 获取纤芯信息列表
  －－－－－－－－－－－－－－－－－*/
--(NSString*)queryFiberInfoWithCableId:(NSInteger)cableId;
+-(NSString*)queryFiberInfoWithCableId:(NSInteger)cableId withCableType:(NSInteger)cableType;
 
 +(SGFiberPageBussiness*)sharedSGFiberPageBussiness;
 

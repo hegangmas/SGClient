@@ -22,8 +22,8 @@
     [super viewDidLoad];
 
 //    [[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom];
-//    [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:22];
-    [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:4486];
+    [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:22];
+    [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:4486 withCableType:0];
 }
 
 - (void)didReceiveMemoryWarning

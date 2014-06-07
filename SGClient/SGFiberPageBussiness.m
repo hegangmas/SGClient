@@ -72,7 +72,9 @@
 
 GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 
-
+#define CABLETYPE0 0
+#define CABLETYPE1 1
+#define CABLETYPE2 2
 -(id)init{
     if (self = [super init]) {
         
@@ -92,31 +94,51 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 /*－－－－－－－－－－－－－－－－－
  根据CableId 获取纤芯信息列表
  －－－－－－－－－－－－－－－－－*/
--(NSString*)queryFiberInfoWithCableId:(NSInteger)cableId{
+-(NSString*)queryFiberInfoWithCableId:(NSInteger)cableId withCableType:(NSInteger)cableType{
+    
     
     //根据CableId 查询表 fiber
     NSArray* fiberList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberItemList(cableId)]
-                                                  withEntity:@"SGFiberItem"];
+                                               withEntity:@"SGFiberItem"];
     NSMutableArray *retList = [NSMutableArray array];
-    //遍历集合
-    [fiberList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        
-        SGResult* resultItem   = [[SGResult alloc] init];
-        SGFiberItem* fiberItem = (SGFiberItem*)obj;
-        
-        [self fillTypeFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
-        [self fillDeviceFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
-        [self fillPortFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
-        [self fillTXFieldWithSGResult    :resultItem withSGFiberItem:fiberItem];
-        [self fillOdfFieldWithSGResult   :resultItem withSGFiberItem:fiberItem];
-        [self fillColorFieldWithSGResult :resultItem withSGFiberItem:fiberItem];
-        [retList addObject:resultItem];
-    }];
     
-    return nil;
+    //如果是光缆
+    if (cableType == CABLETYPE0) {
+        //遍历集合
+        [fiberList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            SGResult* resultItem   = [[SGResult alloc] init];
+            SGFiberItem* fiberItem = (SGFiberItem*)obj;
+            
+            [self fillTypeFieldForGLWithSGResult  :resultItem withSGFiberItem:fiberItem];
+            [self fillDeviceFieldForGLWithSGResult:resultItem withSGFiberItem:fiberItem];
+            [self fillPortFieldForGLWithSGResult  :resultItem withSGFiberItem:fiberItem];
+            [self fillTXFieldForGLWithSGResult    :resultItem withSGFiberItem:fiberItem];
+            [self fillOdfFieldForGLWithSGResult   :resultItem withSGFiberItem:fiberItem];
+            [self fillColorFieldForGLWithSGResult :resultItem withSGFiberItem:fiberItem];
+            [retList addObject:resultItem];
+        }];
+    }
+    
+    //如果是尾缆
+    if (cableType == CABLETYPE1) {
+        //遍历集合
+        [fiberList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            SGResult* resultItem   = [[SGResult alloc] init];
+            SGFiberItem* fiberItem = (SGFiberItem*)obj;
+            
+            [self fillTypeFieldForGLWithSGResult  :resultItem withSGFiberItem:fiberItem];
+            [self fillDeviceFieldForGLWithSGResult:resultItem withSGFiberItem:fiberItem];
+            [self fillPortFieldForGLWithSGResult  :resultItem withSGFiberItem:fiberItem];
+            [self fillColorFieldForGLWithSGResult :resultItem withSGFiberItem:fiberItem];
+            [retList addObject:resultItem];
+        }];
+    }
+    return [self buildXMLForResultSet:retList];
 }
 
--(void)fillColorFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+-(void)fillColorFieldForGLWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
     NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberItem(fiberItem.port1_id, fiberItem.port2_id)]
                                           withEntity:@"SGFiberItem"];
     if (desc) {
@@ -125,41 +147,29 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
             NSString* color;
             switch ([fiber.fiber_color integerValue]) {
                 case 0:
-                    color = @"蓝";
-                    break;
+                    color = @"蓝";break;
                 case 1:
-                    color = @"橙";
-                    break;
+                    color = @"橙";break;
                 case 2:
-                    color = @"绿";
-                    break;
+                    color = @"绿";break;
                 case 3:
-                    color = @"棕";
-                    break;
+                    color = @"棕";break;
                 case 4:
-                    color = @"灰";
-                    break;
+                    color = @"灰";break;
                 case 5:
-                    color = @"本";
-                    break;
+                    color = @"本";break;
                 case 6:
-                    color = @"红";
-                    break;
+                    color = @"红";break;
                 case 7:
-                    color = @"黑";
-                    break;
+                    color = @"黑";break;
                 case 8:
-                    color = @"黄";
-                    break;
+                    color = @"黄";break;
                 case 9:
-                    color = @"紫";
-                    break;
+                    color = @"紫";break;
                 case 10:
-                    color = @"粉红";
-                    break;
+                    color = @"粉红";break;
                 case 11:
-                    color = @"青绿";
-                    break;
+                    color = @"青绿";break;
                 default:
                     break;
             }
@@ -168,7 +178,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
     }
 }
 
--(void)fillOdfFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+-(void)fillOdfFieldForGLWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
     
     NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetODFInfo(fiberItem.port1_id)]
                                           withEntity:@"SGInfoSetItem"];
@@ -190,7 +200,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 }
 
 
--(void)fillTXFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+-(void)fillTXFieldForGLWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
     
     NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTXInfo([[self.portList objectAtIndex:0] port1_id],fiberItem.port1_id)]
                                           withEntity:@"SGInfoSetItem"];
@@ -212,7 +222,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 /*－－－－－－－－－－－－－－－－－
  获取Port
  －－－－－－－－－－－－－－－－－*/
--(void)fillPortFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+-(void)fillPortFieldForGLWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
 
     NSLog(@"%@",FP_GetPortInfo([[self.portList objectAtIndex:0] port1_id]));
     NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortInfo([[self.portList objectAtIndex:0] port1_id])]
@@ -229,7 +239,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 /*－－－－－－－－－－－－－－－－－
  获取Device
  －－－－－－－－－－－－－－－－－*/
--(void)fillDeviceFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+-(void)fillDeviceFieldForGLWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
     NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetDeviceInfo([[self.portList objectAtIndex:0] port1_id])]
                                               withEntity:@"SGInfoSetItem"];
     if (desc) {
@@ -251,7 +261,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 /*－－－－－－－－－－－－－－－－－
  获取Type
  －－－－－－－－－－－－－－－－－*/
--(void)fillTypeFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+-(void)fillTypeFieldForGLWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
     //如果是备用
     if ([fiberItem.reserve isEqualToString:@"1"]) {
         resultItem.type1 = @"备用";
@@ -380,11 +390,30 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 /*－－－－－－－－－－－－－－－－－
  根据RESULT LIST 生成XML
  －－－－－－－－－－－－－－－－－*/
--(NSString*)buildXMLForResultSet:(NSDictionary*)resultList{
+-(NSString*)buildXMLForResultSet:(NSArray*)resultList{
     
     NSMutableString* xMLString = [NSMutableString stringWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>"];
-    [resultList.allKeys enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    
+    [resultList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SGResult* resultItem = (SGResult*)obj;
+        [xMLString appendString:@"<fiberitem>"];
+        unsigned int outCount;
+        objc_property_t *properties;
+        NSString* property;
+        
+        properties = class_copyPropertyList([SGResult class], &outCount);
+        
+        for(int i = 0; i < outCount;i++){
+            property = [NSString stringWithUTF8String:property_getName(properties[i])];
+            
+            [xMLString appendString:[NSString stringWithFormat:@"<%@>%@</%@>",
+                                     property,
+                                     [resultItem valueForKey:property],
+                                     property]];
+        }
+        [xMLString appendString:@"</fiberitem>"];
     }];
+
     [xMLString appendString:@"</root>"];
     return xMLString;
 }
