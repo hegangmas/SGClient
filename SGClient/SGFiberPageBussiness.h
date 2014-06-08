@@ -13,7 +13,7 @@
 /*－－－－－－－－－－－－－－－－－
  根据CableId 获取纤芯信息列表
  －－－－－－－－－－－－－－－－－*/
--(NSString*)queryFiberInfoWithCableId:(NSInteger)cableId withCableType:(NSInteger)cableType;
+-(NSString*)queryFiberInfoWithCableId:(NSInteger)cableId;
 
 +(SGFiberPageBussiness*)sharedSGFiberPageBussiness;
 
@@ -58,7 +58,7 @@
 @property(nonatomic,strong) NSString* port1;
 @property(nonatomic,strong) NSString* tx1;
 @property(nonatomic,strong) NSString* odf1;
-@property(nonatomic,strong) NSString* mColor;
+@property(nonatomic,strong) NSString* middle;
 @property(nonatomic,strong) NSString* type2;
 @property(nonatomic,strong) NSString* device2;
 @property(nonatomic,strong) NSString* port2;

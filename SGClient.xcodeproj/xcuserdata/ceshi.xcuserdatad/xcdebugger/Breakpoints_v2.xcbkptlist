@@ -9,28 +9,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SGClient/SGCablePageBussiness.m"
-            timestampString = "423540047.942933"
+            filePath = "SGClient/SGFiberPageBussiness.m"
+            timestampString = "423899910.876855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "-queryCablelistWithCubicleId:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SGClient/SGCablePageBussiness.m"
-            timestampString = "423540047.942933"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "602"
-            endingLineNumber = "602"
+            startingLineNumber = "529"
+            endingLineNumber = "529"
             landmarkName = "-buildXMLForResultSet:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SGClient/SGFiberPageBussiness.m"
-            timestampString = "423804182.635901"
+            timestampString = "423900051.058692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "418"
-            endingLineNumber = "418"
-            landmarkName = "-buildXMLForResultSet:"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "-fillMiddleFieldWithSGResult:withSGFiberItem:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
