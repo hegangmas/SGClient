@@ -23,7 +23,7 @@
 
 //    [[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom];
     [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:22];
-    [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:4559];
+    [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:4485];
 }
 
 - (void)didReceiveMemoryWarning

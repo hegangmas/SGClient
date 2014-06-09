@@ -296,7 +296,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                                                        withEntity:@"SGFiberItem"] copy];
                 
                 self.portList = [NSMutableArray arrayWithObjects:[[self.portList objectAtIndex:0] port1_id],
-                                                                 [[self.portList objectAtIndex:0] port1_id],nil];
+                                                                 [[self.portList objectAtIndex:1] port1_id],nil];
                 break;
                 
                 //如果是尾缆
