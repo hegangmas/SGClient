@@ -33,23 +33,23 @@
 @end
 
 
-@interface SGInfoSetItem : NSObject
-
-@property(nonatomic,strong) NSString* infoset_id;
-@property(nonatomic,strong) NSString* name;
-@property(nonatomic,strong) NSString* description;
-@property(nonatomic,strong) NSString* type;
-@property(nonatomic,strong) NSString* group;
-@property(nonatomic,strong) NSString* txiedport_id;
-@property(nonatomic,strong) NSString* switch1_rxport_id;
-@property(nonatomic,strong) NSString* switch1_txport_id;
-@property(nonatomic,strong) NSString* switch2_rxport_id;
-@property(nonatomic,strong) NSString* switch2_txport_id;
-@property(nonatomic,strong) NSString* switch3_rxport_id;
-@property(nonatomic,strong) NSString* switch3_txport_id;
-@property(nonatomic,strong) NSString* rxiedport_id;
-
-@end
+//@interface SGInfoSetItem : NSObject
+//
+//@property(nonatomic,strong) NSString* infoset_id;
+//@property(nonatomic,strong) NSString* name;
+//@property(nonatomic,strong) NSString* description;
+//@property(nonatomic,strong) NSString* type;
+//@property(nonatomic,strong) NSString* group;
+//@property(nonatomic,strong) NSString* txiedport_id;
+//@property(nonatomic,strong) NSString* switch1_rxport_id;
+//@property(nonatomic,strong) NSString* switch1_txport_id;
+//@property(nonatomic,strong) NSString* switch2_rxport_id;
+//@property(nonatomic,strong) NSString* switch2_txport_id;
+//@property(nonatomic,strong) NSString* switch3_rxport_id;
+//@property(nonatomic,strong) NSString* switch3_txport_id;
+//@property(nonatomic,strong) NSString* rxiedport_id;
+//
+//@end
 
 @interface SGResult : NSObject
 

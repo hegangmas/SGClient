@@ -11,8 +11,8 @@
 @implementation SGFiberItem
 @end
 
-@implementation SGInfoSetItem
-@end
+//@implementation SGInfoSetItem
+//@end
 
 @implementation SGResult
 @end

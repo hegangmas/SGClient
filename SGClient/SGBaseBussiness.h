@@ -10,6 +10,7 @@
 #import "NUGCDSingleton.h"
 #import "SGDataBase.h"
 #import "FMDatabase.h"
+#import "SGEntity.h"
 
 @interface SGBaseBussiness : NSObject
 
