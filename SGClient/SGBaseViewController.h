@@ -10,4 +10,5 @@
 
 @interface SGBaseViewController : UIViewController
 
+@property (nonatomic,assign) CGFloat dockWidth;
 @end

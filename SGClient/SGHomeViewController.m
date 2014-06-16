@@ -9,6 +9,7 @@
 #import "SGHomeViewController.h"
 #import "SGLeftDockItem.h"
 #import "SGLeftDock.h"
+#import "SGBaseViewController.h"
 
 @interface SGHomeViewController ()
 
@@ -55,12 +56,12 @@
     
     if (nav == nil) {
         
-        Class c = NSClassFromString(dockItem.controller);
-        UIViewController *vc = [[c alloc] init];
-        vc.title = dockItem.title;
-        nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        Class class = NSClassFromString(dockItem.controller);
+        SGBaseViewController *controller = [[class alloc] init];
+        [controller setTitle:dockItem.title];
+        [controller setDockWidth:_leftDock.frame.size.width];
+        nav = [[UINavigationController alloc] initWithRootViewController:controller];
         nav.view.autoresizingMask = UIViewAutoresizingNone;
-        vc.view.backgroundColor = RGB(220, 220, 220);
 
         if (dockItem.isModalShow) {
             nav.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -73,15 +74,13 @@
         [_children setObject:nav forKey:dockItem.controller];
     }
     
-    if (_currentChild == nav) return;
-
+    if (_currentChild == nav)
+        return;
     [_currentChild.view removeFromSuperview];
     
     CGFloat width = kScreenWidth(self.interfaceOrientation) - _leftDock.frame.size.width;
-    
     nav.view.frame = CGRectMake(_leftDock.frame.size.width, 0, width, _leftDock.frame.size.height);
     [self.view addSubview:nav.view];
-    
     _currentChild = nav;
 }
 

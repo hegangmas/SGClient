@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SGBaseViewController.h"
 
-@interface SGMainViewController : SGBaseViewController
+@interface SGMainViewController : SGBaseViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @end

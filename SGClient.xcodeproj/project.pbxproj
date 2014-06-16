@@ -29,6 +29,12 @@
 		C9CF6602194DEDF600957BB1 /* SGBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF6601194DEDF600957BB1 /* SGBaseViewController.m */; };
 		C9E1A226194C404900B6467B /* SGPortPageBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A225194C404900B6467B /* SGPortPageBussiness.m */; };
 		C9E1A22D194C831D00B6467B /* SGEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A22C194C831D00B6467B /* SGEntity.m */; };
+		C9EBBB0D194E92B4005DE69A /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9EBBB0B194E92B4005DE69A /* WebViewJavascriptBridge.js.txt */; };
+		C9EBBB0E194E92B4005DE69A /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB0C194E92B4005DE69A /* WebViewJavascriptBridge.m */; };
+		C9EBBB1B194E99BD005DE69A /* SGRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB1A194E99BD005DE69A /* SGRoomCell.m */; };
+		C9EBBB1D194E9A32005DE69A /* SGRoomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EBBB1C194E9A32005DE69A /* SGRoomCell.xib */; };
+		C9EBBB20194E9F13005DE69A /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB1F194E9F13005DE69A /* XMLReader.m */; };
+		C9EBBB27194EB1DF005DE69A /* SGSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB26194EB1DF005DE69A /* SGSectionHeaderView.m */; };
 		C9F03C2A19170F5400355991 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2919170F5400355991 /* Foundation.framework */; };
 		C9F03C2C19170F5400355991 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2B19170F5400355991 /* CoreGraphics.framework */; };
 		C9F03C2E19170F5400355991 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2D19170F5400355991 /* UIKit.framework */; };
@@ -107,6 +113,16 @@
 		C9E1A225194C404900B6467B /* SGPortPageBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGPortPageBussiness.m; sourceTree = "<group>"; };
 		C9E1A22B194C831D00B6467B /* SGEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGEntity.h; sourceTree = "<group>"; };
 		C9E1A22C194C831D00B6467B /* SGEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGEntity.m; sourceTree = "<group>"; };
+		C9EBBB0A194E92B4005DE69A /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		C9EBBB0B194E92B4005DE69A /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
+		C9EBBB0C194E92B4005DE69A /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		C9EBBB19194E99BD005DE69A /* SGRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGRoomCell.h; sourceTree = "<group>"; };
+		C9EBBB1A194E99BD005DE69A /* SGRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGRoomCell.m; sourceTree = "<group>"; };
+		C9EBBB1C194E9A32005DE69A /* SGRoomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SGRoomCell.xib; sourceTree = "<group>"; };
+		C9EBBB1E194E9F13005DE69A /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		C9EBBB1F194E9F13005DE69A /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		C9EBBB25194EB1DF005DE69A /* SGSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGSectionHeaderView.h; sourceTree = "<group>"; };
+		C9EBBB26194EB1DF005DE69A /* SGSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGSectionHeaderView.m; sourceTree = "<group>"; };
 		C9F03C2619170F5400355991 /* SGClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SGClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9F03C2919170F5400355991 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9F03C2B19170F5400355991 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -192,6 +208,100 @@
 				C9CF65EC194DCDB200957BB1 /* SGLeftDockButton.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		C9EBBB09194E92A1005DE69A /* WebViewJSBridge */ = {
+			isa = PBXGroup;
+			children = (
+				C9EBBB0A194E92B4005DE69A /* WebViewJavascriptBridge.h */,
+				C9EBBB0C194E92B4005DE69A /* WebViewJavascriptBridge.m */,
+				C9EBBB0B194E92B4005DE69A /* WebViewJavascriptBridge.js.txt */,
+			);
+			name = WebViewJSBridge;
+			sourceTree = "<group>";
+		};
+		C9EBBB11194E955B005DE69A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				C9CF658E194DC1C400957BB1 /* SGHomeViewController.h */,
+				C9CF658F194DC1C400957BB1 /* SGHomeViewController.m */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		C9EBBB12194E956D005DE69A /* Function */ = {
+			isa = PBXGroup;
+			children = (
+				C9CF6600194DEDF600957BB1 /* SGBaseViewController.h */,
+				C9CF6601194DEDF600957BB1 /* SGBaseViewController.m */,
+				C9EBBB14194E9933005DE69A /* RoomView */,
+				C9EBBB15194E9953005DE69A /* CableView */,
+				C9EBBB16194E9960005DE69A /* FiberView */,
+				C9EBBB17194E996B005DE69A /* PortView */,
+				C9EBBB18194E9975005DE69A /* Other */,
+			);
+			name = Function;
+			sourceTree = "<group>";
+		};
+		C9EBBB14194E9933005DE69A /* RoomView */ = {
+			isa = PBXGroup;
+			children = (
+				C9CF6587194DA68500957BB1 /* SGMainViewController.h */,
+				C9CF6588194DA68500957BB1 /* SGMainViewController.m */,
+				C9EBBB19194E99BD005DE69A /* SGRoomCell.h */,
+				C9EBBB1A194E99BD005DE69A /* SGRoomCell.m */,
+				C9EBBB1C194E9A32005DE69A /* SGRoomCell.xib */,
+				C9EBBB25194EB1DF005DE69A /* SGSectionHeaderView.h */,
+				C9EBBB26194EB1DF005DE69A /* SGSectionHeaderView.m */,
+			);
+			name = RoomView;
+			sourceTree = "<group>";
+		};
+		C9EBBB15194E9953005DE69A /* CableView */ = {
+			isa = PBXGroup;
+			children = (
+				C9CF658A194DA6B200957BB1 /* SGCableViewController.h */,
+				C9CF658B194DA6B200957BB1 /* SGCableViewController.m */,
+			);
+			name = CableView;
+			sourceTree = "<group>";
+		};
+		C9EBBB16194E9960005DE69A /* FiberView */ = {
+			isa = PBXGroup;
+			children = (
+				C9CF6591194DC48D00957BB1 /* SGFiberViewController.h */,
+				C9CF6592194DC48D00957BB1 /* SGFiberViewController.m */,
+			);
+			name = FiberView;
+			sourceTree = "<group>";
+		};
+		C9EBBB17194E996B005DE69A /* PortView */ = {
+			isa = PBXGroup;
+			children = (
+				C9CF6594194DC49700957BB1 /* SGPortViewController.h */,
+				C9CF6595194DC49700957BB1 /* SGPortViewController.m */,
+			);
+			name = PortView;
+			sourceTree = "<group>";
+		};
+		C9EBBB18194E9975005DE69A /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				C9CF65E4194DCB7F00957BB1 /* SGSettingViewController.h */,
+				C9CF65E5194DCB7F00957BB1 /* SGSettingViewController.m */,
+				C9CF65E7194DCBB500957BB1 /* SGScanViewController.h */,
+				C9CF65E8194DCBB500957BB1 /* SGScanViewController.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		C9EBBB21194E9F16005DE69A /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				C9EBBB1E194E9F13005DE69A /* XMLReader.h */,
+				C9EBBB1F194E9F13005DE69A /* XMLReader.m */,
+			);
+			name = XML;
 			sourceTree = "<group>";
 		};
 		C9F03C1D19170F5400355991 = {
@@ -304,6 +414,8 @@
 		C9F03C6219170FAA00355991 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				C9EBBB21194E9F16005DE69A /* XML */,
+				C9EBBB09194E92A1005DE69A /* WebViewJSBridge */,
 				C9F03C631917108600355991 /* FMDB */,
 			);
 			name = External;
@@ -392,22 +504,8 @@
 		C9F03C8C19171ED600355991 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				C9CF658E194DC1C400957BB1 /* SGHomeViewController.h */,
-				C9CF658F194DC1C400957BB1 /* SGHomeViewController.m */,
-				C9CF6600194DEDF600957BB1 /* SGBaseViewController.h */,
-				C9CF6601194DEDF600957BB1 /* SGBaseViewController.m */,
-				C9CF6587194DA68500957BB1 /* SGMainViewController.h */,
-				C9CF6588194DA68500957BB1 /* SGMainViewController.m */,
-				C9CF658A194DA6B200957BB1 /* SGCableViewController.h */,
-				C9CF658B194DA6B200957BB1 /* SGCableViewController.m */,
-				C9CF6591194DC48D00957BB1 /* SGFiberViewController.h */,
-				C9CF6592194DC48D00957BB1 /* SGFiberViewController.m */,
-				C9CF6594194DC49700957BB1 /* SGPortViewController.h */,
-				C9CF6595194DC49700957BB1 /* SGPortViewController.m */,
-				C9CF65E4194DCB7F00957BB1 /* SGSettingViewController.h */,
-				C9CF65E5194DCB7F00957BB1 /* SGSettingViewController.m */,
-				C9CF65E7194DCBB500957BB1 /* SGScanViewController.h */,
-				C9CF65E8194DCBB500957BB1 /* SGScanViewController.m */,
+				C9EBBB11194E955B005DE69A /* Home */,
+				C9EBBB12194E956D005DE69A /* Function */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -490,6 +588,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9CF65F9194DE82200957BB1 /* tab_bar_app_icon.png in Resources */,
+				C9EBBB0D194E92B4005DE69A /* WebViewJavascriptBridge.js.txt in Resources */,
+				C9EBBB1D194E9A32005DE69A /* SGRoomCell.xib in Resources */,
 				C9CF65FD194DE83B00957BB1 /* tab_bar_pic_wall_icon.png in Resources */,
 				C9F03C4219170F5400355991 /* Images.xcassets in Resources */,
 				C9CF65F3194DE75B00957BB1 /* tabbar_separate_g_line_v.png in Resources */,
@@ -521,6 +621,8 @@
 			files = (
 				C9F03C3A19170F5400355991 /* SGAppDelegate.m in Sources */,
 				C9F03C911917737C00355991 /* SGBaseBussiness.m in Sources */,
+				C9EBBB1B194E99BD005DE69A /* SGRoomCell.m in Sources */,
+				C9EBBB27194EB1DF005DE69A /* SGSectionHeaderView.m in Sources */,
 				C9F03C3619170F5400355991 /* main.m in Sources */,
 				C9CF65F0194DCF6400957BB1 /* UIImage+Fit.m in Sources */,
 				C9CF6596194DC49700957BB1 /* SGPortViewController.m in Sources */,
@@ -543,10 +645,12 @@
 				C9CF6602194DEDF600957BB1 /* SGBaseViewController.m in Sources */,
 				C9026392193D7F6A0020428E /* SGFiberPageBussiness.m in Sources */,
 				C9F03C761917113400355991 /* SGDataBase.m in Sources */,
+				C9EBBB0E194E92B4005DE69A /* WebViewJavascriptBridge.m in Sources */,
 				C9CF6590194DC1C400957BB1 /* SGHomeViewController.m in Sources */,
 				C9F03C801917142C00355991 /* SGUtility.m in Sources */,
 				C9F03C711917108F00355991 /* FMDatabaseQueue.m in Sources */,
 				C9E1A22D194C831D00B6467B /* SGEntity.m in Sources */,
+				C9EBBB20194E9F13005DE69A /* XMLReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

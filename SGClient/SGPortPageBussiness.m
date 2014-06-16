@@ -26,6 +26,9 @@
 GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
 
 
+/*－－－－－－－－－－－－－－－－－
+ portId满足type!=2
+ －－－－－－－－－－－－－－－－－*/
 -(NSString*)queryPortsInfoByPortId:(NSString*)portId{
     
     NSArray* infosetList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetInfoSetList(portId)] withEntity:@"SGInfoSetItem"];
