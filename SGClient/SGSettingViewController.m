@@ -7,6 +7,8 @@
 //
 
 #import "SGSettingViewController.h"
+#import "SGPortPageBussiness.h"
+
 
 @interface SGSettingViewController ()
 
@@ -26,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [[SGPortPageBussiness sharedSGPortPageBussiness] queryPortsInfoByPortId:@"2753"];
 }
 
 - (void)didReceiveMemoryWarning

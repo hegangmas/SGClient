@@ -8,14 +8,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="m4N-Ru-8M8" customClass="SGRoomCell">
-            <rect key="frame" x="0.0" y="0.0" width="196" height="225"/>
+            <rect key="frame" x="0.0" y="0.0" width="232" height="250"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="196" height="225"/>
+                <rect key="frame" x="0.0" y="0.0" width="232" height="250"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="scj-4L-whJ">
-                        <rect key="frame" x="0.0" y="0.0" width="196" height="176"/>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="scj-4L-whJ">
+                        <rect key="frame" x="0.0" y="0.0" width="230" height="201"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -24,16 +24,15 @@
                         </connections>
                     </tableView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qFY-5v-iwx">
-                        <rect key="frame" x="0.0" y="184" width="196" height="36"/>
+                        <rect key="frame" x="0.0" y="208" width="232" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <size key="customSize" width="196" height="225"/>
+            <size key="customSize" width="232" height="225"/>
             <connections>
                 <outlet property="deviceListView" destination="scj-4L-whJ" id="una-g0-jlB"/>
                 <outlet property="roomInfo" destination="qFY-5v-iwx" id="iIQ-9f-m4b"/>

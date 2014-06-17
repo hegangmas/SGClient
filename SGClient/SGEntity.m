@@ -10,6 +10,9 @@
 
 @implementation SGInfoSetItem
 @end
-
 @implementation SGEntity
+@end
+@implementation SGVterminal
+@end
+@implementation SGVterminalConnection
 @end

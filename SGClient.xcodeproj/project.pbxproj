@@ -27,6 +27,7 @@
 		C9CF65FD194DE83B00957BB1 /* tab_bar_pic_wall_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65FC194DE83B00957BB1 /* tab_bar_pic_wall_icon.png */; };
 		C9CF65FF194DE97200957BB1 /* tabbar_separate_ugc_line_v.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65FE194DE97200957BB1 /* tabbar_separate_ugc_line_v.png */; };
 		C9CF6602194DEDF600957BB1 /* SGBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF6601194DEDF600957BB1 /* SGBaseViewController.m */; };
+		C9DD683B194F19C7005776B5 /* SGSectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD683A194F19C7005776B5 /* SGSectionFooterView.m */; };
 		C9E1A226194C404900B6467B /* SGPortPageBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A225194C404900B6467B /* SGPortPageBussiness.m */; };
 		C9E1A22D194C831D00B6467B /* SGEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A22C194C831D00B6467B /* SGEntity.m */; };
 		C9EBBB0D194E92B4005DE69A /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9EBBB0B194E92B4005DE69A /* WebViewJavascriptBridge.js.txt */; };
@@ -109,6 +110,8 @@
 		C9CF65FE194DE97200957BB1 /* tabbar_separate_ugc_line_v.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_separate_ugc_line_v.png; sourceTree = "<group>"; };
 		C9CF6600194DEDF600957BB1 /* SGBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGBaseViewController.h; sourceTree = "<group>"; };
 		C9CF6601194DEDF600957BB1 /* SGBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGBaseViewController.m; sourceTree = "<group>"; };
+		C9DD6839194F19C7005776B5 /* SGSectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGSectionFooterView.h; sourceTree = "<group>"; };
+		C9DD683A194F19C7005776B5 /* SGSectionFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGSectionFooterView.m; sourceTree = "<group>"; };
 		C9E1A224194C404900B6467B /* SGPortPageBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGPortPageBussiness.h; sourceTree = "<group>"; };
 		C9E1A225194C404900B6467B /* SGPortPageBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGPortPageBussiness.m; sourceTree = "<group>"; };
 		C9E1A22B194C831D00B6467B /* SGEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGEntity.h; sourceTree = "<group>"; };
@@ -198,6 +201,15 @@
 		C9CF658D194DC18B00957BB1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C9DD683D194F1FB3005776B5 /* MainView */,
+				C9DD683C194F1FA6005776B5 /* Dock */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		C9DD683C194F1FA6005776B5 /* Dock */ = {
+			isa = PBXGroup;
+			children = (
 				C9CF65EE194DCF6400957BB1 /* UIImage+Fit.h */,
 				C9CF65EF194DCF6400957BB1 /* UIImage+Fit.m */,
 				C9CF6597194DC4FF00957BB1 /* SGLeftDock.h */,
@@ -207,7 +219,21 @@
 				C9CF65EB194DCDB200957BB1 /* SGLeftDockButton.h */,
 				C9CF65EC194DCDB200957BB1 /* SGLeftDockButton.m */,
 			);
-			name = View;
+			name = Dock;
+			sourceTree = "<group>";
+		};
+		C9DD683D194F1FB3005776B5 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				C9EBBB19194E99BD005DE69A /* SGRoomCell.h */,
+				C9EBBB1A194E99BD005DE69A /* SGRoomCell.m */,
+				C9EBBB1C194E9A32005DE69A /* SGRoomCell.xib */,
+				C9EBBB25194EB1DF005DE69A /* SGSectionHeaderView.h */,
+				C9EBBB26194EB1DF005DE69A /* SGSectionHeaderView.m */,
+				C9DD6839194F19C7005776B5 /* SGSectionFooterView.h */,
+				C9DD683A194F19C7005776B5 /* SGSectionFooterView.m */,
+			);
+			name = MainView;
 			sourceTree = "<group>";
 		};
 		C9EBBB09194E92A1005DE69A /* WebViewJSBridge */ = {
@@ -248,11 +274,6 @@
 			children = (
 				C9CF6587194DA68500957BB1 /* SGMainViewController.h */,
 				C9CF6588194DA68500957BB1 /* SGMainViewController.m */,
-				C9EBBB19194E99BD005DE69A /* SGRoomCell.h */,
-				C9EBBB1A194E99BD005DE69A /* SGRoomCell.m */,
-				C9EBBB1C194E9A32005DE69A /* SGRoomCell.xib */,
-				C9EBBB25194EB1DF005DE69A /* SGSectionHeaderView.h */,
-				C9EBBB26194EB1DF005DE69A /* SGSectionHeaderView.m */,
 			);
 			name = RoomView;
 			sourceTree = "<group>";
@@ -635,6 +656,7 @@
 				C9F03C8919171C0700355991 /* SGAPPConfig.m in Sources */,
 				C9F03C731917108F00355991 /* FMDatabasePool.m in Sources */,
 				C9CF65E6194DCB7F00957BB1 /* SGSettingViewController.m in Sources */,
+				C9DD683B194F19C7005776B5 /* SGSectionFooterView.m in Sources */,
 				C9CF6599194DC4FF00957BB1 /* SGLeftDock.m in Sources */,
 				C9F03C721917108F00355991 /* FMDatabaseAdditions.m in Sources */,
 				C9F03C8619171B4200355991 /* SGMainPageBussiness.m in Sources */,

@@ -28,8 +28,16 @@
         self = [arrayOfViews objectAtIndex:0];
         self.deviceListView.dataSource = self;
         self.deviceListView.delegate = self;
+        
+        UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapped)];
+        [gesture setNumberOfTapsRequired:1];
+        [self addGestureRecognizer:gesture];
     }
     return self;
+}
+
+-(void)cellTapped{
+    [self.delegate cellDidSeletedWithCubicleId:self.data];
 }
 
 
@@ -65,7 +73,7 @@
         cell                    = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
     }
-    cell.textLabel.font = [UIFont fontWithName:@"System" size:5];
+    cell.textLabel.font = [UIFont systemFontOfSize:14.0];
     
     id deviceobj = [self.data objectForKey:@"device"];
     if ([deviceobj isKindOfClass:[NSArray class]]) {
@@ -88,7 +96,7 @@
 
 +(CGSize) cellsize
 {
-    return CGSizeMake(180, 250);
+    return CGSizeMake(200, 250);
 }
 
 @end

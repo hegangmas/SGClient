@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XMLReader.h"
+
+#define DockWidth(v) (UIInterfaceOrientationIsLandscape(v)?kDockComposeItemWidthL: kDockComposeItemWidthP)
+
+#define MainScreenWidth(o) ((UIInterfaceOrientationIsLandscape(o)?[UIScreen mainScreen].bounds.size.height:[UIScreen mainScreen].bounds.size.width)) - DockWidth(o)
+
+#define MainScreenHeight(o) ((UIInterfaceOrientationIsLandscape(o)?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height))
 
 @interface SGBaseViewController : UIViewController
 
-@property (nonatomic,assign) CGFloat dockWidth;
 @end

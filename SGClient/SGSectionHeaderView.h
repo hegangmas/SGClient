@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SGSectionHeaderView : UICollectionReusableView
-@property(nonatomic,strong) UILabel* roomLabel;
+@property (nonatomic, readonly, strong) UILabel* roomLabel;
 @end

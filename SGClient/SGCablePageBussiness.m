@@ -586,16 +586,18 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
         }else {
             
             NSArray* connList = [resultList valueForKey:(NSString*)obj];
-            SGCPDataItem* dataItem = [connList objectAtIndex:0];
-            [xMLString appendString:[NSString stringWithFormat:@"<cubicle id = \"%@\" name = \"%@\">",dataItem.cubicle_id,dataItem.cubicle_name]];
-            [connList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                
-                SGCPDataItem* dataItem = (SGCPDataItem*)obj;
-                [xMLString appendString:[NSString stringWithFormat:@"<cable id = \"%@\" type =\"%@\">%@</cable>",
-                                         dataItem.cable_id,
-                                         dataItem.cable_type,
-                                         dataItem.cable_name]];
-            }];[xMLString appendString:@"</cubicle>"];}
+            if (connList.count) {
+                SGCPDataItem* dataItem = [connList objectAtIndex:0];
+                [xMLString appendString:[NSString stringWithFormat:@"<cubicle id = \"%@\" name = \"%@\">",dataItem.cubicle_id,dataItem.cubicle_name]];
+                [connList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    
+                    SGCPDataItem* dataItem = (SGCPDataItem*)obj;
+                    [xMLString appendString:[NSString stringWithFormat:@"<cable id = \"%@\" type =\"%@\">%@</cable>",
+                                             dataItem.cable_id,
+                                             dataItem.cable_type,
+                                             dataItem.cable_name]];
+                }];[xMLString appendString:@"</cubicle>"];
+            }}
                [xMLString appendString:[NSString stringWithFormat:@"</%@>",(NSString*)obj]];}];
                [xMLString appendString:@"</root>"];
     

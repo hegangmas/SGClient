@@ -33,20 +33,18 @@
 {
     [super viewDidLoad];
     
-    _children = [NSMutableDictionary dictionary];
     SGHomeViewController * __weak weakSelf = self;
+    _children = [NSMutableDictionary dictionary];
+    
     _leftDock = [[SGLeftDock alloc] init];
     _leftDock.dockItemClickBlock = ^(SGLeftDockItem* dockItem){
         [weakSelf setSelectControllerWithItem:dockItem];
     };
     [_leftDock rotate:self.interfaceOrientation];
+    
     [self.view addSubview:_leftDock];
-    self.view.backgroundColor = RGB(46, 46, 46);
-    
-//    [weakSelf setSelectControllerWithItem:_leftDock.fisrtDockItem];
-    
+    [self.view setBackgroundColor:RGB(46, 46, 46)];
     [_leftDock setDefaultSelected];
- 
 }
 
 #pragma mark 切换控制器
@@ -57,9 +55,8 @@
     if (nav == nil) {
         
         Class class = NSClassFromString(dockItem.controller);
-        SGBaseViewController *controller = [[class alloc] init];
+        SGBaseViewController *controller = [class new];
         [controller setTitle:dockItem.title];
-        [controller setDockWidth:_leftDock.frame.size.width];
         nav = [[UINavigationController alloc] initWithRootViewController:controller];
         nav.view.autoresizingMask = UIViewAutoresizingNone;
 
@@ -68,8 +65,7 @@
             [self presentViewController:nav animated:YES completion:nil];
             return;
         }
-        [nav.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                               action:@selector(dragNavView:)]];
+        [nav.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragNavView:)]];
         [self addChildViewController:nav];
         [_children setObject:nav forKey:dockItem.controller];
     }

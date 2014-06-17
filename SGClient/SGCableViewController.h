@@ -10,5 +10,5 @@
 #import "SGBaseViewController.h"
 
 @interface SGCableViewController : SGBaseViewController
-
+@property (nonatomic,strong) NSDictionary *cubicleData;
 @end
