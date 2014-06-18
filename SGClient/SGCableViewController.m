@@ -72,7 +72,7 @@
     //cubicle height
     float cHeight  = 35;
     // line length     text y
-    float linelen = 100, linetext_y_origin = 15;
+    float linelen = 100, linetext_y_origin = 10;
     //margins between vertical cubicle
     float cuVeMargin = 10;
     float offsetY = 0;
