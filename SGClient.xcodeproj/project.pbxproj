@@ -36,6 +36,8 @@
 		C9EBBB1D194E9A32005DE69A /* SGRoomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EBBB1C194E9A32005DE69A /* SGRoomCell.xib */; };
 		C9EBBB20194E9F13005DE69A /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB1F194E9F13005DE69A /* XMLReader.m */; };
 		C9EBBB27194EB1DF005DE69A /* SGSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB26194EB1DF005DE69A /* SGSectionHeaderView.m */; };
+		C9EDB66419513C9E00A62D08 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9EDB66319513C9E00A62D08 /* libxml2.2.dylib */; };
+		C9EDB66619513CA900A62D08 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9EDB66519513CA900A62D08 /* libxml2.dylib */; };
 		C9F03C2A19170F5400355991 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2919170F5400355991 /* Foundation.framework */; };
 		C9F03C2C19170F5400355991 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2B19170F5400355991 /* CoreGraphics.framework */; };
 		C9F03C2E19170F5400355991 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2D19170F5400355991 /* UIKit.framework */; };
@@ -126,6 +128,8 @@
 		C9EBBB1F194E9F13005DE69A /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		C9EBBB25194EB1DF005DE69A /* SGSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGSectionHeaderView.h; sourceTree = "<group>"; };
 		C9EBBB26194EB1DF005DE69A /* SGSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGSectionHeaderView.m; sourceTree = "<group>"; };
+		C9EDB66319513C9E00A62D08 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		C9EDB66519513CA900A62D08 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		C9F03C2619170F5400355991 /* SGClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SGClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9F03C2919170F5400355991 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9F03C2B19170F5400355991 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -178,6 +182,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9EDB66619513CA900A62D08 /* libxml2.dylib in Frameworks */,
+				C9EDB66419513C9E00A62D08 /* libxml2.2.dylib in Frameworks */,
 				C9F03C8E19171F9200355991 /* libsqlite3.dylib in Frameworks */,
 				C9F03C2C19170F5400355991 /* CoreGraphics.framework in Frameworks */,
 				C9F03C2E19170F5400355991 /* UIKit.framework in Frameworks */,
@@ -325,6 +331,13 @@
 			name = XML;
 			sourceTree = "<group>";
 		};
+		C9EDB65F1951398200A62D08 /* GDataXML */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GDataXML;
+			sourceTree = "<group>";
+		};
 		C9F03C1D19170F5400355991 = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +360,8 @@
 		C9F03C2819170F5400355991 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9EDB66519513CA900A62D08 /* libxml2.dylib */,
+				C9EDB66319513C9E00A62D08 /* libxml2.2.dylib */,
 				C9F03C8D19171F9200355991 /* libsqlite3.dylib */,
 				C9F03C2919170F5400355991 /* Foundation.framework */,
 				C9F03C2B19170F5400355991 /* CoreGraphics.framework */,
@@ -435,6 +450,7 @@
 		C9F03C6219170FAA00355991 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				C9EDB65F1951398200A62D08 /* GDataXML */,
 				C9EBBB21194E9F16005DE69A /* XML */,
 				C9EBBB09194E92A1005DE69A /* WebViewJSBridge */,
 				C9F03C631917108600355991 /* FMDB */,

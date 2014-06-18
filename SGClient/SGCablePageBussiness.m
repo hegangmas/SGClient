@@ -129,7 +129,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
  1.光缆连接  2.尾缆连接 3.跳缆连接
  绘制光缆连接时 如有光缆连接 则也需画出尾缆连接
  －－－－－－－－－－－－－－－－－－－－－*/
--(NSString*)queryCablelistWithCubicleId:(NSInteger)cubicleId{
+-(NSDictionary*)queryCablelistWithCubicleId:(NSInteger)cubicleId{
 
     NSLog(@"%@",CP_GetCablelist(cubicleId,CABLETYPE0));
     NSLog(@"%@",CP_GetCubicleConnect(cubicleId));
@@ -155,7 +155,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
                             type1List,@"type1",
                             type2List,@"type2",
                             nil];
-    return [self buildXMLForResultSet:result];
+    return result;
+//    return [self buildXMLForResultSet:result];
 }
 
 

@@ -15,7 +15,7 @@
 /*－－－－－－－－－－－－－－－－－
  根据CubicleId获取光缆 尾缆 跳缆的连接
  －－－－－－－－－－－－－－－－－*/
--(NSString*)queryCablelistWithCubicleId:(NSInteger)cubicleId;
+-(NSDictionary*)queryCablelistWithCubicleId:(NSInteger)cubicleId;
 
 @end
 
