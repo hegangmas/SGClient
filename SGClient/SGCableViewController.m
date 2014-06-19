@@ -18,7 +18,7 @@
 
 #define DrawText(x,y,z,c,f,s) [NSString stringWithFormat:@"<text x=\"%f\" y=\"%f\" font-size=\"%d\" fill =\"%@\" font-style=\"%@\">%@</text>",x,y,z,c,f,s]
 
-#define DrawRect(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\"/>",x,y,w,h]
+#define DrawRect(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:navy;stroke:black;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
 
 
 @implementation SGCableViewController
@@ -42,7 +42,7 @@
                                                            MainScreenHeight(self.interfaceOrientation))];
     _webView.dataDetectorTypes = UIDataDetectorTypeAll;
     _webView.userInteractionEnabled = YES;
-    _webView.scalesPageToFit = YES;
+//    _webView.scalesPageToFit = YES;
     [self.view addSubview:_webView];
     [self drawConnections];
 }
@@ -80,15 +80,15 @@
         NSArray* type = _type.allValues[0];
         
         //画主屏
-        [svgStr appendString:[NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\"/>",
-                              margin_x+cWidth+linelen,
-                              margin_y + offsetY,
-                              cWidth,
-                              type.count*cHeight + (type.count-1)*cuVeMargin]];
+        [svgStr appendString:DrawRect(margin_x+cWidth+linelen,
+                                      margin_y + offsetY,
+                                      cWidth,
+                                      type.count*cHeight + (type.count-1)*cuVeMargin)];
+        
         //主屏名称
         [svgStr appendString:DrawText(margin_x+cWidth+linelen + 10,
                                       margin_y + offsetY + (type.count*cHeight + (type.count-1)*cuVeMargin)/2,14,
-                                      @"black",
+                                      @"white",
                                       @"italic",
                                       self.cubicleData[@"name"])];
         
@@ -110,19 +110,19 @@
                     if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
                         hPosition++;
                     } else {
-                        [svgStr appendString:[NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\"/>",margin_x  + hPosition*(cWidth+linelen),
-                                              margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
-                                              cWidth,
-                                              cHeight]];
                         
+                        [svgStr appendString:DrawRect(margin_x  + hPosition*(cWidth+linelen),
+                                                      margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                      cWidth,
+                                                      cHeight)];
+    
                         [svgStr appendString:DrawText(margin_x  + hPosition*(cWidth+linelen),
                                                       margin_y + vPostion*(cuVeMargin+cHeight)+offsetY + cHeight/2,14,
-                                                      @"black",
+                                                      @"white",
                                                       @"italic",
                                                       [cubicle valueForKey:@"cubicle_name"])];
                     }
                         
-                    
                 }else{
                     //画线缆
                     [svgStr appendString:DrawLine(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
@@ -139,20 +139,30 @@
                     
                     if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
                     }else{
-                        [svgStr appendString:[NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\"/>",margin_x + hPosition*(cWidth+linelen),
-                                              margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
-                                              cWidth,
-                                              cHeight]];
+                        
+                        [svgStr appendString:DrawRect(margin_x + hPosition*(cWidth+linelen),
+                                                      margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                      cWidth,
+                                                      cHeight)];
+                        
                         
                         [svgStr appendString:DrawText(margin_x  + hPosition*(cWidth+linelen),
                                                       margin_y + vPostion*(cuVeMargin+cHeight)+offsetY + cHeight/2,14,
-                                                      @"black",
+                                                      @"white",
                                                       @"italic",
                                                       [cubicle valueForKey:@"cubicle_name"])];
                     }
                     
-                } hPosition++; if(hPosition>hPostionMax){hPostionMax = hPosition;}
-            } vPostion++;
+                }
+                
+                hPosition++;
+                
+                if(hPosition>hPostionMax){
+                    hPostionMax = hPosition;
+                }
+            }
+            
+            vPostion++;
         }
         
         //累加高度
@@ -180,15 +190,15 @@
                                       @"跳纤连接")];
         //画两个屏
         for(int i = 0; i<2; i++){
-            [svgStr appendString:[NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\"/>",
-                                  i*(linelen + cWidth) + margin_x,
-                                  margin_y + offsetY,
-                                  cWidth,
-                                  types.count*cHeight]];
+            
+            [svgStr appendString:DrawRect(i*(linelen + cWidth) + margin_x,
+                                          margin_y + offsetY,
+                                          cWidth,
+                                          types.count*cHeight)];
             
             [svgStr appendString:DrawText(i*(linelen + cWidth) + margin_x + 10,
                                           margin_y + offsetY + (types.count*cHeight + (types.count-1)*cuVeMargin)*0.5,14,
-                                          @"black",
+                                          @"white",
                                           @"italic",
                                           self.cubicleData[@"name"])];
         }
@@ -230,6 +240,18 @@
                     MIMEType:@"image/svg+xml"
             textEncodingName:@"UTF-8"
                      baseURL:baseURL];
+}
+
+//主屏是否从最左边画起
+-(BOOL)shouldMainCubicleDrawFromLeftWithList:(NSArray*)list{
+    
+    for(NSArray* connection in list){
+        id cubicle = connection[0];
+        if (![[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{

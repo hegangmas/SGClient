@@ -28,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[SGPortPageBussiness sharedSGPortPageBussiness] queryPortsInfoByPortId:@"2753"];
+//    [[SGPortPageBussiness sharedSGPortPageBussiness] queryPortsInfoByPortId:@"2753"];
 }
 
 - (void)didReceiveMemoryWarning

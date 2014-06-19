@@ -63,6 +63,8 @@
         if (dockItem.isModalShow) {
             nav.modalPresentationStyle = UIModalPresentationFormSheet;
             [self presentViewController:nav animated:YES completion:nil];
+            nav.view.superview.frame = CGRectMake(0, 0, 600, 600);
+            nav.view.superview.center = self.view.center;
             return;
         }
         [nav.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragNavView:)]];
