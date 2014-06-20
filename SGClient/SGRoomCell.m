@@ -14,6 +14,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        
         // 初始化时加载collectionCell.xib文件
         NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"SGRoomCell" owner:self options: nil];
 
@@ -28,6 +30,7 @@
         self = [arrayOfViews objectAtIndex:0];
         self.deviceListView.dataSource = self;
         self.deviceListView.delegate = self;
+        [self.deviceListView setBackgroundColor:RGB(107, 103, 185)];
         
         UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapped)];
         [gesture setNumberOfTapsRequired:1];
@@ -39,8 +42,6 @@
 -(void)cellTapped{
     [self.delegate cellDidSeletedWithCubicleId:self.data];
 }
-
-
 
 -(void)setData:(NSDictionary *)data{
     _data = data;
@@ -73,8 +74,9 @@
         cell                    = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
     }
-    cell.textLabel.font = [UIFont systemFontOfSize:14.0];
-    
+    cell.contentView.backgroundColor = RGB(107, 103, 185);
+    cell.textLabel.font = [UIFont italicSystemFontOfSize:15.0];
+    cell.textLabel.textColor = [UIColor whiteColor];
     id deviceobj = [self.data objectForKey:@"device"];
     if ([deviceobj isKindOfClass:[NSArray class]]) {
         id text =[[[deviceobj objectAtIndex:indexPath.row] objectForKey:@"devicename"] objectForKey:@"text"];

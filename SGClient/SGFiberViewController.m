@@ -26,6 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TEST" message:_cableId delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
     // Do any additional setup after loading the view.
 }
 

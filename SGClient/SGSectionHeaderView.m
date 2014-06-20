@@ -14,12 +14,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = RGB(220, 220, 220);
+//        self.backgroundColor = RGB(220, 220, 220);
+        self.backgroundColor = [UIColor whiteColor];
         _roomLabel = [[UILabel alloc] initWithFrame:self.bounds];
         [_roomLabel setFont:[UIFont italicSystemFontOfSize:22.0]];
         _roomLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _roomLabel.backgroundColor = [UIColor clearColor];
-        _roomLabel.textColor =[UIColor blackColor];
+        _roomLabel.textColor = RGB(107, 103, 185);
         _roomLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_roomLabel];
         

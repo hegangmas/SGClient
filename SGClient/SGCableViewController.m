@@ -8,13 +8,14 @@
 
 #import "SGCableViewController.h"
 #import "SGCablePageBussiness.h"
+#import "SGFiberViewController.h"
 
-@interface SGCableViewController ()
+@interface SGCableViewController ()<UIWebViewDelegate>
 
 @property (nonatomic,strong) UIWebView *webView;
 @end
 
-#define DrawLine(x1,y1,x2,y2) [NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\" stroke:rgb(99,99,99);stroke-width:2\" onclick=\"alert('test')\"/>",x1,y1,x2,y2]
+#define DrawLine(x1,y1,x2,y2,s) [NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\" stroke:rgb(99,99,99);stroke-width:3\" onclick=\"self.location.href='@@@@%@'\"/>",x1,y1,x2,y2,s]
 
 #define DrawText(x,y,z,c,f,s) [NSString stringWithFormat:@"<text x=\"%f\" y=\"%f\" font-size=\"%d\" fill =\"%@\" font-style=\"%@\">%@</text>",x,y,z,c,f,s]
 
@@ -42,9 +43,24 @@
                                                            MainScreenHeight(self.interfaceOrientation))];
     _webView.dataDetectorTypes = UIDataDetectorTypeAll;
     _webView.userInteractionEnabled = YES;
+    [_webView setDelegate:self];
 //    _webView.scalesPageToFit = YES;
     [self.view addSubview:_webView];
     [self drawConnections];
+    
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    NSString* _url = [request URL].description;
+    
+    if ([_url rangeOfString:@"@@@@"].location != NSNotFound) {
+        NSString *cableId = [[_url componentsSeparatedByString:@"@@@@"] objectAtIndex:1];
+        SGFiberViewController *fiber = [SGFiberViewController new];
+        [fiber setCableId:cableId];
+        [self.navigationController pushViewController:fiber animated:YES];
+    }
+    return YES;
 }
 
 //生成SVG文件
@@ -67,6 +83,7 @@
     float cuVeMargin = 5;
     float offsetY = 0;
     int hPostionMax = 0;
+    BOOL drawFromLeft = NO;
 
     [svgStr appendString:@"<defs><style type=\"text/css\"><![CDATA[ rect {fill:white;stroke:black;stroke-width:2;opacity:0.1;}]]></style></defs>"];
     
@@ -79,25 +96,31 @@
         }
         NSArray* type = _type.allValues[0];
         
-        //画主屏
-        [svgStr appendString:DrawRect(margin_x+cWidth+linelen,
-                                      margin_y + offsetY,
-                                      cWidth,
-                                      type.count*cHeight + (type.count-1)*cuVeMargin)];
-        
-        //主屏名称
-        [svgStr appendString:DrawText(margin_x+cWidth+linelen + 10,
-                                      margin_y + offsetY + (type.count*cHeight + (type.count-1)*cuVeMargin)/2,14,
-                                      @"white",
-                                      @"italic",
-                                      self.cubicleData[@"name"])];
-        
         //连接类型
         [svgStr appendString:DrawText(margin_x,
                                       margin_y + offsetY - 15,18,
                                       @"navy",
                                       @"italic",
                                       _type.allKeys[0])];
+        
+        float offsetTmp = 0;
+        drawFromLeft = [self shouldMainCubicleDrawFromLeftWithList:type];
+        if (!drawFromLeft) {
+            offsetTmp += (cWidth+linelen);
+        }
+        
+        //画主屏
+        [svgStr appendString:DrawRect(margin_x+offsetTmp,
+                                      margin_y + offsetY,
+                                      cWidth,
+                                      type.count*cHeight + (type.count-1)*cuVeMargin)];
+        
+        //主屏名称
+        [svgStr appendString:DrawText(margin_x+offsetTmp + 10,
+                                      margin_y + offsetY + (type.count*cHeight + (type.count-1)*cuVeMargin)/2,14,
+                                      @"white",
+                                      @"italic",
+                                      self.cubicleData[@"name"])];
         
         int vPostion = 0;
         for(NSArray* connection in type){
@@ -108,7 +131,9 @@
                 
                 if (i==0) {
                     if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
-                        hPosition++;
+                        if (!drawFromLeft) {
+                            hPosition++;
+                        }
                     } else {
                         
                         [svgStr appendString:DrawRect(margin_x  + hPosition*(cWidth+linelen),
@@ -128,8 +153,7 @@
                     [svgStr appendString:DrawLine(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                   margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,
                                                   margin_x+hPosition*(cWidth+linelen),
-                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY)];
-                    
+                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,[cubicle valueForKey:@"cable_id"])];
                     //线缆名称
                     [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                   margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,
@@ -152,16 +176,12 @@
                                                       @"italic",
                                                       [cubicle valueForKey:@"cubicle_name"])];
                     }
-                    
                 }
-                
                 hPosition++;
-                
                 if(hPosition>hPostionMax){
                     hPostionMax = hPosition;
                 }
             }
-            
             vPostion++;
         }
         
@@ -209,7 +229,7 @@
             [svgStr appendString:DrawLine(margin_x + cWidth,
                                           margin_y + offsetY + (0.5+i)*cHeight,
                                           linelen + margin_x + cWidth,
-                                          margin_y + offsetY + (0.5+i)*cHeight)];
+                                          margin_y + offsetY + (0.5+i)*cHeight,[cubicle valueForKey:@"cable_id"])];
             
             [svgStr appendString:DrawText(margin_x + cWidth + 20,
                                           margin_y + offsetY + (0.5+i)*cHeight - linetext_y_origin,14,
@@ -259,6 +279,14 @@
                                                            0,
                                                            MainScreenWidth(toInterfaceOrientation),
                                                            MainScreenHeight(toInterfaceOrientation));
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    _webView.frame = CGRectMake(0,
+                                0,
+                                MainScreenWidth(self.interfaceOrientation),
+                                MainScreenHeight(self.interfaceOrientation));
 }
 
 - (void)didReceiveMemoryWarning

@@ -41,6 +41,17 @@
     [self loadRoomData];
 }
 
+
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.roomView.frame = CGRectMake(0,
+                                     10,
+                                     MainScreenWidth(self.interfaceOrientation),
+                                     MainScreenHeight(self.interfaceOrientation));
+}
+
+
 -(void)loadRoomData{
     
     NSError* error;
@@ -58,7 +69,9 @@
                                                                       MainScreenWidth(self.interfaceOrientation),
                                                                       MainScreenHeight(self.interfaceOrientation))
                                       collectionViewLayout:flowLayout];
-    [self.roomView setBackgroundColor:RGB(220, 220, 220)];
+//    [self.roomView setBackgroundColor:RGB(220, 220, 220)];
+    [self.roomView setBackgroundColor:[UIColor whiteColor]];
+    //107 103 185
  
     [self.roomView registerClass:[SGSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSectionHeader];
     

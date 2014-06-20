@@ -18,7 +18,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -42,7 +41,6 @@
     labIntroudction.textColor=[UIColor whiteColor];
     labIntroudction.text=@"将二维码图像置于矩形方框内，离手机摄像头10CM左右。";
     [self.view addSubview:labIntroudction];
-    
     
     UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(150, 150, 300, 300)];
     imageView.image = [UIImage imageNamed:@"pick_bg"];
@@ -73,7 +71,6 @@
             upOrdown = NO;
         }
     }
-    
 }
 -(void)backAction
 {
@@ -87,17 +84,13 @@
 }
 - (void)setupCamera
 {
-    // Device
     _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     
-    // Input
     _input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:nil];
     
-    // Output
     _output = [[AVCaptureMetadataOutput alloc]init];
     [_output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
     
-    // Session
     _session = [[AVCaptureSession alloc]init];
     [_session setSessionPreset:AVCaptureSessionPresetHigh];
     if ([_session canAddInput:self.input])
@@ -112,16 +105,12 @@
     
     // 条码类型 AVMetadataObjectTypeQRCode
     _output.metadataObjectTypes =@[AVMetadataObjectTypeQRCode];
-    
-    // Preview
+
     _preview =[AVCaptureVideoPreviewLayer layerWithSession:self.session];
     _preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
     _preview.frame =CGRectMake(0,0,600,600);
     [self.view.layer insertSublayer:self.preview atIndex:0];
-    
-    
-    
-    // Start
+
     [_session startRunning];
 }
 #pragma mark AVCaptureMetadataOutputObjectsDelegate

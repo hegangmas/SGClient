@@ -11,4 +11,5 @@
 
 @interface SGFiberViewController : SGBaseViewController
 
+@property(nonatomic,strong) NSString* cableId;
 @end
