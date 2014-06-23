@@ -12,15 +12,8 @@
 
 @interface SGCableViewController ()<UIWebViewDelegate>
 
-@property (nonatomic,strong) UIWebView *webView;
+@property (nonatomic,strong) NSDictionary* data;
 @end
-
-#define DrawLine(x1,y1,x2,y2,s) [NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\" stroke:rgb(99,99,99);stroke-width:3\" onclick=\"self.location.href='@@@@%@'\"/>",x1,y1,x2,y2,s]
-
-#define DrawText(x,y,z,c,f,s) [NSString stringWithFormat:@"<text x=\"%f\" y=\"%f\" font-size=\"%d\" fill =\"%@\" font-style=\"%@\">%@</text>",x,y,z,c,f,s]
-
-#define DrawRect(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:navy;stroke:black;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
-
 
 @implementation SGCableViewController
 
@@ -36,18 +29,6 @@
 {
     [super viewDidLoad];
     self.title = [NSString stringWithFormat:@"%@连接图",self.cubicleData[@"name"]];
-    
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0,
-                                                           0,
-                                                           MainScreenWidth(self.interfaceOrientation),
-                                                           MainScreenHeight(self.interfaceOrientation))];
-    _webView.dataDetectorTypes = UIDataDetectorTypeAll;
-    _webView.userInteractionEnabled = YES;
-    [_webView setDelegate:self];
-//    _webView.scalesPageToFit = YES;
-    [self.view addSubview:_webView];
-    [self drawConnections];
-    
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -55,20 +36,43 @@
     NSString* _url = [request URL].description;
     
     if ([_url rangeOfString:@"@@@@"].location != NSNotFound) {
-        NSString *cableId = [[_url componentsSeparatedByString:@"@@@@"] objectAtIndex:1];
+        NSString *retValue = [[_url componentsSeparatedByString:@"@@@@"] objectAtIndex:1];
+        NSArray* retList = [retValue componentsSeparatedByString:@"*"];
+        NSString* cableId = retList[0];
+        NSInteger connId  = [retList[1] integerValue];
+        NSString* type    = retList[2];
+        
         SGFiberViewController *fiber = [SGFiberViewController new];
         [fiber setCableId:cableId];
+        id conn;
+        
+        switch ([type integerValue]) {
+            case 0:
+                conn = [[self.data valueForKey:@"type0"] objectAtIndex:connId];
+                break;
+            case 1:
+                conn = [[self.data valueForKey:@"type1"] objectAtIndex:connId];
+                break;
+            case 2:
+                conn = [[self.data valueForKey:@"type2"] objectAtIndex:connId];
+                [fiber setIsTX:YES];
+                break;
+            default:
+                break;
+        }
+        [fiber setConnection:conn];
+
         [self.navigationController pushViewController:fiber animated:YES];
     }
     return YES;
 }
 
 //生成SVG文件
--(void)drawConnections{
-    NSDictionary* data = [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:[self.cubicleData[@"id"] integerValue]];
+-(void)drawSvgFileOnWebview{
+    self.data = [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:[self.cubicleData[@"id"] integerValue]];
     
-    NSArray *types = @[@{@"光缆连接":[data valueForKey:@"type0"]},
-                       @{@"尾缆连接":[data valueForKey:@"type1"]}];
+    NSArray *types = @[@{@"光缆连接":[self.data valueForKey:@"type0"]},
+                       @{@"尾缆连接":[self.data valueForKey:@"type1"]}];
  
     NSMutableString* svgStr = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" standalone=\"no\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">"];
     
@@ -150,10 +154,11 @@
                         
                 }else{
                     //画线缆
+
                     [svgStr appendString:DrawLine(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                   margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,
                                                   margin_x+hPosition*(cWidth+linelen),
-                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,[cubicle valueForKey:@"cable_id"])];
+                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_id"], vPostion,[_type.allKeys[0] isEqualToString:@"光缆连接"]?0:1))];
                     //线缆名称
                     [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                   margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,
@@ -200,7 +205,7 @@
     
     
     //跳纤连接
-    types = [data valueForKey:@"type2"];
+    types = [self.data valueForKey:@"type2"];
     
     if (types) {
         [svgStr appendString:DrawText(margin_x,
@@ -229,7 +234,7 @@
             [svgStr appendString:DrawLine(margin_x + cWidth,
                                           margin_y + offsetY + (0.5+i)*cHeight,
                                           linelen + margin_x + cWidth,
-                                          margin_y + offsetY + (0.5+i)*cHeight,[cubicle valueForKey:@"cable_id"])];
+                                          margin_y + offsetY + (0.5+i)*cHeight,LineInfo([cubicle valueForKey:@"cable_id"], i,2))];
             
             [svgStr appendString:DrawText(margin_x + cWidth + 20,
                                           margin_y + offsetY + (0.5+i)*cHeight - linetext_y_origin,14,
@@ -252,7 +257,7 @@
     NSData *svgData = [result dataUsingEncoding:NSUTF8StringEncoding];
     NSString* dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)
                         objectAtIndex:0];
-    dbPath = [dbPath stringByAppendingPathComponent:@"conn.svg"];
+    dbPath = [dbPath stringByAppendingPathComponent:@"cable.svg"];
     [svgData writeToFile:dbPath atomically:YES];
     NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
     NSURL *baseURL = [[NSURL alloc] initFileURLWithPath:resourcePath isDirectory:YES];
@@ -272,21 +277,6 @@
         }
     }
     return YES;
-}
-
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    _webView.frame = CGRectMake(0,
-                                                           0,
-                                                           MainScreenWidth(toInterfaceOrientation),
-                                                           MainScreenHeight(toInterfaceOrientation));
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    _webView.frame = CGRectMake(0,
-                                0,
-                                MainScreenWidth(self.interfaceOrientation),
-                                MainScreenHeight(self.interfaceOrientation));
 }
 
 - (void)didReceiveMemoryWarning

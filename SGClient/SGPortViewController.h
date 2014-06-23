@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SGBaseViewController.h"
+#import "SGDrawViewController.h"
 
-@interface SGPortViewController : SGBaseViewController
+@interface SGPortViewController : SGDrawViewController
 
 @end

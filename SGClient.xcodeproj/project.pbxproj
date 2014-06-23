@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E8A69CA1958219C00748A3D /* SGDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A69C91958219C00748A3D /* SGDrawViewController.m */; };
 		C9026392193D7F6A0020428E /* SGFiberPageBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9026391193D7F6A0020428E /* SGFiberPageBussiness.m */; };
 		C903CD9719526CDF000C51FE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C903CD9619526CDF000C51FE /* AVFoundation.framework */; };
 		C903CD9A19526D83000C51FE /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C903CD9819526D83000C51FE /* line@2x.png */; };
@@ -81,6 +82,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E8A69C81958219C00748A3D /* SGDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDrawViewController.h; sourceTree = "<group>"; };
+		3E8A69C91958219C00748A3D /* SGDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDrawViewController.m; sourceTree = "<group>"; };
 		C9026390193D7F6A0020428E /* SGFiberPageBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGFiberPageBussiness.h; sourceTree = "<group>"; };
 		C9026391193D7F6A0020428E /* SGFiberPageBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGFiberPageBussiness.m; sourceTree = "<group>"; };
 		C903CD9619526CDF000C51FE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -264,6 +267,8 @@
 			children = (
 				C9CF658E194DC1C400957BB1 /* SGHomeViewController.h */,
 				C9CF658F194DC1C400957BB1 /* SGHomeViewController.m */,
+				3E8A69C81958219C00748A3D /* SGDrawViewController.h */,
+				3E8A69C91958219C00748A3D /* SGDrawViewController.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -694,6 +699,7 @@
 				C9CF65ED194DCDB200957BB1 /* SGLeftDockButton.m in Sources */,
 				C9CF6602194DEDF600957BB1 /* SGBaseViewController.m in Sources */,
 				C9026392193D7F6A0020428E /* SGFiberPageBussiness.m in Sources */,
+				3E8A69CA1958219C00748A3D /* SGDrawViewController.m in Sources */,
 				C9F03C761917113400355991 /* SGDataBase.m in Sources */,
 				C9EBBB0E194E92B4005DE69A /* WebViewJavascriptBridge.m in Sources */,
 				C9CF6590194DC1C400957BB1 /* SGHomeViewController.m in Sources */,
@@ -827,6 +833,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
 				INFOPLIST_FILE = "SGClient/SGClient-Info.plist";
@@ -841,6 +849,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
 				INFOPLIST_FILE = "SGClient/SGClient-Info.plist";

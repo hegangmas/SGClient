@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SGBaseViewController.h"
+#import "SGDrawViewController.h"
 
-@interface SGCableViewController : SGBaseViewController
+@interface SGCableViewController : SGDrawViewController
 @property (nonatomic,strong) NSDictionary *cubicleData;
 @end

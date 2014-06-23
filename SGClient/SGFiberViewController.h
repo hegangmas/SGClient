@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SGBaseViewController.h"
+#import "SGDrawViewController.h"
 
-@interface SGFiberViewController : SGBaseViewController
+@interface SGFiberViewController : SGDrawViewController
 
-@property(nonatomic,strong) NSString* cableId;
+@property(nonatomic,strong) NSString *cableId;
+@property(nonatomic,strong) NSArray  *connection;
+@property(nonatomic,assign) BOOL isTX;
+
 @end
