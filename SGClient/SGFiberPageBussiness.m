@@ -120,7 +120,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 /*－－－－－－－－－－－－－－－－－
  根据CableId 获取纤芯信息列表
  －－－－－－－－－－－－－－－－－*/
--(NSString*)queryFiberInfoWithCableId:(NSInteger)cableId{
+-(NSArray*)queryFiberInfoWithCableId:(NSInteger)cableId{
     
     NSString* _cableId = [NSString stringWithFormat:@"%d",cableId];
     self.cableType = [[(SGInfoSetItem*)[[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCableType(_cableId)] withEntity:@"SGInfoSetItem"] objectAtIndex:0] type] integerValue];
@@ -156,7 +156,9 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
         [retList addObject:resultItem];
         
     }];
-    return [self buildXMLForResultSet:retList];
+    
+    return retList;
+//    return [self buildXMLForResultSet:retList];
 }
 
 /*－－－－－－－－－－－－－－－－－
@@ -358,11 +360,13 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
  如果是跳纤 根据group找出port
  －－－－－－－－－－－－－－－－－*/
 -(void)getNewPairPortsByGroupForType2{
-        for(NSString* port in [NSMutableArray arrayWithArray:self.portList]){
+    
+    NSArray* tmp = [self.portList copy];
+    self.portList = [NSMutableArray array];
+    for(NSString* port in tmp){
         NSArray* portInfo = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTLGroupPort(port)]
                                                   withEntity:@"SGFiberItem"];
         if ([portInfo count]) {
-            [self.portList removeObject:port];
             [self.portList addObject:[(SGFiberItem*)[portInfo objectAtIndex:0]
                                       port1_id]];
         }

@@ -7,10 +7,16 @@
 //
 
 #import "SGFiberViewController.h"
+#import "SGFiberPageBussiness.h"
+
 
 @interface SGFiberViewController ()
 
 @end
+
+#define DrawSpanStart(x,y,v) [NSString stringWithFormat:@"<tspan x='%f' dy='%f' fill='white' text-anchor='start' font-style='italic'>%@</tspan>",x,y,v]
+#define DrawSpan(x,v) [NSString stringWithFormat:@"<tspan x='%f' fill='white' text-anchor='start' font-style='italic'>%@</tspan>",x,v]
+
 
 @implementation SGFiberViewController
 
@@ -33,7 +39,7 @@
     
     [svgStr appendString:@"<svg width=\"##@@@##\" height=\"++@@@++\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"];
     
-    float margin_x = 20;
+    float margin_x = 5;
     float margin_y = 50;
     float cWidth   = 240;
     float cHeight  = 60;
@@ -96,12 +102,51 @@
         }
     }
     
-    [svgStr appendString:@"</svg>"];
+    float tbOffset = 0;
+    
+    [svgStr appendString:@"<g id='rowGroup' transform='translate(0, 100)'>"];
+    
+    NSArray* fiberList = [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:[_cableId integerValue]];
+    
+    [svgStr appendString:DrawRectW(margin_x, margin_y + tbOffset, 900.0, 60.0)];
+    [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",margin_x, 40.0]];
+    [svgStr appendString:DrawSpanStart(margin_x,45.0, @"数据类型")];
+    [svgStr appendString:DrawSpan(margin_x + 120, @"设备")];
+    [svgStr appendString:DrawSpan(margin_x + 250, @"端口")];
+    [svgStr appendString:DrawSpan(margin_x + 330, @"TX")];
+    [svgStr appendString:DrawSpan(margin_x + 400, @"ODF")];
+    [svgStr appendString:DrawSpan(margin_x + 480, @"ODF")];
+    [svgStr appendString:DrawSpan(margin_x + 530, @"TX")];
+    [svgStr appendString:DrawSpan(margin_x + 600, @"端口")];
+    [svgStr appendString:DrawSpan(margin_x + 690, @"设备")];
+    [svgStr appendString:DrawSpan(margin_x + 810, @"数据类型")];
+    [svgStr appendString:@"</text>"];
+    
+    for(id fiberItem in fiberList){
+        tbOffset+=60;
+        [svgStr appendString:DrawRectW(margin_x, margin_y + tbOffset, 900.0, 60.0)];
+        [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='13' text-anchor='start'>",margin_x, 40.0]];
+        [svgStr appendString:DrawSpanStart(margin_x,45.0 + tbOffset, [fiberItem valueForKey:@"type1"])];
+        [svgStr appendString:DrawSpan(margin_x + 90, [fiberItem valueForKey:@"device1"])];
+        [svgStr appendString:DrawSpan(margin_x + 240, [fiberItem valueForKey:@"port1"])];
+        [svgStr appendString:DrawSpan(margin_x + 320, [fiberItem valueForKey:@"tx1"])];
+        [svgStr appendString:DrawSpan(margin_x + 400, [fiberItem valueForKey:@"odf1"])];
+        [svgStr appendString:DrawSpan(margin_x + 440, [fiberItem valueForKey:@"middle"])];
+        [svgStr appendString:DrawSpan(margin_x + 480, [fiberItem valueForKey:@"odf2"])];
+        [svgStr appendString:DrawSpan(margin_x + 520, [fiberItem valueForKey:@"tx2"])];
+        [svgStr appendString:DrawSpan(margin_x + 600, [fiberItem valueForKey:@"port2"])];
+        [svgStr appendString:DrawSpan(margin_x + 660, [fiberItem valueForKey:@"device2"])];
+        [svgStr appendString:DrawSpan(margin_x + 810, [fiberItem valueForKey:@"type2"])];
+        [svgStr appendString:@"</text>"];
+    }
+
+    [svgStr appendString:@"</g></svg>"];
     NSString* result = [NSString stringWithString:svgStr];
     
-    //计算出总高总宽并填回
-    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",cHeight + margin_y]];
-    result = [result stringByReplacingOccurrencesOfString:@"##@@@##" withString:[NSString stringWithFormat:@"%f",2*margin_x+self.connection.count*cWidth+(self.connection.count-1)*linelen]];
+    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",(fiberList.count+1)*60.0 + 150 + 30]];
+    result = [result stringByReplacingOccurrencesOfString:@"##@@@##" withString:[NSString stringWithFormat:@"%f",950.0]];
+    
+        result = [result stringByReplacingOccurrencesOfString:@"(null)" withString:@"--"];
     
     NSData *svgData = [result dataUsingEncoding:NSUTF8StringEncoding];
     NSString* dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)

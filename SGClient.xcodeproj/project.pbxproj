@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3E8A69CA1958219C00748A3D /* SGDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A69C91958219C00748A3D /* SGDrawViewController.m */; };
+		3EF45B5919593E5700488D28 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C4819170F5400355991 /* XCTest.framework */; };
+		3EF45B5A19593E5700488D28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2919170F5400355991 /* Foundation.framework */; };
+		3EF45B5B19593E5700488D28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2D19170F5400355991 /* UIKit.framework */; };
 		C9026392193D7F6A0020428E /* SGFiberPageBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9026391193D7F6A0020428E /* SGFiberPageBussiness.m */; };
 		C903CD9719526CDF000C51FE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C903CD9619526CDF000C51FE /* AVFoundation.framework */; };
 		C903CD9A19526D83000C51FE /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C903CD9819526D83000C51FE /* line@2x.png */; };
@@ -84,6 +87,7 @@
 /* Begin PBXFileReference section */
 		3E8A69C81958219C00748A3D /* SGDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDrawViewController.h; sourceTree = "<group>"; };
 		3E8A69C91958219C00748A3D /* SGDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDrawViewController.m; sourceTree = "<group>"; };
+		3EF45B5819593E5700488D28 /* testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9026390193D7F6A0020428E /* SGFiberPageBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGFiberPageBussiness.h; sourceTree = "<group>"; };
 		C9026391193D7F6A0020428E /* SGFiberPageBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGFiberPageBussiness.m; sourceTree = "<group>"; };
 		C903CD9619526CDF000C51FE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -187,6 +191,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3EF45B5519593E5700488D28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3EF45B5919593E5700488D28 /* XCTest.framework in Frameworks */,
+				3EF45B5B19593E5700488D28 /* UIKit.framework in Frameworks */,
+				3EF45B5A19593E5700488D28 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9F03C2319170F5400355991 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -367,6 +381,7 @@
 			children = (
 				C9F03C2619170F5400355991 /* SGClient.app */,
 				C9F03C4719170F5400355991 /* SGClientTests.xctest */,
+				3EF45B5819593E5700488D28 /* testTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -565,6 +580,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3EF45B5719593E5700488D28 /* testTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3EF45B6C19593E5700488D28 /* Build configuration list for PBXNativeTarget "testTests" */;
+			buildPhases = (
+				3EF45B5419593E5700488D28 /* Sources */,
+				3EF45B5519593E5700488D28 /* Frameworks */,
+				3EF45B5619593E5700488D28 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testTests;
+			productName = testTests;
+			productReference = 3EF45B5819593E5700488D28 /* testTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C9F03C2519170F5400355991 /* SGClient */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9F03C5819170F5400355991 /* Build configuration list for PBXNativeTarget "SGClient" */;
@@ -610,6 +642,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = XLDZ;
 				TargetAttributes = {
+					3EF45B5719593E5700488D28 = {
+						TestTargetID = C9F03C2519170F5400355991;
+					};
 					C9F03C4619170F5400355991 = {
 						TestTargetID = C9F03C2519170F5400355991;
 					};
@@ -630,11 +665,19 @@
 			targets = (
 				C9F03C2519170F5400355991 /* SGClient */,
 				C9F03C4619170F5400355991 /* SGClientTests */,
+				3EF45B5719593E5700488D28 /* testTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3EF45B5619593E5700488D28 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9F03C2419170F5400355991 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -669,6 +712,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3EF45B5419593E5700488D28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9F03C2219170F5400355991 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -756,6 +806,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3EF45B6919593E5700488D28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SGClient.app/SGClient";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "test/test-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "testTests/testTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		3EF45B6A19593E5700488D28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SGClient.app/SGClient";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "test/test-Prefix.pch";
+				INFOPLIST_FILE = "testTests/testTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		C9F03C5619170F5400355991 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -903,6 +993,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3EF45B6C19593E5700488D28 /* Build configuration list for PBXNativeTarget "testTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3EF45B6919593E5700488D28 /* Debug */,
+				3EF45B6A19593E5700488D28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C9F03C2119170F5400355991 /* Build configuration list for PBXProject "SGClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
