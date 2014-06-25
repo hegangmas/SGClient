@@ -36,14 +36,19 @@
     NSString* _url = [request URL].description;
     
     if ([_url rangeOfString:@"@@@@"].location != NSNotFound) {
+        
         NSString *retValue = [[_url componentsSeparatedByString:@"@@@@"] objectAtIndex:1];
         NSArray* retList = [retValue componentsSeparatedByString:@"*"];
-        NSString* cableId = retList[0];
-        NSInteger connId  = [retList[1] integerValue];
-        NSString* type    = retList[2];
+        
+        NSString* cableName = retList[0];
+        NSString* cableId   = retList[1];
+        NSInteger connId    = [retList[2] integerValue];
+        NSString* type      = retList[3];
         
         SGFiberViewController *fiber = [SGFiberViewController new];
+        
         [fiber setCableId:cableId];
+        [fiber setCableName:cableName];
         id conn;
         
         switch ([type integerValue]) {
@@ -158,7 +163,7 @@
                     [svgStr appendString:DrawLine(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                   margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,
                                                   margin_x+hPosition*(cWidth+linelen),
-                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_id"], vPostion,[_type.allKeys[0] isEqualToString:@"光缆连接"]?0:1))];
+                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[_type.allKeys[0] isEqualToString:@"光缆连接"]?0:1))];
                     //线缆名称
                     [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                   margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,
@@ -234,7 +239,7 @@
             [svgStr appendString:DrawLine(margin_x + cWidth,
                                           margin_y + offsetY + (0.5+i)*cHeight,
                                           linelen + margin_x + cWidth,
-                                          margin_y + offsetY + (0.5+i)*cHeight,LineInfo([cubicle valueForKey:@"cable_id"], i,2))];
+                                          margin_y + offsetY + (0.5+i)*cHeight,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], i,2))];
             
             [svgStr appendString:DrawText(margin_x + cWidth + 20,
                                           margin_y + offsetY + (0.5+i)*cHeight - linetext_y_origin,14,

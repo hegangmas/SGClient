@@ -31,10 +31,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = [NSString stringWithFormat:@"%@线缆信息",_cableName];
 }
 
 
 -(void)drawSvgFileOnWebview{
+    
     NSMutableString* svgStr = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" standalone=\"no\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">"];
     
     [svgStr appendString:@"<svg width=\"##@@@##\" height=\"++@@@++\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"];
@@ -53,7 +55,7 @@
                                   margin_y  - 15,18,
                                   @"navy",
                                   @"italic",
-                                  @"连接图")];
+                                  @"连接路径")];
     
     if (self.isTX) {
         self.connection = @[self.connection,self.connection];
@@ -102,7 +104,19 @@
         }
     }
     
-    float tbOffset = 0;
+    [svgStr appendString:[NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"stroke-dasharray: 9, 5;stroke: gray; stroke-width: 2;\"/>",margin_x,
+                          margin_y + cHeight + 30,
+                          margin_x + 1000,
+                          margin_y + cHeight + 30]];
+    
+    //连接类型
+    [svgStr appendString:DrawText(margin_x,
+                                  margin_y + cHeight + 55,18,
+                                  @"navy",
+                                  @"italic",
+                                  @"纤芯信息")];
+    
+    float tbOffset = 30;
     
     [svgStr appendString:@"<g id='rowGroup' transform='translate(0, 100)'>"];
     
@@ -110,7 +124,7 @@
     
     [svgStr appendString:DrawRectW(margin_x, margin_y + tbOffset, 900.0, 60.0)];
     [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",margin_x, 40.0]];
-    [svgStr appendString:DrawSpanStart(margin_x,45.0, @"数据类型")];
+    [svgStr appendString:DrawSpanStart(margin_x,75.0, @"数据类型")];
     [svgStr appendString:DrawSpan(margin_x + 120, @"设备")];
     [svgStr appendString:DrawSpan(margin_x + 250, @"端口")];
     [svgStr appendString:DrawSpan(margin_x + 330, @"TX")];
@@ -143,7 +157,7 @@
     [svgStr appendString:@"</g></svg>"];
     NSString* result = [NSString stringWithString:svgStr];
     
-    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",(fiberList.count+1)*60.0 + 150 + 30]];
+    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",(fiberList.count+1)*60.0 + 150 + 60]];
     result = [result stringByReplacingOccurrencesOfString:@"##@@@##" withString:[NSString stringWithFormat:@"%f",950.0]];
     
         result = [result stringByReplacingOccurrencesOfString:@"(null)" withString:@"--"];

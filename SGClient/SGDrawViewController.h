@@ -16,7 +16,7 @@
 
 #define DrawRectW(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:navy;stroke:white;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
 
-#define LineInfo(c,i,t) [NSString stringWithFormat:@"%@*%d*%d",c,i,t]
+#define LineInfo(n,c,i,t) [NSString stringWithFormat:@"%@*%@*%d*%d",n,c,i,t]
 
 @interface SGDrawViewController : SGBaseViewController<UIWebViewDelegate>
 

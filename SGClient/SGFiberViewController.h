@@ -12,6 +12,7 @@
 @interface SGFiberViewController : SGDrawViewController
 
 @property(nonatomic,strong) NSString *cableId;
+@property(nonatomic,strong) NSString *cableName;
 @property(nonatomic,strong) NSArray  *connection;
 @property(nonatomic,assign) BOOL isTX;
 

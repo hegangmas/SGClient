@@ -122,6 +122,9 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
  －－－－－－－－－－－－－－－－－*/
 -(NSArray*)queryFiberInfoWithCableId:(NSInteger)cableId{
     
+    self.portList = [NSMutableArray array];
+    self.cachedSet = [NSMutableDictionary dictionary];
+    
     NSString* _cableId = [NSString stringWithFormat:@"%d",cableId];
     self.cableType = [[(SGInfoSetItem*)[[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCableType(_cableId)] withEntity:@"SGInfoSetItem"] objectAtIndex:0] type] integerValue];
     
