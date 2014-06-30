@@ -49,6 +49,7 @@
         
         [fiber setCableId:cableId];
         [fiber setCableName:cableName];
+        [fiber setCableType:[type integerValue]];
         id conn;
         
         switch ([type integerValue]) {
@@ -163,7 +164,7 @@
                     [svgStr appendString:DrawLine(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                   margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,
                                                   margin_x+hPosition*(cWidth+linelen),
-                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[_type.allKeys[0] isEqualToString:@"光缆连接"]?0:1))];
+                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[[cubicle valueForKey:@"cable_name"] integerValue]))];
                     //线缆名称
                     [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                   margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,

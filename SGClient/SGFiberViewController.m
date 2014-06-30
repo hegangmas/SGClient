@@ -35,18 +35,20 @@
 }
 
 
+float margin_x = 5;
+float margin_y = 50;
+float cWidth   = 240;
+float cHeight  = 60;
+float linelen  = 100;
+float linetext_y_origin = 10;
+
 -(void)drawSvgFileOnWebview{
     
     NSMutableString* svgStr = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" standalone=\"no\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">"];
     
     [svgStr appendString:@"<svg width=\"##@@@##\" height=\"++@@@++\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"];
     
-    float margin_x = 5;
-    float margin_y = 50;
-    float cWidth   = 240;
-    float cHeight  = 60;
-    float linelen  = 100;
-    float linetext_y_origin = 10;
+    
     
     [svgStr appendString:@"<defs><style type=\"text/css\"><![CDATA[ rect {fill:white;stroke:black;stroke-width:2;opacity:0.1;}]]></style></defs>"];
     
@@ -56,7 +58,6 @@
                                   @"navy",
                                   @"italic",
                                   @"连接路径")];
-    
     if (self.isTX) {
         self.connection = @[self.connection,self.connection];
     }
@@ -104,6 +105,8 @@
         }
     }
     
+    
+    
     [svgStr appendString:[NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"stroke-dasharray: 9, 5;stroke: gray; stroke-width: 2;\"/>",margin_x,
                           margin_y + cHeight + 30,
                           margin_x + 1000,
@@ -116,51 +119,52 @@
                                   @"italic",
                                   @"纤芯信息")];
     
-    float tbOffset = 30;
+    //    float tbOffset = 30;
+    //    [svgStr appendString:@"<g id='rowGroup' transform='translate(0, 100)'>"];
+    //    NSArray* fiberList = [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:[_cableId integerValue]];
+    //
+    //    [svgStr appendString:DrawRectW(margin_x, margin_y + tbOffset, 900.0, 60.0)];
+    //    [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",margin_x, 40.0]];
+    //    [svgStr appendString:DrawSpanStart(margin_x,75.0, @"数据类型")];
+    //    [svgStr appendString:DrawSpan(margin_x + 120, @"设备")];
+    //    [svgStr appendString:DrawSpan(margin_x + 250, @"端口")];
+    //    [svgStr appendString:DrawSpan(margin_x + 330, @"TX")];
+    //    [svgStr appendString:DrawSpan(margin_x + 400, @"ODF")];
+    //    [svgStr appendString:DrawSpan(margin_x + 480, @"ODF")];
+    //    [svgStr appendString:DrawSpan(margin_x + 530, @"TX")];
+    //    [svgStr appendString:DrawSpan(margin_x + 600, @"端口")];
+    //    [svgStr appendString:DrawSpan(margin_x + 690, @"设备")];
+    //    [svgStr appendString:DrawSpan(margin_x + 810, @"数据类型")];
+    //    [svgStr appendString:@"</text>"];
+    //
+    //    for(id fiberItem in fiberList){
+    //        tbOffset+=60;
+    //        [svgStr appendString:DrawRectW(margin_x, margin_y + tbOffset, 900.0, 60.0)];
+    //        [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='13' text-anchor='start'>",margin_x, 40.0]];
+    //        [svgStr appendString:DrawSpanStart(margin_x,45.0 + tbOffset, [fiberItem valueForKey:@"type1"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 90, [fiberItem valueForKey:@"device1"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 240, [fiberItem valueForKey:@"port1"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 320, [fiberItem valueForKey:@"tx1"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 400, [fiberItem valueForKey:@"odf1"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 440, [fiberItem valueForKey:@"middle"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 480, [fiberItem valueForKey:@"odf2"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 520, [fiberItem valueForKey:@"tx2"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 600, [fiberItem valueForKey:@"port2"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 660, [fiberItem valueForKey:@"device2"])];
+    //        [svgStr appendString:DrawSpan(margin_x + 810, [fiberItem valueForKey:@"type2"])];
+    //        [svgStr appendString:@"</text>"];
+    //    }
     
-    [svgStr appendString:@"<g id='rowGroup' transform='translate(0, 100)'>"];
+    [svgStr appendString:[self retriveFiberSvg]];
     
-    NSArray* fiberList = [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:[_cableId integerValue]];
     
-    [svgStr appendString:DrawRectW(margin_x, margin_y + tbOffset, 900.0, 60.0)];
-    [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",margin_x, 40.0]];
-    [svgStr appendString:DrawSpanStart(margin_x,75.0, @"数据类型")];
-    [svgStr appendString:DrawSpan(margin_x + 120, @"设备")];
-    [svgStr appendString:DrawSpan(margin_x + 250, @"端口")];
-    [svgStr appendString:DrawSpan(margin_x + 330, @"TX")];
-    [svgStr appendString:DrawSpan(margin_x + 400, @"ODF")];
-    [svgStr appendString:DrawSpan(margin_x + 480, @"ODF")];
-    [svgStr appendString:DrawSpan(margin_x + 530, @"TX")];
-    [svgStr appendString:DrawSpan(margin_x + 600, @"端口")];
-    [svgStr appendString:DrawSpan(margin_x + 690, @"设备")];
-    [svgStr appendString:DrawSpan(margin_x + 810, @"数据类型")];
-    [svgStr appendString:@"</text>"];
-    
-    for(id fiberItem in fiberList){
-        tbOffset+=60;
-        [svgStr appendString:DrawRectW(margin_x, margin_y + tbOffset, 900.0, 60.0)];
-        [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='13' text-anchor='start'>",margin_x, 40.0]];
-        [svgStr appendString:DrawSpanStart(margin_x,45.0 + tbOffset, [fiberItem valueForKey:@"type1"])];
-        [svgStr appendString:DrawSpan(margin_x + 90, [fiberItem valueForKey:@"device1"])];
-        [svgStr appendString:DrawSpan(margin_x + 240, [fiberItem valueForKey:@"port1"])];
-        [svgStr appendString:DrawSpan(margin_x + 320, [fiberItem valueForKey:@"tx1"])];
-        [svgStr appendString:DrawSpan(margin_x + 400, [fiberItem valueForKey:@"odf1"])];
-        [svgStr appendString:DrawSpan(margin_x + 440, [fiberItem valueForKey:@"middle"])];
-        [svgStr appendString:DrawSpan(margin_x + 480, [fiberItem valueForKey:@"odf2"])];
-        [svgStr appendString:DrawSpan(margin_x + 520, [fiberItem valueForKey:@"tx2"])];
-        [svgStr appendString:DrawSpan(margin_x + 600, [fiberItem valueForKey:@"port2"])];
-        [svgStr appendString:DrawSpan(margin_x + 660, [fiberItem valueForKey:@"device2"])];
-        [svgStr appendString:DrawSpan(margin_x + 810, [fiberItem valueForKey:@"type2"])];
-        [svgStr appendString:@"</text>"];
-    }
-
-    [svgStr appendString:@"</g></svg>"];
+    [svgStr appendString:@"</svg>"];
     NSString* result = [NSString stringWithString:svgStr];
     
-    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",(fiberList.count+1)*60.0 + 150 + 60]];
-    result = [result stringByReplacingOccurrencesOfString:@"##@@@##" withString:[NSString stringWithFormat:@"%f",950.0]];
+    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",1200.0]];
+    result = [result stringByReplacingOccurrencesOfString:@"##@@@##" withString:[NSString stringWithFormat:@"%f",2000.0]];
     
-        result = [result stringByReplacingOccurrencesOfString:@"(null)" withString:@"--"];
+    result = [result stringByReplacingOccurrencesOfString:@"(null)" withString:@"--"];
     
     NSData *svgData = [result dataUsingEncoding:NSUTF8StringEncoding];
     NSString* dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)
@@ -174,6 +178,191 @@
             textEncodingName:@"UTF-8"
                      baseURL:baseURL];
     
+}
+
+-(NSString*)retriveFiberSvg{
+    float linelen2 = 40;
+    
+    NSArray *offsetList;
+    NSArray* propertyList;
+    NSArray* headList;
+    
+    switch (_cableType) {
+            
+            //光缆类型
+        case 0:
+            offsetList = @[@"200",@"100",@"100",@"50",
+                           @"60",
+                           @"50",@"100",@"100",@"200",@"100"];
+            
+            propertyList = @[@"device1",@"port1",@"tx1",@"odf1",@"middle",@"odf2",@"tx2",@"port2",@"device2",@"type2"];
+            
+            headList = @[@"设备",@"端口",@"TX",@"ODF",@"",@"ODF",@"TX",@"端口",@"设备",@"数据类型"];
+            
+            break;
+            
+            //尾缆 跳纤 不显示TX ODF
+        case 1:
+        case 2:
+            offsetList = @[@"200",@"100"
+                           ,@"60"
+                           ,@"100",@"200",@"100"];
+            
+            propertyList = @[@"device1",@"port1",@"middle",@"port2",@"device2",@"type2"];
+            
+            headList = @[@"设备",@"端口",@"",@"端口",@"设备",@"数据类型"];
+            
+            break;
+        default:
+            break;
+    }
+    
+    NSMutableString* svgStr = [NSMutableString new];
+    [svgStr appendString:@"<g id='rowGroup' transform='translate(0, 100)'>"];
+    NSArray* fiberList = [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:[_cableId integerValue]];
+    
+    float vOffset = 30;
+    float hOffset = margin_x;
+    
+    NSInteger beginIndex = 0;
+    NSInteger endIndex = 0;
+    
+    for (int s = 0; s < 3; s++) {
+        
+        switch (s) {
+            case 0:
+                
+                switch (_cableType) {
+                    case 0:
+                        beginIndex = 0;
+                        endIndex = 3;
+                        break;
+                    case 1:
+                    case 2:
+                        beginIndex = 0;
+                        endIndex = 1;
+                        break;
+                }
+
+                break;
+            case 1:
+                
+                hOffset += [self getTotalLengthForArray:offsetList
+                                              withBegin:beginIndex
+                                                withEnd:endIndex];
+                hOffset += linelen2;
+                
+                switch (_cableType) {
+                    case 0:
+                        beginIndex = 4;
+                        endIndex = 4;
+                        break;
+                    case 1:
+                    case 2:
+                        beginIndex = 2;
+                        endIndex = 2;
+                        break;
+                }
+                
+                break;
+            case 2:
+                
+                hOffset += [self getTotalLengthForArray:offsetList
+                                              withBegin:beginIndex
+                                                withEnd:endIndex];
+                hOffset += linelen2;
+                
+                switch (_cableType) {
+                    case 0:
+                        beginIndex = 5;
+                        endIndex = 9;
+                        break;
+                    case 1:
+                    case 2:
+                        beginIndex = 3;
+                        endIndex = 5;
+                        break;
+                }
+
+                break;
+            default:
+                break;
+        }
+        
+        [svgStr appendString:DrawRectW(hOffset,
+                                       margin_y + 30,
+                                       [self getTotalLengthForArray:offsetList withBegin:beginIndex withEnd:endIndex],
+                                       60.0)];
+        
+        [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",hOffset, 40.0]];
+        for(int j = beginIndex; j <= endIndex; j++){
+            
+            if (j == beginIndex) {
+                
+                [svgStr appendString:DrawSpanStart(hOffset,
+                                                   75.0,
+                                                   headList[j])];
+            }else{
+                
+                [svgStr appendString:DrawSpan(hOffset + [self getTotalLengthForArray:offsetList
+                                                                           withBegin:beginIndex
+                                                                             withEnd:j-1],
+                                              headList[j])];
+            }
+        }
+        
+        [svgStr appendString:@"</text>"];
+        
+        vOffset = 0;
+        for (int i = 0; i < fiberList.count; i++) {
+            vOffset += 60;
+            
+            [svgStr appendString:DrawRectW(hOffset,
+                                           margin_y + 30 + vOffset,
+                                           [self getTotalLengthForArray:offsetList withBegin:beginIndex withEnd:endIndex],
+                                           60.0)];
+            
+            [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",hOffset, 40.0]];
+            
+            for(int j = beginIndex; j <= endIndex; j++){
+                if (j == beginIndex) {
+                    
+                    [svgStr appendString:DrawSpanStart(hOffset,
+                                                       margin_y + 30 + vOffset,
+                                                       [fiberList[i] valueForKey:propertyList[j]])];
+                }else{
+                    
+                    [svgStr appendString:DrawSpan(hOffset + [self getTotalLengthForArray:offsetList
+                                                                               withBegin:beginIndex
+                                                                                 withEnd:j-1],
+                                                  [fiberList[i] valueForKey:propertyList[j]])];
+                }
+            }
+            [svgStr appendString:@"</text>"];
+            
+            if (s) {
+                [svgStr appendString:DrawLineT(hOffset - linelen2,
+                                              margin_y + 30 + vOffset + 30,
+                                              hOffset,
+                                              margin_y + 30 + vOffset + 30,@"")];
+            }
+        }
+    }
+    
+    
+    [svgStr appendString:@"</g>"];
+    
+    return svgStr;
+}
+
+-(float)getTotalLengthForArray:(NSArray*)array withBegin:(NSInteger)begin withEnd:(NSInteger)end{
+    
+    float total = 0;
+    
+    for(int i = begin ;i<= end;i++){
+        total += [array[i] integerValue];
+    }
+    return total;
 }
 
 - (void)didReceiveMemoryWarning

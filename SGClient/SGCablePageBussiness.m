@@ -131,8 +131,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
  －－－－－－－－－－－－－－－－－－－－－*/
 -(NSDictionary*)queryCablelistWithCubicleId:(NSInteger)cubicleId{
 
-    NSLog(@"%@",CP_GetCablelist(cubicleId,CABLETYPE0));
-    NSLog(@"%@",CP_GetCubicleConnect(cubicleId));
+//    NSLog(@"%@",CP_GetCablelist(cubicleId,CABLETYPE0));
+//    NSLog(@"%@",CP_GetCubicleConnect(cubicleId));
     
     //光缆列表
     self.cableOfType0List = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCablelist(cubicleId,CABLETYPE0)]
