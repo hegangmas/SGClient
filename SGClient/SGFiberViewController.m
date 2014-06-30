@@ -182,6 +182,7 @@ float linetext_y_origin = 10;
 
 -(NSString*)retriveFiberSvg{
     float linelen2 = 40;
+    float rOffset = 10;
     
     NSArray *offsetList;
     NSArray* propertyList;
@@ -291,7 +292,7 @@ float linetext_y_origin = 10;
         
         [svgStr appendString:DrawRectW(hOffset,
                                        margin_y + 30,
-                                       [self getTotalLengthForArray:offsetList withBegin:beginIndex withEnd:endIndex],
+                                       [self getTotalLengthForArray:offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
                                        60.0)];
         
         [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",hOffset, 40.0]];
@@ -299,14 +300,14 @@ float linetext_y_origin = 10;
             
             if (j == beginIndex) {
                 
-                [svgStr appendString:DrawSpanStart(hOffset,
+                [svgStr appendString:DrawSpanStart(hOffset + rOffset,
                                                    75.0,
                                                    headList[j])];
             }else{
                 
                 [svgStr appendString:DrawSpan(hOffset + [self getTotalLengthForArray:offsetList
                                                                            withBegin:beginIndex
-                                                                             withEnd:j-1],
+                                                                             withEnd:j-1] + rOffset,
                                               headList[j])];
             }
         }
@@ -319,7 +320,7 @@ float linetext_y_origin = 10;
             
             [svgStr appendString:DrawRectW(hOffset,
                                            margin_y + 30 + vOffset,
-                                           [self getTotalLengthForArray:offsetList withBegin:beginIndex withEnd:endIndex],
+                                           [self getTotalLengthForArray:offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
                                            60.0)];
             
             [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",hOffset, 40.0]];
@@ -327,21 +328,21 @@ float linetext_y_origin = 10;
             for(int j = beginIndex; j <= endIndex; j++){
                 if (j == beginIndex) {
                     
-                    [svgStr appendString:DrawSpanStart(hOffset,
+                    [svgStr appendString:DrawSpanStart(hOffset + rOffset,
                                                        margin_y + 30 + vOffset,
                                                        [fiberList[i] valueForKey:propertyList[j]])];
                 }else{
                     
                     [svgStr appendString:DrawSpan(hOffset + [self getTotalLengthForArray:offsetList
                                                                                withBegin:beginIndex
-                                                                                 withEnd:j-1],
+                                                                                 withEnd:j-1] + rOffset,
                                                   [fiberList[i] valueForKey:propertyList[j]])];
                 }
             }
             [svgStr appendString:@"</text>"];
             
             if (s) {
-                [svgStr appendString:DrawLineT(hOffset - linelen2,
+                [svgStr appendString:DrawLineT(hOffset - linelen2 + rOffset,
                                               margin_y + 30 + vOffset + 30,
                                               hOffset,
                                               margin_y + 30 + vOffset + 30,@"")];
