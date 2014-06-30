@@ -126,6 +126,8 @@
     }
     
     [_session stopRunning];
+    
+    
     [self dismissViewControllerAnimated:YES completion:^
      {
          [timer invalidate];

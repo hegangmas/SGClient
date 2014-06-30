@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     self.title = [NSString stringWithFormat:@"%@线缆信息",_cableName];
-    
+    [self.webView setScalesPageToFit:YES];
     NSLog(@"TYPE:_____  %d",_cableType);
 }
 
@@ -135,8 +135,15 @@ float rOffset = 10;
     [svgStr appendString:@"</svg>"];
     
     NSString* result = [NSString stringWithString:svgStr];
-    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",200 + (_fiberList.count+1)*60.0]];
-    result = [result stringByReplacingOccurrencesOfString:@"##@@@##" withString:[NSString stringWithFormat:@"%f",[self getTotalLengthForArray:_offsetList withBegin:0 withEnd:_offsetList.count-1] + 2*(rOffset + linelen2) + rOffset]];
+    
+    float _height = (200 + (_fiberList.count+1)*60.0);
+    _height = (_height < MainScreenHeight(self.interfaceOrientation)) ? MainScreenHeight(self.interfaceOrientation) : _height ;
+    float _width = [self getTotalLengthForArray:_offsetList withBegin:0 withEnd:_offsetList.count-1] + 2*(rOffset + linelen2) + rOffset;
+    _width = (_width < MainScreenWidth(self.interfaceOrientation)) ? MainScreenWidth(self.interfaceOrientation) : _width;
+    
+    
+    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",_height + 200]];
+    result = [result stringByReplacingOccurrencesOfString:@"##@@@##" withString:[NSString stringWithFormat:@"%f",_width]];
     
     result = [result stringByReplacingOccurrencesOfString:@"(null)" withString:@"--"];
     
@@ -161,9 +168,16 @@ float rOffset = 10;
             
             //光缆类型
         case 0:
-            _offsetList = @[@"200",@"100",@"100",@"50",
-                           @"60",
-                           @"50",@"100",@"100",@"200",@"100"];
+            _offsetList = @[[NSNumber numberWithFloat:[self getMaxLengthForField:@"device1"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"port1"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"tx1"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"odf1"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"middle"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"odf2"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"tx2"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"port2"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"device2"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"type2"]]];
             
             _propertyList = @[@"device1",@"port1",@"tx1",@"odf1",@"middle",@"odf2",@"tx2",@"port2",@"device2",@"type2"];
             
@@ -174,9 +188,12 @@ float rOffset = 10;
             //尾缆 跳纤 不显示TX ODF
         case 1:
         case 2:
-            _offsetList = @[@"200",@"100"
-                           ,@"60"
-                           ,@"100",@"200",@"100"];
+            _offsetList = @[[NSNumber numberWithFloat:[self getMaxLengthForField:@"device1"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"port1"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"middle"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"port2"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"device2"]],
+                            [NSNumber numberWithFloat:[self getMaxLengthForField:@"type2"]]];
             
             _propertyList = @[@"device1",@"port1",@"middle",@"port2",@"device2",@"type2"];
             
@@ -325,12 +342,27 @@ float rOffset = 10;
     return svgStr;
 }
 
+-(float)getMaxLengthForField:(NSString*)field{
+    
+    float maxLength = 0;
+    
+    for(id fiberItem in _fiberList){
+        
+        float len = [[fiberItem valueForKey:field] sizeWithFont:[UIFont systemFontOfSize:15.0]].width;
+        
+        if (len > maxLength) {
+            maxLength = len;
+        }
+    }
+    return maxLength + 50;
+}
+
 -(float)getTotalLengthForArray:(NSArray*)array withBegin:(NSInteger)begin withEnd:(NSInteger)end{
     
     float total = 0;
     
     for(int i = begin ;i<= end;i++){
-        total += [array[i] integerValue];
+        total += [array[i] floatValue];
     }
     return total;
 }

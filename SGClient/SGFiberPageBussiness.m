@@ -88,6 +88,7 @@
                                     select [group] from port where port_id = %@)) a where a.port_id!=%@",p,p,p]
 
 @interface SGFiberPageBussiness()
+@property (nonatomic,assign) BOOL findGroupRecord;
 @property (nonatomic,assign) NSInteger cableType;
 @property (nonatomic,strong) NSArray *infoSetOrder;
 @property (nonatomic,strong) NSMutableArray *portList;
@@ -133,6 +134,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                                                withEntity:@"SGFiberItem"];
     NSMutableArray *retList = [NSMutableArray array];
     
+
+    
     [fiberList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
         SGResult *resultItem   = [[SGResult alloc] init];
@@ -152,6 +155,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
             case CABLETYPE1:
                 break;
             case CABLETYPE2:
+                [self fillMiddleFieldForType2WithResultItem:resultItem];
                 break;
             default:
                 break;
@@ -160,8 +164,35 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
         
     }];
     
+    //如果是跳纤再找出Group对应的数据
+    if (self.cableType == CABLETYPE2) {
+        
+        _findGroupRecord = YES;
+        SGResult *resultItem   = [[SGResult alloc] init];
+        SGFiberItem *fiberItem;
+        
+        [self fillTypeFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
+        [self fillDeviceFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
+        [self fillPortFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
+        [self fillMiddleFieldForType2WithResultItem:resultItem];
+ 
+        [retList addObject:resultItem];
+        _findGroupRecord = NO;
+    }
+    
     return retList;
 //    return [self buildXMLForResultSet:retList];
+}
+
+-(void)fillMiddleFieldForType2WithResultItem:(SGResult*)resultItem{
+//    if ([[resultItem.port1 lowercaseString] rangeOfString:@"tx"].location!=NSNotFound
+//      ||[[resultItem.port2 lowercaseString] rangeOfString:@"tx"].location!=NSNotFound) {
+//        resultItem.middle = @"1";
+//    }
+//    if ([[resultItem.port1 lowercaseString] rangeOfString:@"rx"].location!=NSNotFound
+//        ||[[resultItem.port2 lowercaseString] rangeOfString:@"rx"].location!=NSNotFound) {
+//        resultItem.middle = @"2";
+//    }
 }
 
 /*－－－－－－－－－－－－－－－－－
@@ -244,7 +275,6 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
     if ([desc count]) {
         resultItem.tx2 = [(SGInfoSetItem*)[desc objectAtIndex:0] description];
     }
-    
 }
 
 /*－－－－－－－－－－－－－－－－－
@@ -309,9 +339,13 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                 [self getNonOdfPortsForWLWithSGFiberItem:fiberItem];
                 break;
                 
+                //如果是跳纤
             case CABLETYPE2:
                 [self getNonOdfPortsForWLWithSGFiberItem:fiberItem];
-                [self getNewPairPortsByGroupForType2];
+                
+                if (_findGroupRecord) {
+                    [self getNewPairPortsByGroupForType2];
+                }
                 break;
                 
             default:
