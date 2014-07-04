@@ -7,15 +7,16 @@
 //
 
 #import "SGHomeViewController.h"
-#import "SGLeftDockItem.h"
-#import "SGLeftDock.h"
+
 #import "SGBaseViewController.h"
+#import "SGScanViewController.h"
 
 @interface SGHomeViewController ()
 
-@property (nonatomic,strong) SGLeftDock* leftDock;
+
 @property (nonatomic,strong) NSMutableDictionary *children;
 @property (nonatomic,strong) UINavigationController *currentChild;
+@property (nonatomic,strong) UINavigationController *mainController;
 
 @end
 
@@ -61,7 +62,14 @@
         nav.view.autoresizingMask = UIViewAutoresizingNone;
 
         if (dockItem.isModalShow) {
+            
             nav.modalPresentationStyle = UIModalPresentationFormSheet;
+
+            if ([controller isKindOfClass:[SGScanViewController class]]) {
+                SGScanViewController* scan = (SGScanViewController*)controller;
+                [scan setMainController:self.mainController];
+            }
+            
             [self presentViewController:nav animated:YES completion:nil];
             nav.view.superview.frame = CGRectMake(0, 0, 600, 600);
             nav.view.superview.center = self.view.center;
@@ -80,6 +88,10 @@
     nav.view.frame = CGRectMake(_leftDock.frame.size.width, 0, width, _leftDock.frame.size.height);
     [self.view addSubview:nav.view];
     _currentChild = nav;
+    
+    if ([_currentChild.title isEqualToString:@"主页"]) {
+        self.mainController = _currentChild;
+    }
 }
 
 #pragma mark 即将旋转屏幕的时候自动调用

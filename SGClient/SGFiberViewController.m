@@ -123,7 +123,7 @@ float rOffset = 10;
                                   @"italic",
                                   @"纤芯信息")];
     
-    _fiberList = [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:[_cableId integerValue]];
+    _fiberList = [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:[_cableId integerValue] withCubicleId:[_cubicleId integerValue]];
     
     [svgStr appendString:[self retriveFiberSvg]];
     

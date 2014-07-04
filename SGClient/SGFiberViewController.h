@@ -11,6 +11,7 @@
 
 @interface SGFiberViewController : SGDrawViewController
 
+@property(nonatomic,strong) NSString* cubicleId;
 @property(nonatomic,strong) NSString *cableId;
 @property(nonatomic,strong) NSString *cableName;
 @property(nonatomic,assign) NSInteger cableType;

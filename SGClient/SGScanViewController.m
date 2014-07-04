@@ -131,7 +131,6 @@
     [self dismissViewControllerAnimated:YES completion:^
      {
          [timer invalidate];
-         NSLog(@"%@",stringValue);
          
          UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"扫描结果"
                                                          message:stringValue
@@ -139,6 +138,10 @@
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil, nil];
          [alert show];
+         
+         [self.mainController.leftDock setDefaultSelected];
+         
+          
      }];
 }
 @end

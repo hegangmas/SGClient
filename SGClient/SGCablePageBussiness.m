@@ -17,7 +17,7 @@
 
 @implementation SGCPDataItem
 
--(id)initWithCableId:(NSString*)cableId withCableName:(NSString*)cableName
+-(instancetype)initWithCableId:(NSString*)cableId withCableName:(NSString*)cableName
        withCableType:(NSString*)cableType
        withCubicleId:(NSString*)cubicleId
      withCubicleName:(NSString*)cubicleName

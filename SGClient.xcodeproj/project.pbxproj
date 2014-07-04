@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E6302B51966CD5000F69573 /* data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3E6302B41966CD5000F69573 /* data.sqlite */; };
 		3E8A69CA1958219C00748A3D /* SGDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A69C91958219C00748A3D /* SGDrawViewController.m */; };
 		3EF45B5919593E5700488D28 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C4819170F5400355991 /* XCTest.framework */; };
 		3EF45B5A19593E5700488D28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2919170F5400355991 /* Foundation.framework */; };
@@ -58,7 +59,6 @@
 		C9F03C4B19170F5400355991 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2D19170F5400355991 /* UIKit.framework */; };
 		C9F03C5319170F5400355991 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9F03C5119170F5400355991 /* InfoPlist.strings */; };
 		C9F03C5519170F5400355991 /* SGClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C5419170F5400355991 /* SGClientTests.m */; };
-		C9F03C6019170F8A00355991 /* data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C9F03C5F19170F8A00355991 /* data.sqlite */; };
 		C9F03C6F1917108F00355991 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C661917108F00355991 /* FMDatabase.m */; };
 		C9F03C701917108F00355991 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C681917108F00355991 /* FMResultSet.m */; };
 		C9F03C711917108F00355991 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F03C6A1917108F00355991 /* FMDatabaseQueue.m */; };
@@ -85,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E6302B41966CD5000F69573 /* data.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = data.sqlite; sourceTree = "<group>"; };
 		3E8A69C81958219C00748A3D /* SGDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDrawViewController.h; sourceTree = "<group>"; };
 		3E8A69C91958219C00748A3D /* SGDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDrawViewController.m; sourceTree = "<group>"; };
 		3EF45B5819593E5700488D28 /* testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,7 +161,6 @@
 		C9F03C5019170F5400355991 /* SGClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SGClientTests-Info.plist"; sourceTree = "<group>"; };
 		C9F03C5219170F5400355991 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C9F03C5419170F5400355991 /* SGClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SGClientTests.m; sourceTree = "<group>"; };
-		C9F03C5F19170F8A00355991 /* data.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = data.sqlite; sourceTree = "<group>"; };
 		C9F03C641917108F00355991 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
 		C9F03C651917108F00355991 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		C9F03C661917108F00355991 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -523,7 +523,7 @@
 		C9F03C781917118C00355991 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				C9F03C5F19170F8A00355991 /* data.sqlite */,
+				3E6302B41966CD5000F69573 /* data.sqlite */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -687,10 +687,10 @@
 				C9EBBB0D194E92B4005DE69A /* WebViewJavascriptBridge.js.txt in Resources */,
 				C9EBBB1D194E9A32005DE69A /* SGRoomCell.xib in Resources */,
 				C9CF65FD194DE83B00957BB1 /* tab_bar_pic_wall_icon.png in Resources */,
+				3E6302B51966CD5000F69573 /* data.sqlite in Resources */,
 				C9F03C4219170F5400355991 /* Images.xcassets in Resources */,
 				C9CF65F3194DE75B00957BB1 /* tabbar_separate_g_line_v.png in Resources */,
 				C9CF65F7194DE79700957BB1 /* tabbar_separate_selected_bg.png in Resources */,
-				C9F03C6019170F8A00355991 /* data.sqlite in Resources */,
 				C9CF65F5194DE78900957BB1 /* tabbar_separate_line.png in Resources */,
 				C903CD9B19526D83000C51FE /* pick_bg@2x.png in Resources */,
 				C9CF65FB194DE82F00957BB1 /* tab_bar_pic_setting_icon.png in Resources */,
@@ -928,7 +928,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
 				INFOPLIST_FILE = "SGClient/SGClient-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -944,7 +944,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
 				INFOPLIST_FILE = "SGClient/SGClient-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1000,6 +1000,7 @@
 				3EF45B6A19593E5700488D28 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C9F03C2119170F5400355991 /* Build configuration list for PBXProject "SGClient" */ = {
 			isa = XCConfigurationList;

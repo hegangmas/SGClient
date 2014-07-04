@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SGLeftDockItem.h"
+#import "SGLeftDock.h"
 
 @interface SGHomeViewController : UIViewController
-
+@property (nonatomic,strong) SGLeftDock* leftDock;
 @end

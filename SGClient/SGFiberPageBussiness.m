@@ -20,29 +20,29 @@
 /*－－－－－－－－－－－－－－－－－
  根据CableId 获取纤芯信息列表
  －－－－－－－－－－－－－－－－－*/
-#define FP_GetFiberItemList(cableId) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id,\
+#define FP_GetFiberItemList(cableId) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id, \
                       [index],fiber_color,pipe_color,reserve from fiber where cable_id = %d order by [index]",cableId]
 
 
 /*－－－－－－－－－－－－－－－－－
  根据两个端口 获取fiber
  －－－－－－－－－－－－－－－－－*/
-#define FP_GetFiberItem(p1,p2) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id,\
-                      [index],fiber_color,pipe_color,reserve from fiber where (port1_id = %@ and port2_id = %@) or \
+#define FP_GetFiberItem(p1,p2) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id, \
+                      [index],fiber_color,pipe_color,reserve from fiber where (port1_id = %@ and port2_id = %@) or  \
                           (port2_id = %@ and port1_id = %@)",p1,p2,p1,p2]
 
 /*－－－－－－－－－－－－－－－－－
  根据两个端口号 获取另外两个端口
  －－－－－－－－－－－－－－－－－*/
 #define FP_GetAnotherTwoPorts(p1,p2) [NSString stringWithFormat:@"select a.port1_id from(\
-                      select port1_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union\
-                      select port2_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union\
-                      select port1_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union\
-                      select port2_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@  ) a \
+                      select port1_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union \
+                      select port2_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union \
+                      select port1_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union \
+                      select port2_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@  ) a  \
                             where a.port1_id not in (%@,%@)",p1,p1,p1,p1,p2,p2,p2,p2,p1,p2]
 
 
-#define FP_CheckPortOrder(p1,p2) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id,\
+#define FP_CheckPortOrder(p1,p2) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id, \
 [index],fiber_color,pipe_color,reserve from fiber where (port1_id = %@ and port2_id = %@) or (port2_id = %@  and port1_id = %@)",p1,p2,p1,p2]
 
 /*－－－－－－－－－－－－－－－－－
@@ -57,9 +57,24 @@
 /*－－－－－－－－－－－－－－－－－
  根据端口号 获取device信息
  －－－－－－－－－－－－－－－－－*/
-#define FP_GetDeviceInfo(p) [NSString stringWithFormat:@"select device.description from device\
-               inner join board on device.device_id=board.device_id inner join port on board.board_id=port.board_id\
+#define FP_GetDeviceInfo(p) [NSString stringWithFormat:@"select device.description from device \
+               inner join board on device.device_id=board.device_id inner join port on board.board_id=port.board_id \
                where port.port_id = %@",p]
+
+/*－－－－－－－－－－－－－－－－－
+ 根据端口号 获取ODF端口的device信息
+ －－－－－－－－－－－－－－－－－*/
+#define FP_GetDeviceInfoForOdf(p) [NSString stringWithFormat:@"select device.name as description from device \
+    inner join board on device.device_id=board.device_id inner join port on board.board_id=port.board_id \
+where port.port_id = %@",p]
+
+/*－－－－－－－－－－－－－－－－－
+ 判断端口是否属于屏柜
+ －－－－－－－－－－－－－－－－－*/
+#define FP_GetCubicleIdWithPort(p) [NSString stringWithFormat:@"select device.cubicle_id as port1_id from device \
+    inner join board on device.device_id=board.device_id inner join port on board.board_id=port.board_id \
+where port.port_id = %@",p]
+
 
 /*－－－－－－－－－－－－－－－－－
  根据端口号 获取port board信息
@@ -70,28 +85,31 @@
  获取TX信息
  －－－－－－－－－－－－－－－－－*/
 #define FP_GetTXInfo(p1,p2) [NSString stringWithFormat:@"select cable.name ||':'||fiber.[index] as description from cable \
-                                                      inner join fiber on cable.cable_id = fiber.cable_id\
+                                                      inner join fiber on cable.cable_id = fiber.cable_id \
                                                             where (fiber.port1_id = %@ and fiber.port2_id = %@) or (fiber.port2_id = %@ and fiber.port1_id = %@)",p1,p2,p1,p2]
 /*－－－－－－－－－－－－－－－－－
  获取Port Type ODF信息
  －－－－－－－－－－－－－－－－－*/
 #define FP_GetODFInfo(p) [NSString stringWithFormat:@"select name,type from port where port_id = %@",p]
 
-#define FP_GetFiberItems(p) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id,\
+#define FP_GetFiberItems(p) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id, \
                    [index],fiber_color,pipe_color,reserve from fiber where port1_id = %@ or port2_id = %@",p,p]
 
 #define FP_GetCableType(c) [NSString stringWithFormat:@"select cable_type as type from cable where cable_id = %@",c]
 
-#define FP_GetTLGroupPort(p) [NSString stringWithFormat:@"select port_id as port1_id from \
-                                  (select port_id from port where board_id = (\
-                                    select board_id from port where port_id = %@) and [group] =  (\
+#define FP_GetTLGroupPort(p) [NSString stringWithFormat:@"select port_id as port1_id from  \
+                                  (select port_id from port where board_id = ( \
+                                    select board_id from port where port_id = %@) and [group] =  ( \
                                     select [group] from port where port_id = %@)) a where a.port_id!=%@",p,p,p]
 
 @interface SGFiberPageBussiness()
+
+@property (nonatomic,assign) NSInteger cubicleId;
 @property (nonatomic,assign) BOOL findGroupRecord;
 @property (nonatomic,assign) NSInteger cableType;
 @property (nonatomic,strong) NSArray *infoSetOrder;
 @property (nonatomic,strong) NSMutableArray *portList;
+@property (nonatomic,strong) NSMutableArray *typePortList;
 @property (nonatomic,strong) NSMutableDictionary *cachedSet;
 @end
 
@@ -121,18 +139,16 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 /*－－－－－－－－－－－－－－－－－
  根据CableId 获取纤芯信息列表
  －－－－－－－－－－－－－－－－－*/
--(NSArray*)queryFiberInfoWithCableId:(NSInteger)cableId{
+-(NSArray*)queryFiberInfoWithCableId:(NSInteger)cableId withCubicleId:(NSInteger)cubicleId{
     
-    self.portList = [NSMutableArray array];
-    self.cachedSet = [NSMutableDictionary dictionary];
-    
+    self.cubicleId = cubicleId;
     NSString* _cableId = [NSString stringWithFormat:@"%d",cableId];
     self.cableType = [[(SGInfoSetItem*)[[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCableType(_cableId)] withEntity:@"SGInfoSetItem"] objectAtIndex:0] type] integerValue];
     
     //根据CableId 查询表 fiber
     NSArray* fiberList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberItemList(cableId)]
                                                withEntity:@"SGFiberItem"];
-    NSMutableArray *retList = [NSMutableArray array];
+    __block NSMutableArray *retList = [NSMutableArray array];
     
 
     
@@ -141,44 +157,49 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
         SGResult *resultItem   = [[SGResult alloc] init];
         SGFiberItem *fiberItem = (SGFiberItem*)obj;
         
-        [self fillTypeFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
-        [self fillDeviceFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
-        [self fillPortFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
-        [self fillMiddleFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
         
-        switch (self.cableType) {
-                
-            case CABLETYPE0:
-                [self fillTXFieldWithSGResult :resultItem withSGFiberItem:fiberItem];
-                [self fillOdfFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
-                break;
-            case CABLETYPE1:
-                break;
-            case CABLETYPE2:
-                [self fillMiddleFieldForType2WithResultItem:resultItem];
-                break;
-            default:
-                break;
+        if ([self fillTypeFieldWithSGResult  :resultItem withSGFiberItem:fiberItem]) {
+            [self fillDeviceFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
+            [self fillPortFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
+            [self fillMiddleFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
+            
+            switch (self.cableType) {
+                    
+                case CABLETYPE0:
+                    [self fillTXFieldWithSGResult :resultItem withSGFiberItem:fiberItem];
+                    [self fillOdfFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
+                    break;
+                case CABLETYPE1:
+                    break;
+                case CABLETYPE2:
+//                    [self fillMiddleFieldForType2WithResultItem:resultItem];
+                    break;
+                default:
+                    break;
+            }
         }
+  
         [retList addObject:resultItem];
+        
+        //如果是跳纤再找出Group对应的数据
+        if (self.cableType == CABLETYPE2) {
+            _findGroupRecord = YES;
+            SGResult *resultItem   = [[SGResult alloc] init];
+            [self fillTypeFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
+            [self fillDeviceFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
+            [self fillPortFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
+            [self fillMiddleFieldForType2WithResultItem:resultItem];
+            
+            [retList addObject:resultItem];
+            _findGroupRecord = NO;
+            
+            if ([[resultItem.port1 lowercaseString] rangeOfString:@"tx"].location!=NSNotFound) {
+                retList = [[[retList reverseObjectEnumerator] allObjects] mutableCopy];
+             }
+        }
         
     }];
-    
-    //如果是跳纤再找出Group对应的数据
-    if (self.cableType == CABLETYPE2) {
-        
-        _findGroupRecord = YES;
-        SGResult *resultItem   = [[SGResult alloc] init];
-        SGFiberItem *fiberItem;
-        
-        [self fillTypeFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
-        [self fillDeviceFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
-        [self fillPortFieldWithSGResult  :resultItem withSGFiberItem:fiberItem];
-        [self fillMiddleFieldForType2WithResultItem:resultItem];
  
-        [retList addObject:resultItem];
-        _findGroupRecord = NO;
-    }
     
     return retList;
 //    return [self buildXMLForResultSet:retList];
@@ -261,20 +282,35 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
  －－－－－－－－－－－－－－－－－*/
 -(void)fillTXFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
     
-    NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTXInfo([self.portList objectAtIndex:0],fiberItem.port1_id)]
-                                          withEntity:@"SGInfoSetItem"];
+    NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTXInfo([self.portList objectAtIndex:0],fiberItem.port1_id)] withEntity:@"SGInfoSetItem"];
     
-    if ([desc count]) {
-        resultItem.tx1 = [(SGInfoSetItem*)[desc objectAtIndex:0] description];
-    }
+    if (desc.count) {
+            resultItem.tx1 = [[desc objectAtIndex:0] description];
+        }else{
+            desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTXInfo([self.portList objectAtIndex:0],fiberItem.port2_id)]
+                                         withEntity:@"SGInfoSetItem"];
+            if (desc.count) {
+                resultItem.tx1 = [[desc objectAtIndex:0] description];
+            }
+        }
+    
+    
+    
     
     
     desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTXInfo([self.portList objectAtIndex:1],fiberItem.port2_id)]
                                  withEntity:@"SGInfoSetItem"];
     
-    if ([desc count]) {
-        resultItem.tx2 = [(SGInfoSetItem*)[desc objectAtIndex:0] description];
-    }
+        if (desc.count){
+            resultItem.tx2 = [[desc objectAtIndex:0] description];
+        }else{
+            desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTXInfo([self.portList objectAtIndex:1],fiberItem.port1_id)]
+                                         withEntity:@"SGInfoSetItem"];
+            if (desc.count) {
+                resultItem.tx2 = [[desc objectAtIndex:0] description];
+            }
+        }
+
 }
 
 /*－－－－－－－－－－－－－－－－－
@@ -297,30 +333,65 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
  获取Device
  －－－－－－－－－－－－－－－－－*/
 -(void)fillDeviceFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+    
     NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetDeviceInfo([self.portList objectAtIndex:0])]
                                           withEntity:@"SGInfoSetItem"];
     
-    if ([desc count]) {
-        resultItem.device1 = [[desc objectAtIndex:0] description];
+    if (desc.count) {
+        if (![[[desc objectAtIndex:0] description] isEqualToString:@""]) {
+            resultItem.device1 = [[desc objectAtIndex:0] description];
+        }else{
+            desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetDeviceInfoForOdf([self.portList objectAtIndex:0])]
+                                         withEntity:@"SGInfoSetItem"];
+            if (desc.count) {
+                resultItem.device1 = [[desc objectAtIndex:0] description];
+            }
+        }
     }
     
     
     desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetDeviceInfo([self.portList objectAtIndex:1])]
                                  withEntity:@"SGInfoSetItem"];
     
-    if ([desc count]) {
-        resultItem.device2 = [[desc objectAtIndex:0] description];
+    if (desc.count) {
+        if (![[[desc objectAtIndex:0] description] isEqualToString:@""]) {
+            resultItem.device2 = [[desc objectAtIndex:0] description];
+        }else{
+            desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetDeviceInfoForOdf([self.portList objectAtIndex:1])]
+                                         withEntity:@"SGInfoSetItem"];
+            if (desc.count) {
+                resultItem.device2 = [[desc objectAtIndex:0] description];
+            }
+        }
+    }
+}
+
+-(void)resortPortList{
+ 
+    NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCubicleIdWithPort([self.portList objectAtIndex:0])]
+                                          withEntity:@"SGFiberItem"];
+    if (desc.count) {
+        SGFiberItem* fiberItem = desc[0];
+        if (!([fiberItem.port1_id integerValue] == self.cubicleId)) {
+            self.portList = [[[self.portList reverseObjectEnumerator] allObjects] copy];
+        }
     }
 }
 
 /*－－－－－－－－－－－－－－－－－
  获取Type
  －－－－－－－－－－－－－－－－－*/
--(void)fillTypeFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+-(BOOL)fillTypeFieldWithSGResult:(SGResult*)resultItem withSGFiberItem:(SGFiberItem*)fiberItem{
+    
+    self.portList = [NSMutableArray array];
+    self.typePortList = [NSMutableArray array];
+    self.cachedSet = [NSMutableDictionary dictionary];
+    
     //如果是备用
     if ([fiberItem.reserve isEqualToString:@"1"]) {
         resultItem.type1 = @"备用";
         resultItem.type2 = resultItem.type1;
+        return NO;
     }else{
         
         switch (self.cableType) {
@@ -332,37 +403,49 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                 
                 self.portList = [NSMutableArray arrayWithObjects:[[self.portList objectAtIndex:0] port1_id],
                                                                  [[self.portList objectAtIndex:1] port1_id],nil];
+                self.typePortList = [self.portList mutableCopy];
                 break;
                 
                 //如果是尾缆
             case CABLETYPE1:
+                self.portList = [NSMutableArray arrayWithObjects:fiberItem.port1_id,fiberItem.port2_id, nil];
                 [self getNonOdfPortsForWLWithSGFiberItem:fiberItem];
                 break;
                 
                 //如果是跳纤
             case CABLETYPE2:
-                [self getNonOdfPortsForWLWithSGFiberItem:fiberItem];
-                
+
                 if (_findGroupRecord) {
+                    self.portList = [NSMutableArray arrayWithObjects:fiberItem.port1_id,fiberItem.port2_id, nil];
                     [self getNewPairPortsByGroupForType2];
+                    
+                    fiberItem = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberItems(self.portList[0])]
+                                                       withEntity:@"SGFiberItem"][0];
+                    
+                    self.portList = [NSMutableArray arrayWithObjects:fiberItem.port1_id,fiberItem.port2_id, nil];
+                    [self getNonOdfPortsForWLWithSGFiberItem:fiberItem];
+                    
+                 }else{
+                    self.portList = [NSMutableArray arrayWithObjects:fiberItem.port1_id,fiberItem.port2_id, nil];
+                    [self getNonOdfPortsForWLWithSGFiberItem:fiberItem];
                 }
                 break;
-                
-            default:
-                break;
         }
+        
+        [self resortPortList];
+        
         if ([self checkPortListOrderWithSGFiberItem:fiberItem]) {
-            self.portList = [[[self.portList reverseObjectEnumerator] allObjects] copy];
+            self.typePortList = [[[self.typePortList reverseObjectEnumerator] allObjects] copy];
         }
 
-            if ([self.portList count]) {
-                NSArray* infoSetList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetInfoSetList([self.portList objectAtIndex:0],
-                                                                                                                      [self.portList objectAtIndex:1])]
+            if ([self.typePortList count]) {
+                NSArray* infoSetList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetInfoSetList([self.typePortList objectAtIndex:0],
+                                                                                                                      [self.typePortList objectAtIndex:1])]
                                                              withEntity:@"SGInfoSetItem"];
                 //用这两个端口遍历infoset表的顺序链
                 for(SGInfoSetItem* infosetItem in infoSetList){
                     //两个端口匹配顺序链
-                    if ([self checkInfoSetChainWithInfoSetItem:infosetItem withPorts:self.portList]) {
+                    if ([self checkInfoSetChainWithInfoSetItem:infosetItem withPorts:self.typePortList]) {
                         NSMutableString* type = [[NSMutableString alloc] init];
                         BOOL flag = [self checkIfSwFieldAllZeroWithInfoSetItem:infosetItem];
                         switch ([infosetItem.type integerValue]) {
@@ -383,14 +466,14 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                                 [type appendString:@"GOOSE/SV"];
                                 if (flag) {[type appendString:@"直连"];}
                                 break;
-                            default:
-                                break;
                         }
+                        
                         resultItem.type1 = type;
                         resultItem.type2 = type;
                     };
                 }
         }}
+    return YES;
 }
 
 /*－－－－－－－－－－－－－－－－－
@@ -416,7 +499,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 -(void)getNonOdfPortsForWLWithSGFiberItem:(SGFiberItem*)fiberItem{
 
     //两个端口都找到返回
-    if ([self.portList count]==2) {
+    if ([self.typePortList count]==2) {
         return;
     }
     NSArray* ports = [NSArray arrayWithObjects:fiberItem.port1_id,fiberItem.port2_id,nil];
@@ -433,12 +516,12 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
             //如果Type!=2添加
             if(![[(SGInfoSetItem*)[portInfo objectAtIndex:0] type] isEqualToString:@"2"]){
 
-                if (!self.portList) {
-                    self.portList = [NSMutableArray array];
+                if (!self.typePortList) {
+                    self.typePortList = [NSMutableArray array];
                 }
                 
-                if (![self.portList containsObject:port]) {
-                    [self.portList addObject:port];
+                if (![self.typePortList containsObject:port]) {
+                    [self.typePortList addObject:port];
                 }
                 
             //Type为2即ODF继续查找
@@ -462,7 +545,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 
 -(BOOL)checkPortListOrderWithSGFiberItem:(SGFiberItem*)fiberItem{
     
-    NSArray* retList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_CheckPortOrder([self.portList objectAtIndex:0], fiberItem.port1_id)]
+    NSArray* retList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_CheckPortOrder([self.typePortList objectAtIndex:0], fiberItem.port1_id)]
                           withEntity:@"SGFiberItem"];
     if (retList) {
         if ([retList count]) {

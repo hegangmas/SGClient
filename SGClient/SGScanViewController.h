@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SGBaseViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "SGHomeViewController.h"
+
 
 @interface SGScanViewController : SGBaseViewController<AVCaptureMetadataOutputObjectsDelegate>
 {
@@ -24,4 +26,5 @@
 @property (strong,nonatomic)AVCaptureVideoPreviewLayer * preview;
 @property (nonatomic, retain) UIImageView * line;
 
+@property(nonatomic,strong) SGHomeViewController* mainController;
 @end

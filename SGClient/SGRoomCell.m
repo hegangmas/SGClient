@@ -46,6 +46,7 @@
 -(void)setData:(NSDictionary *)data{
     _data = data;
     self.roomInfo.text = [data objectForKey:@"name"];
+    [self.deviceListView reloadData];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -68,12 +69,16 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = (UITableViewCell*)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil)
-    {
-        cell                    = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        
-    }
+//    UITableViewCell *cell = (UITableViewCell*)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if(cell == nil)
+//    {
+//        cell                    = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//        
+//    }
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    
+    
     cell.contentView.backgroundColor = RGB(107, 103, 185);
     cell.textLabel.font = [UIFont italicSystemFontOfSize:15.0];
     cell.textLabel.textColor = [UIColor whiteColor];
