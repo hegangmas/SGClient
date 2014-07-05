@@ -11,4 +11,7 @@
 
 @interface SGMainViewController : SGBaseViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
+
+//扫码功能调用接口
+-(void)scanModeWithCubicleId:(NSInteger)cubicleId withCableId:(NSInteger)cableId;
 @end

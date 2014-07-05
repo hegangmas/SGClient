@@ -31,7 +31,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
 	UIButton * scanButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [scanButton setTitle:@"取消" forState:UIControlStateNormal];
-    scanButton.frame = CGRectMake(200, 500, 120, 40);
+    [scanButton.titleLabel setFont:[UIFont systemFontOfSize:20.0]];
+    scanButton.frame = CGRectMake(250, 500, 120, 40);
     [scanButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:scanButton];
     
@@ -39,7 +40,7 @@
     labIntroudction.textAlignment = NSTextAlignmentCenter;
     labIntroudction.backgroundColor = [UIColor clearColor];
     labIntroudction.textColor=[UIColor whiteColor];
-    labIntroudction.text=@"将二维码图像置于矩形方框内，离手机摄像头10CM左右。";
+    labIntroudction.text=@"将二维码图像置于矩形方框内，离摄像头10CM左右。";
     [self.view addSubview:labIntroudction];
     
     UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(150, 150, 300, 300)];
@@ -124,24 +125,19 @@
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
         stringValue = metadataObject.stringValue;
     }
-    
     [_session stopRunning];
-    
     
     [self dismissViewControllerAnimated:YES completion:^
      {
          [timer invalidate];
+         NSLog(@"%@",stringValue);
          
-         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"扫描结果"
-                                                         message:stringValue
-                                                        delegate:self
-                                               cancelButtonTitle:@"OK"
-                                               otherButtonTitles:nil, nil];
-         [alert show];
-         
+         NSArray* result = [stringValue componentsSeparatedByString:@":"];
          [self.mainController.leftDock setDefaultSelected];
          
-          
-     }];
+         [self.mainController.currentChild popToRootViewControllerAnimated:NO];
+         SGMainViewController* mainController = (SGMainViewController*)self.mainController.currentChild.childViewControllers[0];
+         [mainController scanModeWithCubicleId:[result[1] integerValue] withCableId:[result[2] integerValue]];
+       }];
 }
 @end

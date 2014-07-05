@@ -8,6 +8,8 @@
 
 #import "SGBaseBussiness.h"
 
+@class SGCPDataItem;
+
 @interface SGCablePageBussiness : SGBaseBussiness
 
 +(SGCablePageBussiness*)sharedSGCablePageBussiness;
@@ -16,6 +18,8 @@
  根据CubicleId获取光缆 尾缆 跳缆的连接
  －－－－－－－－－－－－－－－－－*/
 -(NSDictionary*)queryCablelistWithCubicleId:(NSInteger)cubicleId;
+
+-(SGCPDataItem*)queryCalbleInfoWithCableId:(NSInteger)cableId;
 
 @end
 

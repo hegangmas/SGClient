@@ -74,9 +74,7 @@ float rOffset = 10;
     }
     
     for(int i = 0; i < self.connection.count;i++){
-        
         id cubicle = self.connection[i];
-        
         if (i==0) {
             
             [svgStr appendString:DrawRect(margin_x  + i*(cWidth+linelen),

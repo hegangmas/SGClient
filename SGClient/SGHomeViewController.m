@@ -15,8 +15,7 @@
 
 
 @property (nonatomic,strong) NSMutableDictionary *children;
-@property (nonatomic,strong) UINavigationController *currentChild;
-@property (nonatomic,strong) UINavigationController *mainController;
+
 
 @end
 
@@ -60,14 +59,13 @@
         [controller setTitle:dockItem.title];
         nav = [[UINavigationController alloc] initWithRootViewController:controller];
         nav.view.autoresizingMask = UIViewAutoresizingNone;
-
         if (dockItem.isModalShow) {
             
             nav.modalPresentationStyle = UIModalPresentationFormSheet;
 
             if ([controller isKindOfClass:[SGScanViewController class]]) {
                 SGScanViewController* scan = (SGScanViewController*)controller;
-                [scan setMainController:self.mainController];
+                [scan setMainController:self];
             }
             
             [self presentViewController:nav animated:YES completion:nil];
@@ -89,9 +87,9 @@
     [self.view addSubview:nav.view];
     _currentChild = nav;
     
-    if ([_currentChild.title isEqualToString:@"主页"]) {
-        self.mainController = _currentChild;
-    }
+//    if ([_currentChild.title isEqualToString:@"主页"]) {
+//        self.mainController = _currentChild;
+//    }
 }
 
 #pragma mark 即将旋转屏幕的时候自动调用

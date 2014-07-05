@@ -106,6 +106,15 @@
 
 
 
+/*－－－－－－－－－－－－－－－－－
+ SQL 根据cableId
+ 
+ 获取Cable信息
+ －－－－－－－－－－－－－－－－－*/
+#define CP_GetCableInfo(c) [NSString stringWithFormat:@"select cable_id,cable_type,cable.name as cable_name from cable where cable_id = %d",c]
+
+
+
 @implementation SGCablePageBussiness
 
 GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
@@ -122,6 +131,11 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     return self;
 }
 
+-(SGCPDataItem*)queryCalbleInfoWithCableId:(NSInteger)cableId{
+    
+    return [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCableInfo(cableId)]
+                                 withEntity:@"SGCPDataItem"][0];
+}
 
 /*－－－－－－－－－－－－－－－－－－－－－
  根据请求CubicleId返回XML STRING

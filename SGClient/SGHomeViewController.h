@@ -12,4 +12,6 @@
 
 @interface SGHomeViewController : UIViewController
 @property (nonatomic,strong) SGLeftDock* leftDock;
+@property (nonatomic,strong) UINavigationController *currentChild;
+
 @end

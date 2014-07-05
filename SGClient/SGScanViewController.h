@@ -10,6 +10,7 @@
 #import "SGBaseViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SGHomeViewController.h"
+#import "SGMainViewController.h"
 
 
 @interface SGScanViewController : SGBaseViewController<AVCaptureMetadataOutputObjectsDelegate>

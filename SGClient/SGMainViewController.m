@@ -154,10 +154,24 @@
     [self.roomView reloadData];
 }
 
+#pragma mark - 用户点击入口 加载下一级界面
 -(void)cellDidSeletedWithCubicleId:(NSDictionary*)cubicleData{
     SGCableViewController* cableController = [[SGCableViewController alloc] init];
     [cableController setCubicleData:cubicleData];
     [self.navigationController pushViewController:cableController animated:YES];
+}
+
+#pragma mark - 扫码入口 加载下一级界面
+-(void)scanModeWithCubicleId:(NSInteger)cubicleId withCableId:(NSInteger)cableId{
+
+    for(NSDictionary* dic in self.roomList){
+        for(NSDictionary* subDic in dic[@"cubicle"]){
+            if ([subDic[@"id"] integerValue] == cubicleId) {
+                SGCableViewController* cableController = [[SGCableViewController alloc] initWithCubicleData:subDic withCubicleId:cubicleId withCableId:cableId];
+                [self.navigationController pushViewController:cableController animated:NO];
+            }
+        }
+    }
 }
 
 ////UICollectionView被选中时调用的方法

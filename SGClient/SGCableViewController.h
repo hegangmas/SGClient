@@ -11,4 +11,10 @@
 
 @interface SGCableViewController : SGDrawViewController
 @property (nonatomic,strong) NSDictionary *cubicleData;
+
+@property (nonatomic,assign) NSInteger scannedCubicleId;
+@property (nonatomic,assign) NSInteger scannedCableId;
+
+-(instancetype)initWithCubicleData:(NSDictionary*)cubicleData withCubicleId:(NSInteger)cubicleId withCableId:(NSInteger)cableId;
+
 @end

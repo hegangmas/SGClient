@@ -13,6 +13,7 @@
 @interface SGCableViewController ()<UIWebViewDelegate>
 
 @property (nonatomic,strong) NSDictionary* data;
+@property (nonatomic,assign) BOOL isScanMode;
 @end
 
 @implementation SGCableViewController
@@ -23,6 +24,45 @@
     if (self) {
     }
     return self;
+}
+
+#pragma mark - 扫描初始化入口
+-(instancetype)initWithCubicleData:(NSDictionary*)cubicleData withCubicleId:(NSInteger)cubicleId withCableId:(NSInteger)cableId{
+
+    if (self = [super init]) {
+        _scannedCubicleId = cubicleId;
+        _scannedCableId = cableId;
+        _cubicleData = cubicleData;
+  
+        _isScanMode = YES;
+    }
+    return self;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+    //如果是扫码动作 直接跳过进入下一级界面
+    if (_isScanMode) {
+        _isScanMode = NO;
+        SGCablePageBussiness* bussiness = [SGCablePageBussiness sharedSGCablePageBussiness];
+        id cable = [bussiness queryCalbleInfoWithCableId:_scannedCableId];
+        
+        SGFiberViewController *fiber = [SGFiberViewController new];
+        [fiber setCableId:[NSString stringWithFormat:@"%d",_scannedCableId]];
+        [fiber setCubicleId:[NSString stringWithFormat:@"%d",_scannedCubicleId]];
+        [fiber setCableName:[cable valueForKey:@"cable_name"]];
+        [fiber setCableType:[[cable valueForKey:@"cable_type"] integerValue]];
+        
+        for(NSArray* array in [self.data valueForKey:@"type1"]){
+            
+            id item = array[1];
+            if ([[item valueForKey:@"cable_name"] isEqualToString:[cable valueForKey:@"cable_name"]]) {
+                [fiber setConnection:array];
+            }
+        }
+        [self.navigationController pushViewController:fiber animated:NO];
+    }
 }
 
 - (void)viewDidLoad
