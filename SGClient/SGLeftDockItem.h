@@ -15,5 +15,5 @@
 @property (nonatomic,strong) NSString *controller;
 @property (nonatomic,assign) BOOL isModalShow;
 
-+(SGLeftDockItem*)initWithTitle:(NSString*)title withBgImage:(NSString*)bgImage withController:(NSString*)controller withModalShow:(BOOL)isModalShow;
++(instancetype)initWithTitle:(NSString*)title withBgImage:(NSString*)bgImage withController:(NSString*)controller withModalShow:(BOOL)isModalShow;
 @end

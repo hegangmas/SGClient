@@ -38,7 +38,6 @@
     [super viewDidLoad];
     self.title = [NSString stringWithFormat:@"%@线缆信息",_cableName];
     [self.webView setScalesPageToFit:YES];
-    NSLog(@"TYPE:_____  %d",_cableType);
 }
 
 
@@ -280,7 +279,7 @@ float rOffset = 10;
                                        60.0)];
         
         [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",hOffset, 40.0]];
-        for(int j = beginIndex; j <= endIndex; j++){
+        for(NSInteger j = beginIndex; j <= endIndex; j++){
             
             if (j == beginIndex) {
                 
@@ -309,7 +308,7 @@ float rOffset = 10;
             
             [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",hOffset, 40.0]];
             
-            for(int j = beginIndex; j <= endIndex; j++){
+            for(NSInteger j = beginIndex; j <= endIndex; j++){
                 if (j == beginIndex) {
                     
                     [svgStr appendString:DrawSpanStart(hOffset + rOffset,
@@ -359,7 +358,7 @@ float rOffset = 10;
     
     float total = 0;
     
-    for(int i = begin ;i<= end;i++){
+    for(NSInteger i = begin ;i<= end;i++){
         total += [array[i] floatValue];
     }
     return total;

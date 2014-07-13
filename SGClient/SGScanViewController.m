@@ -135,9 +135,15 @@
          NSArray* result = [stringValue componentsSeparatedByString:@":"];
          [self.mainController.leftDock setDefaultSelected];
          
-         [self.mainController.currentChild popToRootViewControllerAnimated:NO];
-         SGMainViewController* mainController = (SGMainViewController*)self.mainController.currentChild.childViewControllers[0];
-         [mainController scanModeWithCubicleId:[result[1] integerValue] withCableId:[result[2] integerValue]];
+         if ([stringValue rangeOfString:@"C"].location!=NSNotFound) {
+             if (result.count == 3) {
+                 [self.mainController.currentChild popToRootViewControllerAnimated:NO];
+                 SGMainViewController* mainController = (SGMainViewController*)self.mainController.currentChild.childViewControllers[0];
+                 [mainController scanModeWithCubicleId:[result[1] integerValue] withCableId:[result[2] integerValue]];
+             }
+         }
+         
+
        }];
 }
 @end

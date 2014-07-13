@@ -12,7 +12,7 @@
 
 @implementation SGLeftDockItem
 
-+(SGLeftDockItem*)initWithTitle:(NSString*)title withBgImage:(NSString*)bgImage withController:(NSString*)controller withModalShow:(BOOL)isModalShow{
++(instancetype)initWithTitle:(NSString*)title withBgImage:(NSString*)bgImage withController:(NSString*)controller withModalShow:(BOOL)isModalShow{
     
     SGLeftDockItem *leftDockItem = [SGLeftDockItem new];
     leftDockItem.title = title;

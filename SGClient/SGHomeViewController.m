@@ -86,10 +86,6 @@
     nav.view.frame = CGRectMake(_leftDock.frame.size.width, 0, width, _leftDock.frame.size.height);
     [self.view addSubview:nav.view];
     _currentChild = nav;
-    
-//    if ([_currentChild.title isEqualToString:@"主页"]) {
-//        self.mainController = _currentChild;
-//    }
 }
 
 #pragma mark 即将旋转屏幕的时候自动调用

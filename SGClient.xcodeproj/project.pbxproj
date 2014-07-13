@@ -27,13 +27,6 @@
 		C9CF65E9194DCBB500957BB1 /* SGScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF65E8194DCBB500957BB1 /* SGScanViewController.m */; };
 		C9CF65ED194DCDB200957BB1 /* SGLeftDockButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF65EC194DCDB200957BB1 /* SGLeftDockButton.m */; };
 		C9CF65F0194DCF6400957BB1 /* UIImage+Fit.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF65EF194DCF6400957BB1 /* UIImage+Fit.m */; };
-		C9CF65F3194DE75B00957BB1 /* tabbar_separate_g_line_v.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65F2194DE75B00957BB1 /* tabbar_separate_g_line_v.png */; };
-		C9CF65F5194DE78900957BB1 /* tabbar_separate_line.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65F4194DE78900957BB1 /* tabbar_separate_line.png */; };
-		C9CF65F7194DE79700957BB1 /* tabbar_separate_selected_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65F6194DE79700957BB1 /* tabbar_separate_selected_bg.png */; };
-		C9CF65F9194DE82200957BB1 /* tab_bar_app_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65F8194DE82200957BB1 /* tab_bar_app_icon.png */; };
-		C9CF65FB194DE82F00957BB1 /* tab_bar_pic_setting_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65FA194DE82F00957BB1 /* tab_bar_pic_setting_icon.png */; };
-		C9CF65FD194DE83B00957BB1 /* tab_bar_pic_wall_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65FC194DE83B00957BB1 /* tab_bar_pic_wall_icon.png */; };
-		C9CF65FF194DE97200957BB1 /* tabbar_separate_ugc_line_v.png in Resources */ = {isa = PBXBuildFile; fileRef = C9CF65FE194DE97200957BB1 /* tabbar_separate_ugc_line_v.png */; };
 		C9CF6602194DEDF600957BB1 /* SGBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF6601194DEDF600957BB1 /* SGBaseViewController.m */; };
 		C9DD683B194F19C7005776B5 /* SGSectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD683A194F19C7005776B5 /* SGSectionFooterView.m */; };
 		C9E1A226194C404900B6467B /* SGPortPageBussiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A225194C404900B6467B /* SGPortPageBussiness.m */; };
@@ -117,13 +110,6 @@
 		C9CF65EE194DCF6400957BB1 /* UIImage+Fit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Fit.h"; sourceTree = "<group>"; };
 		C9CF65EF194DCF6400957BB1 /* UIImage+Fit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Fit.m"; sourceTree = "<group>"; };
 		C9CF65F1194DDBC600957BB1 /* NUApp-Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NUApp-Macro.h"; sourceTree = "<group>"; };
-		C9CF65F2194DE75B00957BB1 /* tabbar_separate_g_line_v.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_separate_g_line_v.png; sourceTree = "<group>"; };
-		C9CF65F4194DE78900957BB1 /* tabbar_separate_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_separate_line.png; sourceTree = "<group>"; };
-		C9CF65F6194DE79700957BB1 /* tabbar_separate_selected_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_separate_selected_bg.png; sourceTree = "<group>"; };
-		C9CF65F8194DE82200957BB1 /* tab_bar_app_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_bar_app_icon.png; sourceTree = "<group>"; };
-		C9CF65FA194DE82F00957BB1 /* tab_bar_pic_setting_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_bar_pic_setting_icon.png; sourceTree = "<group>"; };
-		C9CF65FC194DE83B00957BB1 /* tab_bar_pic_wall_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_bar_pic_wall_icon.png; sourceTree = "<group>"; };
-		C9CF65FE194DE97200957BB1 /* tabbar_separate_ugc_line_v.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_separate_ugc_line_v.png; sourceTree = "<group>"; };
 		C9CF6600194DEDF600957BB1 /* SGBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGBaseViewController.h; sourceTree = "<group>"; };
 		C9CF6601194DEDF600957BB1 /* SGBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGBaseViewController.m; sourceTree = "<group>"; };
 		C9DD6839194F19C7005776B5 /* SGSectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGSectionFooterView.h; sourceTree = "<group>"; };
@@ -144,7 +130,7 @@
 		C9EBBB26194EB1DF005DE69A /* SGSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGSectionHeaderView.m; sourceTree = "<group>"; };
 		C9EDB66319513C9E00A62D08 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		C9EDB66519513CA900A62D08 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		C9F03C2619170F5400355991 /* SGClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SGClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9F03C2619170F5400355991 /* 智能标签.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "智能标签.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9F03C2919170F5400355991 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9F03C2B19170F5400355991 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C9F03C2D19170F5400355991 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -379,7 +365,7 @@
 		C9F03C2719170F5400355991 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C9F03C2619170F5400355991 /* SGClient.app */,
+				C9F03C2619170F5400355991 /* 智能标签.app */,
 				C9F03C4719170F5400355991 /* SGClientTests.xctest */,
 				3EF45B5819593E5700488D28 /* testTests.xctest */,
 			);
@@ -411,6 +397,7 @@
 				C9F03C6219170FAA00355991 /* External */,
 				C9F03C771917117000355991 /* Helper */,
 				C9F03C5E19170F8000355991 /* Resource */,
+				C9F03C4119170F5400355991 /* Images.xcassets */,
 				C9F03C3019170F5400355991 /* Supporting Files */,
 			);
 			path = SGClient;
@@ -531,14 +518,6 @@
 		C9F03C791917119A00355991 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				C9CF65FC194DE83B00957BB1 /* tab_bar_pic_wall_icon.png */,
-				C9CF65FA194DE82F00957BB1 /* tab_bar_pic_setting_icon.png */,
-				C9CF65F8194DE82200957BB1 /* tab_bar_app_icon.png */,
-				C9CF65F6194DE79700957BB1 /* tabbar_separate_selected_bg.png */,
-				C9CF65F4194DE78900957BB1 /* tabbar_separate_line.png */,
-				C9CF65FE194DE97200957BB1 /* tabbar_separate_ugc_line_v.png */,
-				C9CF65F2194DE75B00957BB1 /* tabbar_separate_g_line_v.png */,
-				C9F03C4119170F5400355991 /* Images.xcassets */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -611,7 +590,7 @@
 			);
 			name = SGClient;
 			productName = SGClient;
-			productReference = C9F03C2619170F5400355991 /* SGClient.app */;
+			productReference = C9F03C2619170F5400355991 /* 智能标签.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C9F03C4619170F5400355991 /* SGClientTests */ = {
@@ -682,22 +661,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9CF65F9194DE82200957BB1 /* tab_bar_app_icon.png in Resources */,
 				C903CD9A19526D83000C51FE /* line@2x.png in Resources */,
 				C9EBBB0D194E92B4005DE69A /* WebViewJavascriptBridge.js.txt in Resources */,
 				C9EBBB1D194E9A32005DE69A /* SGRoomCell.xib in Resources */,
-				C9CF65FD194DE83B00957BB1 /* tab_bar_pic_wall_icon.png in Resources */,
 				3E6302B51966CD5000F69573 /* data.sqlite in Resources */,
 				C9F03C4219170F5400355991 /* Images.xcassets in Resources */,
-				C9CF65F3194DE75B00957BB1 /* tabbar_separate_g_line_v.png in Resources */,
-				C9CF65F7194DE79700957BB1 /* tabbar_separate_selected_bg.png in Resources */,
-				C9CF65F5194DE78900957BB1 /* tabbar_separate_line.png in Resources */,
 				C903CD9B19526D83000C51FE /* pick_bg@2x.png in Resources */,
-				C9CF65FB194DE82F00957BB1 /* tab_bar_pic_setting_icon.png in Resources */,
 				C9F03C3419170F5400355991 /* InfoPlist.strings in Resources */,
 				C9F03C3D19170F5400355991 /* Main.storyboard in Resources */,
 				C9F03C821917168800355991 /* Localizable.strings in Resources */,
-				C9CF65FF194DE97200957BB1 /* tabbar_separate_ugc_line_v.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,7 +901,7 @@
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
 				INFOPLIST_FILE = "SGClient/SGClient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "智能标签";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -945,7 +917,7 @@
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
 				INFOPLIST_FILE = "SGClient/SGClient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "智能标签";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

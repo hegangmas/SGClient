@@ -10,6 +10,10 @@
 #import "SGCablePageBussiness.h"
 #import "SGFiberViewController.h"
 
+
+@implementation SGCableTmpItem
+@end
+
 @interface SGCableViewController ()<UIWebViewDelegate>
 
 @property (nonatomic,strong) NSDictionary* data;
@@ -68,6 +72,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.webView setScalesPageToFit:YES];
     self.title = [NSString stringWithFormat:@"%@连接图",self.cubicleData[@"name"]];
 }
 
@@ -114,11 +119,129 @@
     return YES;
 }
 
+-(id)getRandomFullLengthItemWithList:(NSArray*)list{
+    for(NSArray *a in list){
+        if (a.count>2) {
+            return a;
+        }
+    }
+    return nil;
+}
+
+-(SGCableTmpItem*)getGLCableWithConnection:(NSArray*)conn{
+    
+    NSUInteger index;
+    
+    for(int i = 0; i < conn.count;i++){
+        if ([[conn[i] valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]) {
+            index = i;
+            break;
+        }
+    }
+    
+    SGCableTmpItem *item = [SGCableTmpItem new];
+    [item setCableId:[conn[index+1] valueForKey:@"cable_id"]];
+    [item setCableName:[conn[index+1] valueForKey:@"cable_name"]];
+    [item setCubicleName:[conn[index+1] valueForKey:@"cubicle_name"]];
+    [item setCubicleId:[conn[index+1] valueForKey:@"cubicle_id"]];
+    return item;
+}
+
+-(NSUInteger)getMainIndexWithConnection:(NSArray*)conn{
+    
+    NSUInteger index;
+    
+    for(int i = 0; i < conn.count;i++){
+        if ([[conn[i] valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]) {
+            index = i;
+            break;
+        }
+    }
+ 
+    return index;
+}
+
+
+
 //生成SVG文件
 -(void)drawSvgFileOnWebview{
     self.data = [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:[self.cubicleData[@"id"] integerValue]];
     
-    NSArray *types = @[@{@"光缆连接":[self.data valueForKey:@"type0"]},
+    //
+    NSArray* type0 = self.data[@"type0"];
+    NSInteger index = 0;
+    
+    
+    id item = [self getRandomFullLengthItemWithList:type0];
+    
+    if ([[[item[1] valueForKey:@"cable_name"] uppercaseString] rangeOfString:@"GL"].location!=NSNotFound) {
+        index = 1;
+    }
+    
+    type0 = [type0 sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        
+        if (index == 1) {
+            if([[obj1[1] valueForKey:@"cable_id"] integerValue] < [[obj2[1] valueForKey:@"cable_id"] integerValue]){
+                return NSOrderedAscending;
+            }
+            if([[obj1[1] valueForKey:@"cable_id"] integerValue] > [[obj2[1] valueForKey:@"cable_id"] integerValue]){
+                return NSOrderedDescending;
+            }
+            return NSOrderedSame;
+        }else{
+            if([[obj1[[obj1 count] - 1] valueForKey:@"cable_id"] integerValue] < [[obj2[[obj2 count] - 1] valueForKey:@"cable_id"] integerValue]){
+                return NSOrderedAscending;
+            }
+            if([[obj1[[obj1 count] - 1] valueForKey:@"cable_id"] integerValue] > [[obj2[[obj2 count] - 1] valueForKey:@"cable_id"] integerValue]){
+                return NSOrderedDescending;
+            }
+            return NSOrderedSame;
+        }
+    }];
+    
+    NSMutableArray* mergedCubicles = [NSMutableArray array];
+    NSInteger count = 0;
+    
+    if (type0.count) {
+        SGCableTmpItem* preItem = [self getGLCableWithConnection:type0[0]];
+        
+        for(NSUInteger i = 0; i <type0.count; i++){
+            
+            SGCableTmpItem *t = [self getGLCableWithConnection:type0[i]];
+            
+            if (![t.cableName isEqualToString:preItem.cableName]) {
+                
+                SGCableTmpItem* t1 = [SGCableTmpItem new];
+                t1.count = count;
+                t1.cableName = preItem.cableName;
+                t1.cableId = preItem.cableId;
+                t1.cubicleId = preItem.cubicleId;
+                t1.cubicleName = preItem.cubicleName;
+                
+                [mergedCubicles addObject:t1];
+                count = 0;
+            }
+            
+            preItem = t;
+            count++;
+            
+            if (i == type0.count-1) {
+                SGCableTmpItem* t1 = [SGCableTmpItem new];
+                t1.count = count;
+                t1.cableName = preItem.cableName;
+                t1.cableId = preItem.cableId;
+                t1.cubicleId = preItem.cubicleId;
+                t1.cubicleName = preItem.cubicleName;
+                [mergedCubicles addObject:t1];
+            }
+        }
+    }
+
+
+    
+ 
+    
+    NSArray *types = @[@{@"光缆连接":type0},
                        @{@"尾缆连接":[self.data valueForKey:@"type1"]}];
  
     NSMutableString* svgStr = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" standalone=\"no\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">"];
@@ -131,7 +254,7 @@
     float cHeight  = 35;
     float linelen  = 100;
     float linetext_y_origin = 10;
-    float cuVeMargin = 5;
+    float cuVeMargin = 10;
     float offsetY = 0;
     int hPostionMax = 0;
     BOOL drawFromLeft = NO;
@@ -155,6 +278,7 @@
                                       _type.allKeys[0])];
         
         float offsetTmp = 0;
+        
         drawFromLeft = [self shouldMainCubicleDrawFromLeftWithList:type];
         if (!drawFromLeft) {
             offsetTmp += (cWidth+linelen);
@@ -173,10 +297,48 @@
                                       @"italic",
                                       self.cubicleData[@"name"])];
         
+        if ([types indexOfObject:_type] == 0){
+            //画光缆连接屏柜 连接线缆
+            float offsetYTmp = margin_y + offsetY;
+            for(int k = 0; k < mergedCubicles.count; k++){
+                
+                SGCableTmpItem* t = mergedCubicles[k];
+                
+                [svgStr appendString:DrawRect(margin_x+offsetTmp + cWidth + linelen,
+                                              offsetYTmp,
+                                              cWidth,
+                                              t.count*cHeight + (t.count-1)*cuVeMargin)];
+                
+                
+                [svgStr appendString:DrawText(margin_x+offsetTmp + cWidth +  linelen + 10,
+                                              offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2,14,
+                                              @"white",
+                                              @"italic",
+                                              t.cubicleName)];
+                
+                [svgStr appendString:DrawLine(margin_x+offsetTmp + cWidth,
+                                              offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2,
+                                              margin_x+offsetTmp + cWidth +linelen,
+                                              offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2,LineInfo(t.cableName,t.cableId, 0,0))];
+                
+                [svgStr appendString:DrawText(margin_x+offsetTmp + cWidth,
+                                              offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2 - linetext_y_origin,14,
+                                              @"gray",
+                                              @"italic",
+                                              t.cableName)];
+                
+                offsetYTmp += t.count*(cHeight+cuVeMargin);
+            }
+        }
+
+        
+        
+     
         int vPostion = 0;
         for(NSArray* connection in type){
 
             int hPosition = 0;
+            int hPositionOri = 0;
             for(int i = 0;i < connection.count;i++){
                 id cubicle = connection[i];
                 
@@ -200,38 +362,80 @@
                     }
                         
                 }else{
-                    //画线缆
+                    
+                    if ([types indexOfObject:_type] == 0) {
 
-                    [svgStr appendString:DrawLine(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
-                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,
-                                                  margin_x+hPosition*(cWidth+linelen),
-                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[types indexOfObject:_type]))];
-                    
-                    NSLog(@"VVVVV  %d",vPostion);
-                    //线缆名称
-                    [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
-                                                  margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,
-                                                  @"gray",
-                                                  @"italic",
-                                                  [cubicle valueForKey:@"cable_name"])];
-                    
-                    if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
+                        NSInteger pos = [self getMainIndexWithConnection:connection];
+                        
+                        if (hPositionOri ==  pos+1) {
+                            
+                        } else {
+                            [svgStr appendString:DrawLine(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
+                                                          margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,
+                                                          margin_x+hPosition*(cWidth+linelen),
+                                                          margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[types indexOfObject:_type]))];
+                            
+                            [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
+                                                          margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,
+                                                          @"gray",
+                                                          @"italic",
+                                                          [cubicle valueForKey:@"cable_name"])];
+                            
+                            if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
+                            }else{
+                                
+                                
+                                [svgStr appendString:DrawRect(margin_x + hPosition*(cWidth+linelen),
+                                                              margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                              cWidth,
+                                                              cHeight)];
+                                
+                                
+                                [svgStr appendString:DrawText(margin_x  + hPosition*(cWidth+linelen),
+                                                              margin_y + vPostion*(cuVeMargin+cHeight)+offsetY + cHeight/2,14,
+                                                              @"white",
+                                                              @"italic",
+                                                              [cubicle valueForKey:@"cubicle_name"])];
+                            }
+                        }
+    
+                        
+                        
                     }else{
                         
-                        [svgStr appendString:DrawRect(margin_x + hPosition*(cWidth+linelen),
-                                                      margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
-                                                      cWidth,
-                                                      cHeight)];
+                        [svgStr appendString:DrawLine(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
+                                                      margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,
+                                                      margin_x+hPosition*(cWidth+linelen),
+                                                      margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[types indexOfObject:_type]))];
                         
-                        
-                        [svgStr appendString:DrawText(margin_x  + hPosition*(cWidth+linelen),
-                                                      margin_y + vPostion*(cuVeMargin+cHeight)+offsetY + cHeight/2,14,
-                                                      @"white",
+                        [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
+                                                      margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,
+                                                      @"gray",
                                                       @"italic",
-                                                      [cubicle valueForKey:@"cubicle_name"])];
+                                                      [cubicle valueForKey:@"cable_name"])];
+                        
+                        if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
+                        }else{
+                            
+                            
+                            [svgStr appendString:DrawRect(margin_x + hPosition*(cWidth+linelen),
+                                                          margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                          cWidth,
+                                                          cHeight)];
+                            
+                            
+                            [svgStr appendString:DrawText(margin_x  + hPosition*(cWidth+linelen),
+                                                          margin_y + vPostion*(cuVeMargin+cHeight)+offsetY + cHeight/2,14,
+                                                          @"white",
+                                                          @"italic",
+                                                          [cubicle valueForKey:@"cubicle_name"])];
+                        }
                     }
+                    
+
                 }
                 hPosition++;
+                hPositionOri++;
                 if(hPosition>hPostionMax){
                     hPostionMax = hPosition;
                 }

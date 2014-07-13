@@ -150,9 +150,7 @@
                                      0,
                                      MainScreenWidth(toInterfaceOrientation),
                                      MainScreenHeight(toInterfaceOrientation));
-    
-    [self.roomView reloadData];
-}
+    }
 
 #pragma mark - 用户点击入口 加载下一级界面
 -(void)cellDidSeletedWithCubicleId:(NSDictionary*)cubicleData{

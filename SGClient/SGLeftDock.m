@@ -36,7 +36,7 @@
     _dockItems =  @[[SGLeftDockItem initWithTitle:@"主页" withBgImage:@"tab_bar_app_icon.png" withController:@"SGMainViewController" withModalShow:NO],
                     [SGLeftDockItem initWithTitle:@"设置" withBgImage:@"tab_bar_pic_setting_icon.png" withController:@"SGSettingViewController" withModalShow:NO],
                     [SGLeftDockItem initWithTitle:@"扫描" withBgImage:@"tab_bar_pic_wall_icon.png" withController:@"SGScanViewController" withModalShow:YES]];
-//    self.fisrtDockItem = _dockItems[0];
+
     for(int i = 0; i<[_dockItems count];i++){
         SGLeftDockButton *dockBtn = [[SGLeftDockButton alloc] init];
         dockBtn.frame = CGRectMake(0, i * kDockMenuItemHeight+200, self.frame.size.width, kDockMenuItemHeight);
