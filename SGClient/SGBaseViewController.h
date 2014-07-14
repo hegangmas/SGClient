@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "XMLReader.h"
+#import "NUApp-Macro.h"
+
 
 #define DockWidth(v) (UIInterfaceOrientationIsLandscape(v)?kDockComposeItemWidthL: kDockComposeItemWidthP)
 

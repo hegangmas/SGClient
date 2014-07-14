@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E6302B51966CD5000F69573 /* data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3E6302B41966CD5000F69573 /* data.sqlite */; };
 		3E8A69CA1958219C00748A3D /* SGDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A69C91958219C00748A3D /* SGDrawViewController.m */; };
+		3EDB0F3C1972DFA500F9FE3C /* SGGenerateCubicleSvg.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDB0F3B1972DFA500F9FE3C /* SGGenerateCubicleSvg.m */; };
 		3EF45B5919593E5700488D28 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C4819170F5400355991 /* XCTest.framework */; };
 		3EF45B5A19593E5700488D28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2919170F5400355991 /* Foundation.framework */; };
 		3EF45B5B19593E5700488D28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2D19170F5400355991 /* UIKit.framework */; };
@@ -81,6 +82,8 @@
 		3E6302B41966CD5000F69573 /* data.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = data.sqlite; sourceTree = "<group>"; };
 		3E8A69C81958219C00748A3D /* SGDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDrawViewController.h; sourceTree = "<group>"; };
 		3E8A69C91958219C00748A3D /* SGDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDrawViewController.m; sourceTree = "<group>"; };
+		3EDB0F3A1972DFA500F9FE3C /* SGGenerateCubicleSvg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGGenerateCubicleSvg.h; sourceTree = "<group>"; };
+		3EDB0F3B1972DFA500F9FE3C /* SGGenerateCubicleSvg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGGenerateCubicleSvg.m; sourceTree = "<group>"; };
 		3EF45B5819593E5700488D28 /* testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9026390193D7F6A0020428E /* SGFiberPageBussiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGFiberPageBussiness.h; sourceTree = "<group>"; };
 		C9026391193D7F6A0020428E /* SGFiberPageBussiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGFiberPageBussiness.m; sourceTree = "<group>"; };
@@ -278,6 +281,8 @@
 			children = (
 				C9CF6600194DEDF600957BB1 /* SGBaseViewController.h */,
 				C9CF6601194DEDF600957BB1 /* SGBaseViewController.m */,
+				3EDB0F3A1972DFA500F9FE3C /* SGGenerateCubicleSvg.h */,
+				3EDB0F3B1972DFA500F9FE3C /* SGGenerateCubicleSvg.m */,
 				C9EBBB14194E9933005DE69A /* RoomView */,
 				C9EBBB15194E9953005DE69A /* CableView */,
 				C9EBBB16194E9960005DE69A /* FiberView */,
@@ -701,6 +706,7 @@
 				C9EBBB27194EB1DF005DE69A /* SGSectionHeaderView.m in Sources */,
 				C9F03C3619170F5400355991 /* main.m in Sources */,
 				C9CF65F0194DCF6400957BB1 /* UIImage+Fit.m in Sources */,
+				3EDB0F3C1972DFA500F9FE3C /* SGGenerateCubicleSvg.m in Sources */,
 				C9CF6596194DC49700957BB1 /* SGPortViewController.m in Sources */,
 				C9F26F341929EDB4006A4BAC /* SGCablePageBussiness.m in Sources */,
 				C9CF6589194DA68500957BB1 /* SGMainViewController.m in Sources */,

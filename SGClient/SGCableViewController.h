@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SGDrawViewController.h"
+#import "SGGenerateCubicleSvg.h"
 
 @interface SGCableViewController : SGDrawViewController
 @property (nonatomic,strong) NSDictionary *cubicleData;
@@ -19,11 +20,4 @@
 
 @end
 
-@interface SGCableTmpItem : NSObject
-
-@property (nonatomic,strong) NSString* cableId;
-@property (nonatomic,strong) NSString* cableName;
-@property (nonatomic,strong) NSString* cubicleId;
-@property (nonatomic,strong) NSString* cubicleName;
-@property (nonatomic,assign) NSUInteger count;
-@end
+ 

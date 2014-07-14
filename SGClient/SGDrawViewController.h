@@ -8,17 +8,7 @@
 
 #import "SGBaseViewController.h"
 
-#define DrawLine(x1,y1,x2,y2,s) [NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\" stroke:rgb(99,99,99);stroke-width:3\" onclick=\"self.location.href='@@@@%@'\"/>",x1,y1,x2,y2,s]
 
-#define DrawLineT(x1,y1,x2,y2,s) [NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\" stroke:rgb(99,99,99);stroke-width:1\" onclick=\"self.location.href='@@@@%@'\"/>",x1,y1,x2,y2,s]
-
-#define DrawText(x,y,z,c,f,s) [NSString stringWithFormat:@"<text x=\"%f\" y=\"%f\" font-size=\"%d\" fill =\"%@\" font-style=\"%@\">%@</text>",x,y,z,c,f,s]
-
-#define DrawRect(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:navy;stroke:black;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
-
-#define DrawRectW(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:navy;stroke:white;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
-
-#define LineInfo(n,c,i,t) [NSString stringWithFormat:@"%@*%@*%d*%d",n,c,i,t]
 
 @interface SGDrawViewController : SGBaseViewController<UIWebViewDelegate>
 

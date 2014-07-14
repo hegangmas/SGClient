@@ -17,6 +17,8 @@
 @property (nonatomic,strong) NSArray *propertyList;
 @property (nonatomic,strong) NSArray *headList;
 
+@property (nonatomic,assign) float offsetTmp;
+
 @end
 
 #define DrawSpanStart(x,y,v) [NSString stringWithFormat:@"<tspan x='%f' dy='%f' fill='white' text-anchor='start' font-style='italic'>%@</tspan>",x,y,v]
@@ -52,82 +54,103 @@ float linelen2 = 40;
 float rOffset = 10;
 
 
--(void)drawSvgFileOnWebview{
+-(void)filterList{
     
-    NSMutableString* svgStr = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" standalone=\"no\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">"];
+    NSMutableArray* retlist = [NSMutableArray array];
+    NSArray* orilist;
     
-    [svgStr appendString:@"<svg width=\"##@@@##\" height=\"++@@@++\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"];
-    
-    
-    
-    [svgStr appendString:@"<defs><style type=\"text/css\"><![CDATA[ rect {fill:white;stroke:black;stroke-width:2;opacity:0.1;}]]></style></defs>"];
-    
-    //连接类型
-    [svgStr appendString:DrawText(margin_x,
-                                  margin_y  - 15,18,
-                                  @"navy",
-                                  @"italic",
-                                  @"连接路径")];
-    if (self.isTX) {
-        self.connection = @[self.connection,self.connection];
+    switch (self.cableType) {
+        case 0:
+            orilist = self.type0listSorted;
+            break;
+        case 1:
+            orilist = self.type1list;
+            break;
+        case 2:
+            orilist = self.type2list;
+            break;
     }
     
-    for(int i = 0; i < self.connection.count;i++){
-        id cubicle = self.connection[i];
-        if (i==0) {
-            
-            [svgStr appendString:DrawRect(margin_x  + i*(cWidth+linelen),
-                                          margin_y,
-                                          cWidth,
-                                          cHeight)];
-            
-            [svgStr appendString:DrawText(margin_x  + i*(cWidth+linelen),
-                                          margin_y + cHeight/2,14,
-                                          @"white",
-                                          @"italic",
-                                          [cubicle valueForKey:@"cubicle_name"])];
-        }else{
-            //画线缆
-            [svgStr appendString:DrawLine(margin_x+i*cWidth+(i-1)*linelen,
-                                          margin_y + 0.5*cHeight,
-                                          margin_x+i*(cWidth+linelen),
-                                          margin_y + 0.5*cHeight,@"")];
-            //线缆名称
-            [svgStr appendString:DrawText(margin_x+i*cWidth+(i-1)*linelen,
-                                          margin_y + 0.5*cHeight - linetext_y_origin,14,
-                                          @"gray",
-                                          @"italic",
-                                          [cubicle valueForKey:@"cable_name"])];
-            
-            [svgStr appendString:DrawRect(margin_x + i*(cWidth+linelen),
-                                          margin_y,
-                                          cWidth,
-                                          cHeight)];
-            
-            [svgStr appendString:DrawText(margin_x  + i*(cWidth+linelen),
-                                          margin_y  + cHeight/2,14,
-                                          @"white",
-                                          @"italic",
-                                          [cubicle valueForKey:@"cubicle_name"])];
-            
+    if (self.cableType!=2) {
+        for(NSArray* conn in orilist){
+            for(id item in conn){
+                if ([[item valueForKey:@"cable_id"] isEqualToString:self.cableId]) {
+                    [retlist addObject:conn];
+                }
+            }
+        }
+    }else{
+        for(id item in orilist){
+            if ([[item valueForKey:@"cable_id"] isEqualToString:self.cableId]) {
+                [retlist addObject:item];
+            }
         }
     }
+
     
+    switch (self.cableType) {
+        case 0:
+            self.type0listSorted = retlist;
+            self.type1list = [NSArray array];
+            self.type2list = [NSArray array];
+            break;
+        case 1:
+            self.type1list = retlist;
+            self.type2list = [NSArray array];
+            self.type0listSorted = [NSArray array];
+            break;
+        case 2:
+            self.type2list = retlist;
+            self.type1list = [NSArray array];
+            self.type0listSorted = [NSArray array];
+            break;
+        default:
+            break;
+    }
+}
+
+
+-(void)drawSvgFileOnWebview{
+
+    NSMutableString* svgStr = [NSMutableString new];
+
+    [self filterList];
+
+    SGGenerateCubicleSvg* s = [SGGenerateCubicleSvg new];
+    s.type0listSorted = self.type0listSorted;
+    s.type1list = self.type1list;
+    s.type2list = self.type2list;
+    s.mergedCubicles = self.mergedCubicles;
+    s.cubicleData = self.cubicleData;
+    s.isForFiberPage = YES;
+    
+    NSString* r = [s getCubicleSvgStr];
+    [svgStr appendString:[r componentsSeparatedByString:@"**@@@**"][0]];
+    
+    self.offsetTmp = [[r componentsSeparatedByString:@"**@@@**"][1] floatValue];
+
     //连接类型
     [svgStr appendString:DrawText(margin_x,
-                                  margin_y + cHeight + 55,18,
+                                  margin_y + self.offsetTmp,18,
                                   @"navy",
                                   @"italic",
                                   @"纤芯信息")];
+    
+    [svgStr appendString:DrawText(margin_x,
+                                  margin_y  - 20,18,
+                                  @"navy",
+                                  @"italic",
+                                  @"连接路径")];
+    
     
     _fiberList = [[SGFiberPageBussiness sharedSGFiberPageBussiness] queryFiberInfoWithCableId:[_cableId integerValue] withCubicleId:[_cubicleId integerValue]];
     
     [svgStr appendString:[self retriveFiberSvg]];
     
     [svgStr appendString:[NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"stroke-dasharray: 9, 5;stroke: gray; stroke-width: 2;\"/>",margin_x,
-                          margin_y + cHeight + 30,
+                          self.offsetTmp,
                           [self getTotalLengthForArray:_offsetList withBegin:0 withEnd:_offsetList.count-1] + 2*(rOffset + linelen2) + rOffset,
-                          margin_y + cHeight + 30]];
+                          self.offsetTmp]];
     
     [svgStr appendString:@"</svg>"];
     
@@ -139,7 +162,7 @@ float rOffset = 10;
     _width = (_width < MainScreenWidth(self.interfaceOrientation)) ? MainScreenWidth(self.interfaceOrientation) : _width;
     
     
-    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",_height + 200]];
+    result = [result stringByReplacingOccurrencesOfString:@"++@@@++" withString:[NSString stringWithFormat:@"%f",_height + 200 + self.offsetTmp]];
     result = [result stringByReplacingOccurrencesOfString:@"##@@@##" withString:[NSString stringWithFormat:@"%f",_width]];
     
     result = [result stringByReplacingOccurrencesOfString:@"(null)" withString:@"--"];
@@ -159,7 +182,6 @@ float rOffset = 10;
 }
 
 -(NSString*)retriveFiberSvg{
-
 
     switch (_cableType) {
             
@@ -202,7 +224,8 @@ float rOffset = 10;
     }
     
     NSMutableString* svgStr = [NSMutableString new];
-    [svgStr appendString:@"<g id='rowGroup' transform='translate(0, 100)'>"];
+ 
+    [svgStr appendString:[NSString stringWithFormat:@"<g id='rowGroup' transform='translate(0, %f)'>",self.offsetTmp]];
    
     
     float vOffset = 30;

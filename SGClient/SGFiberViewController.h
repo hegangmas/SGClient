@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SGDrawViewController.h"
+#import "SGGenerateCubicleSvg.h"
+
 
 @interface SGFiberViewController : SGDrawViewController
 
@@ -17,5 +19,13 @@
 @property(nonatomic,assign) NSInteger cableType;
 @property(nonatomic,strong) NSArray  *connection;
 @property(nonatomic,assign) BOOL isTX;
+
+
+@property (nonatomic,strong) NSArray* type0listSorted;
+@property (nonatomic,strong) NSArray* type1list;
+@property (nonatomic,strong) NSArray* type2list;
+@property (nonatomic,strong) NSArray* mergedCubicles;
+@property (nonatomic,strong) NSDictionary* cubicleData;
+
 
 @end
