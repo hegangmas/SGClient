@@ -17,9 +17,6 @@
 @property(nonatomic,strong) NSString *cableId;
 @property(nonatomic,strong) NSString *cableName;
 @property(nonatomic,assign) NSInteger cableType;
-@property(nonatomic,strong) NSArray  *connection;
-@property(nonatomic,assign) BOOL isTX;
-
 
 @property (nonatomic,strong) NSArray* type0listSorted;
 @property (nonatomic,strong) NSArray* type1list;

@@ -62,13 +62,11 @@
         [fiber setCableName:[cable valueForKey:@"cable_name"]];
         [fiber setCableType:[[cable valueForKey:@"cable_type"] integerValue]];
         
-        for(NSArray* array in [self.data valueForKey:@"type1"]){
-            
-            id item = array[1];
-            if ([[item valueForKey:@"cable_name"] isEqualToString:[cable valueForKey:@"cable_name"]]) {
-                [fiber setConnection:array];
-            }
-        }
+        fiber.type0listSorted = self.type0listSorted;
+        fiber.type1list = self.type1list;
+        fiber.type2list = self.type2list;
+        fiber.mergedCubicles = self.mergedCubicles;
+        fiber.cubicleData = self.cubicleData;
         [self.navigationController pushViewController:fiber animated:NO];
     }
 }
@@ -91,7 +89,6 @@
         
         NSString* cableName = retList[0];
         NSString* cableId   = retList[1];
-        NSInteger connId    = [retList[2] integerValue];
         NSString* type      = retList[3];
         
         SGFiberViewController *fiber = [SGFiberViewController new];
@@ -100,24 +97,6 @@
         [fiber setCableName:cableName];
         [fiber setCableType:[type integerValue]];
         [fiber setCubicleId:self.cubicleData[@"id"]];
-        id conn;
-        
-        switch ([type integerValue]) {
-            case 0:
-                conn = [[self.data valueForKey:@"type0"] objectAtIndex:connId];
-                break;
-            case 1:
-                conn = [[self.data valueForKey:@"type1"] objectAtIndex:connId];
-                break;
-            case 2:
-                conn = [[self.data valueForKey:@"type2"] objectAtIndex:connId];
-                [fiber setIsTX:YES];
-                break;
-            default:
-                break;
-        }
-        [fiber setConnection:conn];
-        
         
         fiber.type0listSorted = self.type0listSorted;
         fiber.type1list = self.type1list;
@@ -160,12 +139,11 @@
 
 //生成SVG文件
 -(void)drawSvgFileOnWebview{
-    self.data = [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:[self.cubicleData[@"id"] integerValue]];
     
-    //
+    self.data = [[SGCablePageBussiness sharedSGCablePageBussiness] queryCablelistWithCubicleId:[self.cubicleData[@"id"] integerValue]];
+
     NSArray* type0 = self.data[@"type0"];
     NSInteger index = 0;
-    
     
     id item = [self getRandomFullLengthItemWithList:type0];
     
