@@ -7,6 +7,8 @@
 //
 
 #import "SGDataBase.h"
+#import "SGAPPConfig.h"
+
 
 @implementation SGDataBase
 
@@ -18,7 +20,7 @@ static FMDatabase *db = nil;
 
 -(FMDatabase*)dataBase
 {
-    if (db) {
+    if (db&&![SGUtility getDBChangeFlag]) {
         return db;
     }
     db = [FMDatabase databaseWithPath:[SGUtility dataBasePath]];
@@ -28,6 +30,8 @@ static FMDatabase *db = nil;
         
         return nil;
     }
+    
+    [SGUtility restoreDBChangeFlag];
     return db;
 }
 @end

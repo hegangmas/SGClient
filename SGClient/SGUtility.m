@@ -1,4 +1,4 @@
-//
+                                                                                                                                                                                        //
 //  SGUtility.m
 //  SGClient
 //
@@ -7,9 +7,13 @@
 //
 
 #import "SGUtility.h"
+#import "SGAPPConfig.h"
 
 
 @implementation SGUtility
+
+static NSString *DB_NAME = @"DB_NAME";
+static NSString *DB_CHANGE_FLAG =@"DB_CHANGE_FLAG";
 
 + (NSURL *)applicationDocumentsDirectory
 {
@@ -26,7 +30,7 @@
     NSString* dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)
                         objectAtIndex:0];
     
-    dbPath = [dbPath stringByAppendingPathComponent:NSLocalizedString(@"DB_NAME", nil)];
+    dbPath = [dbPath stringByAppendingPathComponent:[self getCurrentDB]];
     
     return dbPath;
 }
@@ -47,6 +51,26 @@
         }
         [resultList addObject:_entity];}
     return resultList;
+}
+
++(BOOL)getDBChangeFlag{
+    
+    return [[NSUserDefaults standardUserDefaults] boolForKey:DB_CHANGE_FLAG];
+}
++(void)restoreDBChangeFlag{
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:DB_CHANGE_FLAG];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSString*)getCurrentDB{
+    
+    return [[NSUserDefaults standardUserDefaults] stringForKey:DB_NAME];
+}
+
++(void)setCurrentDB:(NSString *)db{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DB_CHANGE_FLAG];
+    [[NSUserDefaults standardUserDefaults] setObject:db forKey:DB_NAME];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

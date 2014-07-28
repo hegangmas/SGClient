@@ -6,7 +6,7 @@
   Copyright (c) 2014年 XLDZ. All rights reserved.
 */
 
-DB_NAME = "data.sqlite";
+DB_NAME = "测试数据库.sqlite";
 
 
 //******************************************** MainPage *****************************************************

@@ -7,6 +7,7 @@
 //
 
 #import "SGAppDelegate.h"
+#import "SGUtility.h"
 #import "SGAPPConfig.h"
 
 @implementation SGAppDelegate
@@ -15,7 +16,13 @@
 {
     // Override point for customization after application launch.
     
+    [UINavigationBar appearance].tintColor = [UIColor darkGrayColor];
+    [UIBarButtonItem appearance].tintColor = [UIColor darkGrayColor];
+    [UITableViewCell appearance].tintColor = [UIColor darkGrayColor];
+    
     [SGAPPConfig sharedSGAPPConfig];
+    [SGUtility restoreDBChangeFlag];
+
     return YES;
 }
 							

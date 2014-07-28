@@ -21,7 +21,6 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGAPPConfig)
 
 static NSString *SETTING_FIRST_TIME_RUN = @"SETTING_FIRST_TIME_RUN";
 
-
 /*－－－－－－－－－－－－－－－－－
  配置
  检测第一次运行配置环境
@@ -41,7 +40,7 @@ static NSString *SETTING_FIRST_TIME_RUN = @"SETTING_FIRST_TIME_RUN";
         if (setting == nil)
         {
             [self.userDefaults setObject:[NSNumber numberWithInt:1] forKey:SETTING_FIRST_TIME_RUN];
-            
+            [SGUtility setCurrentDB:@"测试数据库.sqlite"];
             /*－－－－－－－－－－－－－－－－－－－－－－－－－－－
              初次运行判断沙盒下是否存在Sqlite 文件，如无则复制之。
   

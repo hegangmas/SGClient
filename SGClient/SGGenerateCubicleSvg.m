@@ -100,11 +100,11 @@
                                               margin_x+offsetTmp + cWidth +linelen,
                                               offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2,LineInfo(t.cableName,t.cableId, 0,[types indexOfObject:_type]))];
                 
-                [svgStr appendString:DrawText(margin_x+offsetTmp + cWidth,
+                [svgStr appendString:DrawTextClicked(margin_x+offsetTmp + cWidth,
                                               offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2 - linetext_y_origin,14,
                                               @"gray",
                                               @"italic",
-                                              t.cableName)];
+                                              t.cableName,LineInfo(t.cableName,t.cableId, 0,[types indexOfObject:_type]))];
                 
                 offsetYTmp += t.count*(cHeight+cuVeMargin);
             }
@@ -151,11 +151,11 @@
                                                           margin_x+hPosition*(cWidth+linelen),
                                                           margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[types indexOfObject:_type]))];
                             
-                            [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
+                            [svgStr appendString:DrawTextClicked(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                           margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,
                                                           @"gray",
                                                           @"italic",
-                                                          [cubicle valueForKey:@"cable_name"])];
+                                                          [cubicle valueForKey:@"cable_name"],LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[types indexOfObject:_type]))];
                             
                             if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
                             }else{
@@ -184,11 +184,11 @@
                                                       margin_x+hPosition*(cWidth+linelen),
                                                       margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[types indexOfObject:_type]))];
                         
-                        [svgStr appendString:DrawText(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
+                        [svgStr appendString:DrawTextClicked(margin_x+hPosition*cWidth+(hPosition-1)*linelen,
                                                       margin_y + vPostion*cHeight+0.5*cHeight+vPostion*cuVeMargin+offsetY - linetext_y_origin,14,
                                                       @"gray",
                                                       @"italic",
-                                                      [cubicle valueForKey:@"cable_name"])];
+                                                      [cubicle valueForKey:@"cable_name"],LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], vPostion,[types indexOfObject:_type]))];
                         
                         if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
                         }else{
@@ -271,11 +271,11 @@
                                           linelen + margin_x + cWidth,
                                           margin_y + offsetY + (0.5+i)*cHeight,LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], i,2))];
             
-            [svgStr appendString:DrawText(margin_x + cWidth + 20,
+            [svgStr appendString:DrawTextClicked(margin_x + cWidth + 20,
                                           margin_y + offsetY + (0.5+i)*cHeight - linetext_y_origin,14,
                                           @"gray",
                                           @"italic",
-                                          [cubicle valueForKey:@"cable_name"])];
+                                          [cubicle valueForKey:@"cable_name"],LineInfo([cubicle valueForKey:@"cable_name"],[cubicle valueForKey:@"cable_id"], i,2))];
             
         }
         if (types.count) {

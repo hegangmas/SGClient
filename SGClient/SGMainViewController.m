@@ -13,6 +13,8 @@
 #import "SGSectionHeaderView.h"
 #import "SGSectionFooterView.h"
 #import "SGCableViewController.h"
+#import "SGAPPConfig.h"
+#import "SGUtility.h"
 
 
 @interface SGMainViewController ()<SGRoomCellDelegate>
@@ -38,17 +40,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = [[SGUtility getCurrentDB] componentsSeparatedByString:@"."][0];
     [self loadRoomData];
 }
 
 
 
 -(void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
+     
     self.roomView.frame = CGRectMake(0,
                                      10,
                                      MainScreenWidth(self.interfaceOrientation),
                                      MainScreenHeight(self.interfaceOrientation));
+    
+    
+    if ([SGUtility getDBChangeFlag]) {
+        NSError* error;
+        NSString   *strXml = [[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom];
+        NSDictionary *dict = [XMLReader dictionaryForXMLString:strXml error:&error];
+        self.roomList = [ [dict objectForKey:@"root"] objectForKey:@"room"];
+        [self.roomView reloadData];
+    }
 }
 
 
@@ -58,6 +73,7 @@
     NSString   *strXml = [[SGMainPageBussiness sharedSGMainPageBussiness] queryDevicelistForAllInnerRoom];
     NSDictionary *dict = [XMLReader dictionaryForXMLString:strXml error:&error];
     self.roomList = [ [dict objectForKey:@"root"] objectForKey:@"room"];
+    
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.headerReferenceSize = CGSizeMake(0.0, 50.0);
@@ -69,9 +85,7 @@
                                                                       MainScreenWidth(self.interfaceOrientation),
                                                                       MainScreenHeight(self.interfaceOrientation))
                                       collectionViewLayout:flowLayout];
-//    [self.roomView setBackgroundColor:RGB(220, 220, 220)];
     [self.roomView setBackgroundColor:[UIColor whiteColor]];
-    //107 103 185
  
     [self.roomView registerClass:[SGSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSectionHeader];
     
@@ -82,20 +96,17 @@
     [self.view addSubview:self.roomView];
 }
 
-//定义展示的UICollectionViewCell的个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSArray* cubicles = (NSArray*)[[self.roomList objectAtIndex:section] objectForKey:@"cubicle"];
     return [cubicles count];
 }
 
-//定义展示的Section的个数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
 	return self.roomList.count;
 }
 
-//每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SGRoomCell *cell = (SGRoomCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
@@ -107,7 +118,6 @@
 }
 
 
-//定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -116,19 +126,12 @@
 }
 
 
-//定义每个UICollectionView 的 margin
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView
                        layout:(UICollectionViewLayout *)collectionViewLayout
        insetForSectionAtIndex:(NSInteger)section
 {
 	return UIEdgeInsetsMake(15, 15, 15, 15);
 }
-
-//返回这个UICollectionView是否可以被选择
-//-(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//	return YES;
-//}
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind

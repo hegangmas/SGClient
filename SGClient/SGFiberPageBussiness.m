@@ -114,6 +114,8 @@ where port.port_id = %@",p]
 @property (nonatomic,strong) NSMutableArray *portList;
 @property (nonatomic,strong) NSMutableArray *typePortList;
 @property (nonatomic,strong) NSMutableDictionary *cachedSet;
+
+@property (nonatomic,strong) SGFiberItem* currentFiber;
 @end
 
 @implementation SGFiberPageBussiness
@@ -159,6 +161,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
         
         SGResult *resultItem   = [[SGResult alloc] init];
         SGFiberItem *fiberItem = (SGFiberItem*)obj;
+        self.currentFiber = fiberItem;
         
         if ([self fillTypeFieldWithSGResult  :resultItem withSGFiberItem:fiberItem]) {
             [self fillDeviceFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
@@ -368,7 +371,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 
 -(void)resortPortList{
  
-    NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCubicleIdWithPort([self.portList objectAtIndex:0])]
+    NSArray* desc = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCubicleIdWithPort(self.currentFiber.port1_id)]
                                           withEntity:@"SGFiberItem"];
     if (desc.count) {
         SGFiberItem* fiberItem = desc[0];
@@ -401,8 +404,16 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                 self.portList = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetAnotherTwoPorts(fiberItem.port1_id,fiberItem.port2_id)]
                                                        withEntity:@"SGFiberItem"] copy];
                 
+                
+                
                 self.portList = [NSMutableArray arrayWithObjects:[[self.portList objectAtIndex:0] port1_id],
                                                                  [[self.portList objectAtIndex:1] port1_id],nil];
+                
+                if ([self checkPortListOrderWithSGFiberItem:fiberItem]) {
+                    
+                    self.portList = [[[self.portList reverseObjectEnumerator] allObjects] copy];
+                }
+                
                 self.typePortList = [self.portList mutableCopy];
                 break;
                 
@@ -433,11 +444,6 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
         }
         
         [self resortPortList];
-        
-        if ([self checkPortListOrderWithSGFiberItem:fiberItem]) {
-            self.typePortList = [[[self.typePortList reverseObjectEnumerator] allObjects] copy];
-        }
-
             if ([self.typePortList count]) {
                 NSArray* infoSetList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetInfoSetList([self.typePortList objectAtIndex:0],
                                                                                                                       [self.typePortList objectAtIndex:1])]
@@ -545,7 +551,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 
 -(BOOL)checkPortListOrderWithSGFiberItem:(SGFiberItem*)fiberItem{
     
-    NSArray* retList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_CheckPortOrder([self.typePortList objectAtIndex:0], fiberItem.port1_id)]
+    NSArray* retList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_CheckPortOrder([self.portList objectAtIndex:0], fiberItem.port1_id)]
                           withEntity:@"SGFiberItem"];
     if (retList) {
         if ([retList count]) {

@@ -146,4 +146,25 @@
 
        }];
 }
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    
+    AVCaptureConnection *previewLayerConnection=self.preview.connection;
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationPortrait:
+            [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationPortrait];
+            break;
+        case UIInterfaceOrientationPortraitUpsideDown:
+            [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationPortraitUpsideDown];
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+            [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
+            break;
+    }
+}
 @end

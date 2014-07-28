@@ -7,6 +7,8 @@
 //
 
 #import "SGCablePageBussiness.h"
+#import "SGFiberPageBussiness.h"
+
 #import <objc/message.h>
 
 @implementation SGCPConnectionItem
@@ -41,6 +43,11 @@
 @property(nonatomic,strong) NSArray *cableOfType0List;
 @property(nonatomic,strong) NSArray *cableOfType1List;
 @property(nonatomic,strong) NSArray *connectionOrder;
+
+@property(nonatomic,strong) NSMutableDictionary* cached;
+@property(nonatomic,strong) NSMutableArray* gllist;
+@property(nonatomic,strong) NSMutableArray* gllistFinal;
+@property(nonatomic,assign) NSUInteger cubicleId;
 
 
 @end
@@ -148,6 +155,10 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
 //    NSLog(@"%@",CP_GetCablelist(cubicleId,CABLETYPE0));
 //    NSLog(@"%@",CP_GetCubicleConnect(cubicleId));
     
+    _cached = [NSMutableDictionary dictionary];
+    _gllist = [NSMutableArray array];
+    _gllistFinal = [NSMutableArray array];
+    self.cubicleId = cubicleId;
     //光缆列表
     self.cableOfType0List = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCablelist(cubicleId,CABLETYPE0)]
                                              withEntity:@"SGCPDataBaseRowItem"];
@@ -158,13 +169,17 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     self.connectionList   = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleConnect(cubicleId)]
                                              withEntity:@"SGCPConnectionItem"];
     
-    NSArray* type0List = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE0];
+    NSArray* type0List;
+//    = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE0];
     NSArray* type1List = [self requestListWithCubicleId:cubicleId WithType:CABLETYPE1];
     
     NSArray* type2List = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:CP_GetCubicleItem(cubicleId, CABLETYPE2)]
                                           withEntity:@"SGCPDataItem"];
-    type0List = [self verifyType0ListWithCubicleId:cubicleId withList:type0List];
+//    type0List = [self verifyType0ListWithCubicleId:cubicleId withList:type0List];
     
+    [self handleType0list];
+  
+    type0List = self.gllistFinal;
     NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:type0List,@"type0",
                             type1List,@"type1",
                             type2List,@"type2",
@@ -343,6 +358,14 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
         NSMutableArray *n = [NSMutableArray array];
         connectionCubicles = [NSMutableArray array];
         
+        
+        if (YES) {
+            [self getType0listWithlist:connection item:connectionItem dic:kvPairs];
+        }
+        
+        
+        if (type == CABLETYPE1) {
+            
         if ([connection count] > 1) {
             if (type == CABLETYPE0) {
                 if (!isContainsGLConn) {
@@ -372,58 +395,53 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
             }
         }
         
-        if (n.count == 1) {
-            for(int i = 0;i<[n[0] count];i++){
-                NSMutableArray *tmp = [NSMutableArray array];
-                [tmp addObject:n[0][i][0]];
-                [tmp addObject:n[0][i][1]];
-                [connectionCubicles addObject:tmp];
-            }
-        }
         
-
-        if (n.count == 2) {
-            
-            for(int i = 0;i<[n[0] count];i++){
-                for(int j = 0; j < [n[1] count];j++){
-                    
+            if (n.count == 1) {
+                for(int i = 0;i<[n[0] count];i++){
                     NSMutableArray *tmp = [NSMutableArray array];
                     [tmp addObject:n[0][i][0]];
                     [tmp addObject:n[0][i][1]];
-                    [tmp addObject:n[1][j][1]];
                     [connectionCubicles addObject:tmp];
                 }
             }
-        }
-        
-        if (n.count == 3) {
-            for(int i = 0;i<[n[0] count];i++){
-                for(int j = 0; j < [n[1] count];j++){
-                    for(int m = 0; m < [n[2] count]; m++){
+            
+            
+            if (n.count == 2) {
+                
+                for(int i = 0;i<[n[0] count];i++){
+                    for(int j = 0; j < [n[1] count];j++){
+                        
                         NSMutableArray *tmp = [NSMutableArray array];
                         [tmp addObject:n[0][i][0]];
                         [tmp addObject:n[0][i][1]];
                         [tmp addObject:n[1][j][1]];
-                        [tmp addObject:n[2][m][1]];
                         [connectionCubicles addObject:tmp];
                     }
                 }
             }
+            
+            if (n.count == 3) {
+                for(int i = 0;i<[n[0] count];i++){
+                    for(int j = 0; j < [n[1] count];j++){
+                        for(int m = 0; m < [n[2] count]; m++){
+                            NSMutableArray *tmp = [NSMutableArray array];
+                            [tmp addObject:n[0][i][0]];
+                            [tmp addObject:n[0][i][1]];
+                            [tmp addObject:n[1][j][1]];
+                            [tmp addObject:n[2][m][1]];
+                            [connectionCubicles addObject:tmp];
+                        }
+                    }
+                }
+            }
         }
-        
-        
 
         for(int i = 0; i < connectionCubicles.count;i++){
-            
-//            if (![self checkConnectionExistsWithList:retList
-//                                         withSubList:connectionCubicles[i]]) {
+ 
             
             if (YES) {
                 NSArray* c = connectionCubicles[i];
-                
-
-
-                
+ 
                 //尾缆调整顺序 如请求Cubicle在尾部 倒转顺序
                 if (type == CABLETYPE1) {
                     SGCPDataItem* cubicle = c[c.count-1];
@@ -651,6 +669,221 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     }
     return array;
 }
+
+
+
+
+#define FP_GetFiberItemList(cableId) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id, \
+[index],fiber_color,pipe_color,reserve from fiber where cable_id = %@ order by [index]",cableId]
+
+#define FP_GetAnotherTwoPorts(p1,p2) [NSString stringWithFormat:@"select a.port1_id from(\
+select port1_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union \
+select port2_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union \
+select port1_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@ union \
+select port2_id  as port1_id  from fiber   where port1_id = %@ or port2_id = %@  ) a  \
+where a.port1_id not in (%@,%@)",p1,p1,p1,p1,p2,p2,p2,p2,p1,p2]
+
+#define FP_CheckPortOrder(p1,p2) [NSString stringWithFormat:@"select fiber_id,cable_id,port1_id,port2_id, \
+[index],fiber_color,pipe_color,reserve from fiber where (port1_id = %@ and port2_id = %@) or (port2_id = %@  and port1_id = %@)",p1,p2,p1,p2]
+
+#define FP_GetCubicleIdWithPort(p) [NSString stringWithFormat:@"select device.cubicle_id as port1_id from device \
+inner join board on device.device_id=board.device_id inner join port on board.board_id=port.board_id \
+where port.port_id = %@",p]
+
+#define FP_GetTXInfo(p1,p2) [NSString stringWithFormat:@"select cable.cable_id,cable.name as cable_name,cable.cable_type from cable \
+inner join fiber on cable.cable_id = fiber.cable_id \
+where (fiber.port1_id = %@ and fiber.port2_id = %@) or (fiber.port2_id = %@ and fiber.port1_id = %@)",p1,p2,p1,p2]
+
+#define FP_GetCubicleId(p) [NSString stringWithFormat:@"select cubicle.cubicle_id,cubicle.name as cubicle_name from device \
+inner join board on device.device_id=board.device_id inner join port on board.board_id=port.board_id inner join cubicle on cubicle.cubicle_id = device.cubicle_id  \
+ where port.port_id = %@",p]
+
+-(void)handleType0list{
+    
+
+    for(NSMutableArray* a in self.gllist){
+        
+
+        NSArray* fiberList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberItemList([a[1] valueForKey:@"cable_id"])]
+                                                   withEntity:@"SGFiberItem"];
+        
+        BOOL flag = NO;
+        BOOL swapped = NO;
+        for(SGFiberItem* fiberItem in fiberList){
+            
+            NSMutableArray* tmp = [NSMutableArray array];
+            for(SGCPDataItem* item in a){
+                [tmp addObject:[[SGCPDataItem alloc] initWithCableId:item.cable_id withCableName:item.cable_name withCableType:item.cable_type withCubicleId:item.cubicle_id withCubicleName:item.cubicle_name withDrawFlag:nil]];
+            }
+            
+            BOOL flag1 = NO;
+            BOOL flag2 = NO;
+            if ([fiberItem.reserve isEqualToString:@"1"]) {
+                continue;
+            }
+            
+            NSArray* portList = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetAnotherTwoPorts(fiberItem.port1_id,fiberItem.port2_id)]
+                                                   withEntity:@"SGFiberItem"] copy];
+            portList = [NSMutableArray arrayWithObjects:[[portList objectAtIndex:0] port1_id],
+                             [[portList objectAtIndex:1] port1_id],nil];
+            
+            NSArray* desc1 = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_CheckPortOrder([portList objectAtIndex:0], fiberItem.port1_id)]
+                                                     withEntity:@"SGFiberItem"];
+            if (!desc1.count) {
+                portList = [[[portList reverseObjectEnumerator] allObjects] copy];
+//                swapped = YES;
+            }
+            
+            NSArray *desc2 = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCubicleIdWithPort(fiberItem.port1_id)]
+                                                  withEntity:@"SGFiberItem"];
+            if (desc2.count) {
+                SGFiberItem* fiberItem2 = desc2[0];
+                if (!([fiberItem2.port1_id integerValue] == self.cubicleId)) {
+                    
+                    NSString* tmp = fiberItem.port1_id;
+                    fiberItem.port1_id = fiberItem.port2_id;
+                    fiberItem.port2_id = tmp;
+                    
+                    portList = [[[portList reverseObjectEnumerator] allObjects] copy];
+//                    swapped = YES;
+                }
+            }
+            
+            NSMutableArray* c = [NSMutableArray arrayWithArray:tmp];
+            
+            NSArray *desc3 = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTXInfo([portList objectAtIndex:0],fiberItem.port1_id)] withEntity:@"SGCPDataItem"];
+            if (desc3.count) {
+                if ([[desc3[0] valueForKey:@"cable_type"] isEqualToString:@"1"]) {
+                    flag1 = YES;
+                    flag = YES;
+                    NSArray* cu =  [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCubicleId([portList objectAtIndex:0])] withEntity:@"SGCPDataItem"];
+                    if (YES) {
+                        
+                        if (YES) {
+                            SGCPDataItem* item = c[0];
+                            item.cable_id = [desc3[0] valueForKey:@"cable_id"];
+                            item.cable_name = [desc3[0] valueForKey:@"cable_name"];
+                            
+                            [c insertObject:cu[0] atIndex:0];
+                            
+                        }else{
+                            
+//                            SGCPDataItem* item = cu[0];
+//                            item.cable_id = [desc[0] valueForKey:@"cable_id"];
+//                            item.cable_name = [desc[0] valueForKey:@"cable_name"];
+//                            
+//                            
+//                            [c insertObject:item atIndex:c.count];
+                        }
+                        
+                        
+
+                    }
+                }
+            }
+            
+            NSArray *desc4 = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTXInfo([portList objectAtIndex:1],fiberItem.port2_id)] withEntity:@"SGCPDataItem"];
+            if (desc4.count) {
+                
+                if ([[desc4[0] valueForKey:@"cable_type"] isEqualToString:@"1"]) {
+                    flag2 = YES;
+                    flag = YES;
+                    NSArray* cu =  [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetCubicleId([portList objectAtIndex:1])] withEntity:@"SGCPDataItem"];
+                    if (YES) {
+                        if (YES) {
+                            SGCPDataItem* item = cu[0];
+                            item.cable_id = [desc4[0] valueForKey:@"cable_id"];
+                            item.cable_name = [desc4[0] valueForKey:@"cable_name"];
+                            
+                            
+                            [c insertObject:item atIndex:c.count];
+                            
+                        }else{
+//                            SGCPDataItem* item = c[0];
+//                            item.cable_id = [desc[0] valueForKey:@"cable_id"];
+//                            item.cable_name = [desc[0] valueForKey:@"cable_name"];
+//                            
+//                            [c insertObject:cu[0] atIndex:0];
+
+                        }
+
+                        
+                    }
+                }
+            }
+
+            if (flag1||flag2) {
+               [self.gllistFinal addObject:c];
+            }
+            
+            if (!flag) {
+                [self.gllistFinal addObject:a];
+            }
+            
+        }
+
+    }
+    NSLog(@"test");
+}
+
+
+
+-(void)getType0listWithlist:(NSArray*)list item:(SGCPConnectionItem*)item dic:(NSDictionary*)dic{
+    
+    NSUInteger type = 0;
+    
+    SGCPDataItem* basicItem;
+    NSString* cubicleName;
+    
+    for(int i = 0;i<list.count-1;i++){
+        
+        type = [self getCableTypeBetweenField1:dic[[NSString stringWithFormat:@"%@",list[i]]]
+                                        field2:dic[[NSString stringWithFormat:@"%@",list[i+1]]]
+                                   withUseOdf1:[item.use_odf1 integerValue]
+                                   withUseOdf2:[item.use_odf2 integerValue]];
+        
+        if (type == 0) {
+            
+            NSPredicate* predicate = [NSPredicate predicateWithFormat:@"(cubicle1_id == %@ and cubicle2_id == %@) or \
+                                      (cubicle2_id == %@ and cubicle1_id == %@)",list[i],list[i+1],list[i],list[i+1]];
+            
+            NSArray* filteredList;
+            filteredList = [self.cableOfType0List filteredArrayUsingPredicate:predicate];
+            for(SGCPDataBaseRowItem * cableRowItem in filteredList){
+                
+                if (![self.cached valueForKey:cableRowItem.cable_id]) {
+                    
+                    if ([list[i] integerValue] == self.cubicleId || [list[i+1] integerValue] == self.cubicleId) {
+                        NSMutableArray* a = [NSMutableArray array];
+                        cubicleName = ([list[i] isEqualToString:cableRowItem.cubicle1_id])? cableRowItem.cubicle1_name:
+                        cableRowItem.cubicle2_name;
+                        basicItem = [[SGCPDataItem alloc] initWithCableId:@""
+                                                            withCableName:@""
+                                                            withCableType:@""
+                                                            withCubicleId:list[i]
+                                                          withCubicleName:cubicleName
+                                                             withDrawFlag:@""];
+                        [a addObject:basicItem];
+                        
+                        cubicleName = ([list[i+1] isEqualToString:cableRowItem.cubicle1_id])? cableRowItem.cubicle1_name:
+                        cableRowItem.cubicle2_name;
+                        basicItem = [[SGCPDataItem alloc] initWithCableId:cableRowItem.cable_id
+                                                            withCableName:cableRowItem.cable_name
+                                                            withCableType:cableRowItem.cable_type
+                                                            withCubicleId:list[i+1]
+                                                          withCubicleName:cubicleName
+                                                             withDrawFlag:@"1"];
+                        [a addObject:basicItem];
+                        [self.gllist addObject:a];
+                    }
+                    
+                    [self.cached setValue:@"#" forKey:cableRowItem.cable_id];
+                }
+            }
+        }
+    }
+}
+
 
 /*－－－－－－－－－－－－－－－－－
  根据RESULT LIST 生成XML

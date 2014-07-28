@@ -82,6 +82,7 @@
     
     NSString* _url = [request URL].description;
     
+    NSLog(@"%@",_url);
     if ([_url rangeOfString:@"@@@@"].location != NSNotFound) {
         
         NSString *retValue = [[_url componentsSeparatedByString:@"@@@@"] objectAtIndex:1];

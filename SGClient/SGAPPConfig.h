@@ -13,4 +13,5 @@
 
 +(SGAPPConfig*)sharedSGAPPConfig;
 
+
 @end

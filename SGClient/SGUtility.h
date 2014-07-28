@@ -17,4 +17,10 @@
 
 + (NSArray*)getResultlistForFMSet:(FMResultSet*)fmResultSet
                        withEntity:(NSString*)entity;
+
++(NSString*)getCurrentDB;
++(void)setCurrentDB:(NSString*)db;
+
++(BOOL)getDBChangeFlag;
++(void)restoreDBChangeFlag;
 @end

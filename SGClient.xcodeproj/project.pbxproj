@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E6302B51966CD5000F69573 /* data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3E6302B41966CD5000F69573 /* data.sqlite */; };
+		3E288EDE19813E79009DB66B /* SGDBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E288EDD19813E79009DB66B /* SGDBViewController.m */; };
+		3E288EE019815810009DB66B /* 测试数据库.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3E288EDF19815810009DB66B /* 测试数据库.sqlite */; };
 		3E8A69CA1958219C00748A3D /* SGDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A69C91958219C00748A3D /* SGDrawViewController.m */; };
 		3EDB0F3C1972DFA500F9FE3C /* SGGenerateCubicleSvg.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDB0F3B1972DFA500F9FE3C /* SGGenerateCubicleSvg.m */; };
 		3EF45B5919593E5700488D28 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C4819170F5400355991 /* XCTest.framework */; };
@@ -79,7 +80,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3E6302B41966CD5000F69573 /* data.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = data.sqlite; sourceTree = "<group>"; };
+		3E288EDC19813E79009DB66B /* SGDBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDBViewController.h; sourceTree = "<group>"; };
+		3E288EDD19813E79009DB66B /* SGDBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDBViewController.m; sourceTree = "<group>"; };
+		3E288EDF19815810009DB66B /* 测试数据库.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "测试数据库.sqlite"; sourceTree = "<group>"; };
 		3E8A69C81958219C00748A3D /* SGDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDrawViewController.h; sourceTree = "<group>"; };
 		3E8A69C91958219C00748A3D /* SGDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDrawViewController.m; sourceTree = "<group>"; };
 		3EDB0F3A1972DFA500F9FE3C /* SGGenerateCubicleSvg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGGenerateCubicleSvg.h; sourceTree = "<group>"; };
@@ -333,6 +336,8 @@
 			children = (
 				C9CF65E4194DCB7F00957BB1 /* SGSettingViewController.h */,
 				C9CF65E5194DCB7F00957BB1 /* SGSettingViewController.m */,
+				3E288EDC19813E79009DB66B /* SGDBViewController.h */,
+				3E288EDD19813E79009DB66B /* SGDBViewController.m */,
 				C9CF65E7194DCBB500957BB1 /* SGScanViewController.h */,
 				C9CF65E8194DCBB500957BB1 /* SGScanViewController.m */,
 				C903CD9819526D83000C51FE /* line@2x.png */,
@@ -515,7 +520,7 @@
 		C9F03C781917118C00355991 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3E6302B41966CD5000F69573 /* data.sqlite */,
+				3E288EDF19815810009DB66B /* 测试数据库.sqlite */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -667,9 +672,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C903CD9A19526D83000C51FE /* line@2x.png in Resources */,
+				3E288EE019815810009DB66B /* 测试数据库.sqlite in Resources */,
 				C9EBBB0D194E92B4005DE69A /* WebViewJavascriptBridge.js.txt in Resources */,
 				C9EBBB1D194E9A32005DE69A /* SGRoomCell.xib in Resources */,
-				3E6302B51966CD5000F69573 /* data.sqlite in Resources */,
 				C9F03C4219170F5400355991 /* Images.xcassets in Resources */,
 				C903CD9B19526D83000C51FE /* pick_bg@2x.png in Resources */,
 				C9F03C3419170F5400355991 /* InfoPlist.strings in Resources */,
@@ -734,6 +739,7 @@
 				C9F03C801917142C00355991 /* SGUtility.m in Sources */,
 				C9F03C711917108F00355991 /* FMDatabaseQueue.m in Sources */,
 				C9E1A22D194C831D00B6467B /* SGEntity.m in Sources */,
+				3E288EDE19813E79009DB66B /* SGDBViewController.m in Sources */,
 				C9EBBB20194E9F13005DE69A /* XMLReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

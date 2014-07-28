@@ -7,15 +7,25 @@
 //
 
 #import "SGBaseBussiness.h"
+#import "SGAPPConfig.h"
 
 @implementation SGBaseBussiness
 
 #pragma mark - init
 -(id)init{
     if (self = [super init]) {
-        _dataBase = [[SGDataBase sharedSGDataBase] dataBase];
     }
     return self;
+}
+
+-(FMDatabase*)dataBase{
+    
+//    if (!_dataBase || [SGUtility getDBChangeFlag]) {
+//        
+//        _dataBase = [[SGDataBase sharedSGDataBase] dataBase];
+//        [SGUtility restoreDBChangeFlag];
+//    }
+    return [[SGDataBase sharedSGDataBase] dataBase];
 }
 #pragma mark -
 @end
