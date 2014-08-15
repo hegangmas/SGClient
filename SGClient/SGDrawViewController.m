@@ -32,7 +32,7 @@
     _webView.dataDetectorTypes = UIDataDetectorTypeAll;
     _webView.userInteractionEnabled = YES;
     [_webView setDelegate:self];
-//    _webView.scalesPageToFit = YES;
+    _webView.scalesPageToFit = YES;
     [self.view addSubview:_webView];
     [self drawSvgFileOnWebview];
     

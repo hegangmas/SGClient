@@ -11,4 +11,5 @@
 
 @interface SGSettingViewController : SGBaseViewController
 
+@property (nonatomic,strong) UINavigationController* main;
 @end

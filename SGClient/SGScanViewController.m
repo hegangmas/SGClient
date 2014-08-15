@@ -82,6 +82,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self setupCamera];
+    [self setOrientationForCamara:self.interfaceOrientation];
 }
 - (void)setupCamera
 {
@@ -149,9 +150,14 @@
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     
+    [self setOrientationForCamara:toInterfaceOrientation];
+}
+
+-(void)setOrientationForCamara:(UIInterfaceOrientation)orientation{
+    
     AVCaptureConnection *previewLayerConnection=self.preview.connection;
     
-    switch (toInterfaceOrientation) {
+    switch (orientation) {
         case UIInterfaceOrientationPortrait:
             [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationPortrait];
             break;
@@ -166,5 +172,8 @@
             [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
             break;
     }
+    
 }
+
+
 @end

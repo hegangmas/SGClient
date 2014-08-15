@@ -137,10 +137,11 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     self.currentDBString = cell.textLabel.text;
-    
 }
 
 -(void)save{
+    
+    [self.main popToRootViewControllerAnimated:NO];
     NSLog(@"%@",self.currentDBString);
     [SGUtility setCurrentDB:[NSString stringWithFormat:@"%@.sqlite",self.currentDBString]];
     [self.navigationController popViewControllerAnimated:YES];

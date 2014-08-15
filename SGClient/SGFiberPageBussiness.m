@@ -476,6 +476,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                         
                         resultItem.type1 = type;
                         resultItem.type2 = type;
+                        resultItem.portId1 = self.typePortList[0];
+                        resultItem.portId2 = self.typePortList[1];
                     };
                 }
         }}

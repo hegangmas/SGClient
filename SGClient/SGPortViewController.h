@@ -11,4 +11,5 @@
 
 @interface SGPortViewController : SGDrawViewController
 
+@property (nonatomic,strong) NSString* portId;
 @end

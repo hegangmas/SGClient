@@ -43,4 +43,14 @@
 @interface SGVterminalConnection : NSObject
 @property(nonatomic,strong) NSString* txvterminal_id;
 @property(nonatomic,strong) NSString* rxvterminal_id;
+@property(nonatomic,strong) NSString* straight;
+@end
+
+@interface SGPortInfo : NSObject
+@property(nonatomic,strong) NSString* port_id;
+@property(nonatomic,strong) NSString* direction;
+@end
+
+@interface SGDeviceInfo : NSObject
+@property(nonatomic,strong) NSString* description;
 @end

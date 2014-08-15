@@ -8,6 +8,7 @@
 
 #import "SGFiberViewController.h"
 #import "SGFiberPageBussiness.h"
+#import "SGPortViewController.h"
 
 
 @interface SGFiberViewController ()
@@ -295,8 +296,8 @@ float rOffset = 10;
             default:
                 break;
         }
-        
-        [svgStr appendString:DrawRectW(hOffset,
+
+        [svgStr appendString:DrawRect(hOffset,
                                        margin_y + 30,
                                        [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
                                        60.0)];
@@ -321,13 +322,29 @@ float rOffset = 10;
         [svgStr appendString:@"</text>"];
         
         vOffset = 0;
+        NSString* port = @"";
         for (int i = 0; i < _fiberList.count; i++) {
             vOffset += 60;
             
-            [svgStr appendString:DrawRectW(hOffset,
-                                           margin_y + 30 + vOffset,
-                                           [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
-                                           60.0)];
+            if (s == 0) {
+                port = [self.fiberList[i] valueForKey:@"portId1"];
+            }
+            if (s == 2) {
+                port = [self.fiberList[i] valueForKey:@"portId2"];
+            }
+
+            if (s == 1) {
+                [svgStr appendString:DrawRectW(hOffset,
+                                               margin_y + 30 + vOffset,
+                                               [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
+                                               60.0,@"")];
+            }else{
+                [svgStr appendString:DrawRectW(hOffset,
+                                               margin_y + 30 + vOffset,
+                                               [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
+                                               60.0,port)];
+            }
+
             
             [svgStr appendString:[NSString stringWithFormat:@"<text x='%f' y='%f' font-size='17' text-anchor='start'>",hOffset, 40.0]];
             
@@ -392,5 +409,25 @@ float rOffset = 10;
     [super didReceiveMemoryWarning];
 }
 
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    NSString* _url = [request URL].description;
+    
+    NSLog(@"%@",_url);
+    if ([_url rangeOfString:@"@@@@"].location != NSNotFound) {
+        
+        NSString *retValue = [[_url componentsSeparatedByString:@"@@@@"] objectAtIndex:1];
+        if (retValue) {
+            if (![retValue isEqualToString:@""]) {
+                SGPortViewController* controller = [SGPortViewController new];
+                [controller setPortId:retValue];
+                
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        }
+    }
+    return YES;
+}
 
 @end

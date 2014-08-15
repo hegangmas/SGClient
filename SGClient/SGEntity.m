@@ -16,3 +16,7 @@
 @end
 @implementation SGVterminalConnection
 @end
+@implementation SGPortInfo
+@end
+@implementation SGDeviceInfo
+@end

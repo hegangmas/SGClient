@@ -7,11 +7,15 @@
 //
 
 #import "SGBaseBussiness.h"
+ 
 
 @interface SGPortPageBussiness : SGBaseBussiness
 
 +(SGPortPageBussiness*)sharedSGPortPageBussiness;
 
--(NSString*)queryPortsInfoByPortId:(NSString*)portId;
+-(NSArray*)queryPortsInfoByPortId:(NSString*)portId;
 
+-(NSArray*)queryAllInfoById:(NSString*)portId;
+
+@property (nonatomic,assign) BOOL isShowAll;
 @end

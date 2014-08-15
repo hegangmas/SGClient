@@ -18,8 +18,14 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"首页" style:UIBarButtonItemStyleBordered target:self action:@selector(backToRoot)];
+
     }
     return self;
+}
+
+-(void)backToRoot{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad

@@ -10,6 +10,7 @@
 
 #import "SGBaseViewController.h"
 #import "SGScanViewController.h"
+#import "SGSettingViewController.h"
 
 @interface SGHomeViewController ()
 
@@ -59,6 +60,7 @@
         [controller setTitle:dockItem.title];
         nav = [[UINavigationController alloc] initWithRootViewController:controller];
         nav.view.autoresizingMask = UIViewAutoresizingNone;
+        
         if (dockItem.isModalShow) {
             
             nav.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -73,6 +75,11 @@
             nav.view.superview.center = self.view.center;
             return;
         }
+        if ([controller isKindOfClass:[SGSettingViewController class]]) {
+            SGSettingViewController* setting = (SGSettingViewController*)controller;
+            [setting setMain:_children[@"SGMainViewController"]];
+        }
+        
         [nav.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragNavView:)]];
         [self addChildViewController:nav];
         [_children setObject:nav forKey:dockItem.controller];

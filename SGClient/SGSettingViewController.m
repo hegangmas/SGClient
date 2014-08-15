@@ -31,8 +31,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = nil;
     [self.view addSubview:self.listView];
-//    [[SGPortPageBussiness sharedSGPortPageBussiness] queryPortsInfoByPortId:@"2753"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -78,12 +78,12 @@
             switch (indexPath.row) {
                 case 0:
                     controller = [SGDBViewController new];
+                    [controller setMain:self.main];
                     break;
                 default:
                     break;
             }
-            
-            
+
             break;
             
         default:

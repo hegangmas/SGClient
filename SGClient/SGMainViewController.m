@@ -40,8 +40,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = nil;
     
-    self.title = [[SGUtility getCurrentDB] componentsSeparatedByString:@"."][0];
     [self loadRoomData];
 }
 
@@ -50,7 +50,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-     
+    
+    self.title = [[SGUtility getCurrentDB] componentsSeparatedByString:@"."][0];
     self.roomView.frame = CGRectMake(0,
                                      10,
                                      MainScreenWidth(self.interfaceOrientation),

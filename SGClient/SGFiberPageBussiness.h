@@ -65,4 +65,7 @@
 @property(nonatomic,strong) NSString* tx2;
 @property(nonatomic,strong) NSString* odf2;
 
+@property(nonatomic,strong) NSString* portId1;
+@property(nonatomic,strong) NSString* portId2;
+
 @end

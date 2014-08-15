@@ -10,4 +10,5 @@
 
 @interface SGDBViewController : SGBaseViewController
 
+@property (nonatomic,strong) UINavigationController* main;
 @end
