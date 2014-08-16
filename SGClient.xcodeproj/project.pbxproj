@@ -10,6 +10,7 @@
 		3E173BFF198F69AC0011E64F /* SGPortPageDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E173BFE198F69AC0011E64F /* SGPortPageDataModel.m */; };
 		3E288EDE19813E79009DB66B /* SGDBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E288EDD19813E79009DB66B /* SGDBViewController.m */; };
 		3E288EE019815810009DB66B /* 测试数据库.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3E288EDF19815810009DB66B /* 测试数据库.sqlite */; };
+		3E837CEC199E06D30041F1C9 /* SGSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E837CEB199E06D30041F1C9 /* SGSelectViewController.m */; };
 		3E8A69CA1958219C00748A3D /* SGDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A69C91958219C00748A3D /* SGDrawViewController.m */; };
 		3E96912C199B118E00E0A780 /* File.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E96912B199B118E00E0A780 /* File.strings */; };
 		3EDB0F3C1972DFA500F9FE3C /* SGGenerateCubicleSvg.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDB0F3B1972DFA500F9FE3C /* SGGenerateCubicleSvg.m */; };
@@ -88,6 +89,8 @@
 		3E288EDC19813E79009DB66B /* SGDBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDBViewController.h; sourceTree = "<group>"; };
 		3E288EDD19813E79009DB66B /* SGDBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDBViewController.m; sourceTree = "<group>"; };
 		3E288EDF19815810009DB66B /* 测试数据库.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "测试数据库.sqlite"; sourceTree = "<group>"; };
+		3E837CEA199E06D30041F1C9 /* SGSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGSelectViewController.h; sourceTree = "<group>"; };
+		3E837CEB199E06D30041F1C9 /* SGSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGSelectViewController.m; sourceTree = "<group>"; };
 		3E8A69C81958219C00748A3D /* SGDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDrawViewController.h; sourceTree = "<group>"; };
 		3E8A69C91958219C00748A3D /* SGDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDrawViewController.m; sourceTree = "<group>"; };
 		3E96912B199B118E00E0A780 /* File.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = File.strings; sourceTree = "<group>"; };
@@ -335,6 +338,8 @@
 			children = (
 				C9CF6594194DC49700957BB1 /* SGPortViewController.h */,
 				C9CF6595194DC49700957BB1 /* SGPortViewController.m */,
+				3E837CEA199E06D30041F1C9 /* SGSelectViewController.h */,
+				3E837CEB199E06D30041F1C9 /* SGSelectViewController.m */,
 			);
 			name = PortView;
 			sourceTree = "<group>";
@@ -736,6 +741,7 @@
 				C9F03C731917108F00355991 /* FMDatabasePool.m in Sources */,
 				C9CF65E6194DCB7F00957BB1 /* SGSettingViewController.m in Sources */,
 				C9DD683B194F19C7005776B5 /* SGSectionFooterView.m in Sources */,
+				3E837CEC199E06D30041F1C9 /* SGSelectViewController.m in Sources */,
 				C9CF6599194DC4FF00957BB1 /* SGLeftDock.m in Sources */,
 				C9F03C721917108F00355991 /* FMDatabaseAdditions.m in Sources */,
 				C9F03C8619171B4200355991 /* SGMainPageBussiness.m in Sources */,

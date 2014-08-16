@@ -34,7 +34,7 @@
 {
 
     [super viewDidLoad];
-    self.title = [NSString stringWithFormat:@"设备虚端子连接图:端口:%@",self.portId];
+    self.title = @"设备虚端子连接图";
     self.showAll = NO;
     self.result = [[SGPortPageBussiness sharedSGPortPageBussiness] queryPortsInfoByPortId:self.portId];
     [self loadSVG];
@@ -223,7 +223,7 @@ float offsetY_ = 0;
     //左右最多行数
     NSUInteger mainHeight = MAX(leftTotal, rightTotal);
     float height = 0;
-    
+ 
     //计算整体高度
     if (mainHeight == leftTotal) {
         height = dataModel.leftChilds.count*40 + (dataModel.leftChilds.count - 1)*cHeight_ + mainHeight*cHeight_;
@@ -245,7 +245,7 @@ float offsetY_ = 0;
     [svgStr appendString:DrawRectW(margin,
                                   margin_y_ + offsetY_,
                                   width,
-                                  height,dataModel.mainPortId)];
+                                  height-10,dataModel.mainPortId)];
     
     //主设名称
     [svgStr appendString:DrawText(margin,
@@ -280,7 +280,7 @@ float offsetY_ = 0;
                                                offsetLeft,11,
                                                @"white",
                                                @"italic",
-                                               proDes)];
+                                               child.cntedProDes[index])];
                 
                 [svgStr appendString:DrawText(margin_x_ + maxLeftL + linelen_,
                                               offsetLeft,11,
@@ -293,10 +293,10 @@ float offsetY_ = 0;
                                                    margin_x_ + maxLeftL + linelen_-15,
                                                    offsetLeft-2,@"")];
                 
-                [svgStr appendString:DrawCircle(margin_x_ + maxLeftL+20,offsetLeft-2,3.0)];
+                [svgStr appendString:DrawCircle(margin_x_ + maxLeftL+5,offsetLeft-2,3.0)];
                 [svgStr appendString:DrawCircle(margin_x_ + maxLeftL + linelen_-5,offsetLeft-2,3.0)];
                 
-                [svgStr appendString:DrawText(margin_x_ + maxLeftL + linelen_-30,
+                [svgStr appendString:DrawText(margin_x_ + maxLeftL + linelen_-60,
                                               offsetLeft-10,11,
                                               @"gray",
                                               @"italic",
@@ -353,7 +353,7 @@ float offsetY_ = 0;
                                               offsetRight-2,
                                               margin + width + linelen_-15,
                                               offsetRight-2,@"")];
-                [svgStr appendString:DrawCircle(margin + width+20,offsetRight-2,3.0)];
+                [svgStr appendString:DrawCircle(margin + width+5,offsetRight-2,3.0)];
                 [svgStr appendString:DrawCircle(margin + width + linelen_-5,offsetRight-2,3.0)];
                 
                 
@@ -363,7 +363,7 @@ float offsetY_ = 0;
                                               @"italic",
                                               child.centerPortId)];
                 
-                [svgStr appendString:DrawText(margin + width + linelen_- 30,
+                [svgStr appendString:DrawText(margin + width + linelen_- 60,
                                               offsetRight-10,11,
                                               @"gray",
                                               @"italic",

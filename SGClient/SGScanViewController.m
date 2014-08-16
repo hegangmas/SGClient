@@ -144,6 +144,16 @@
              }
          }
          
+         if ([stringValue rangeOfString:@"F"].location!=NSNotFound) {
+             if (result.count == 2) {
+                 [self.mainController.currentChild popToRootViewControllerAnimated:NO];
+                 SGMainViewController* mainController = (SGMainViewController*)self.mainController.currentChild.childViewControllers[0];
+                 [mainController scanModeWithPortId:result[1]];
+             }
+         }
+         
+         
+         
 
        }];
 }

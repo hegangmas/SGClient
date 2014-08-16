@@ -16,6 +16,8 @@
 #import "SGAPPConfig.h"
 #import "SGUtility.h"
 
+#import "SGPortViewController.h"
+
 
 @interface SGMainViewController ()<SGRoomCellDelegate>
 
@@ -163,7 +165,7 @@
     [self.navigationController pushViewController:cableController animated:YES];
 }
 
-#pragma mark - 扫码入口 加载下一级界面
+#pragma mark - 扫码入口 加载下一级界面 跳转第三级
 -(void)scanModeWithCubicleId:(NSInteger)cubicleId withCableId:(NSInteger)cableId{
 
     for(NSDictionary* dic in self.roomList){
@@ -174,6 +176,14 @@
             }
         }
     }
+}
+
+#pragma mark - 扫码入口 加载下一级界面 跳转第四级
+-(void)scanModeWithPortId:(NSString*)portId{
+    
+    SGPortViewController* portViewController = [SGPortViewController new];
+    [portViewController setPortId:portId];
+    [self.navigationController pushViewController:portViewController animated:YES];
 }
 
 ////UICollectionView被选中时调用的方法

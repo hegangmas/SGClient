@@ -35,7 +35,7 @@ or switch3_txport_id = %@ ",p,p,p,p]
 #define FP_GetVterminalConnection(c) [NSString stringWithFormat:@"select rxvterminal_id,txvterminal_id,straight from vterminal_connection where %@",c]
 
 
-#define FP_GetPortInfo(p) [NSString stringWithFormat:@"select direction from port where port_id = %@",p]
+#define FP_GetPortInfo(p) [NSString stringWithFormat:@"select type,direction from port where port_id = %@",p]
 
 #define FP_GetDeviceInfo(d) [NSString stringWithFormat:@"select description from device where device_id = %@",d]
 
@@ -55,6 +55,8 @@ where switch1_id != 0 or switch1_txport_id != 0 or switch1_rxport_id != 0 or swi
  根据端口号 获取port board信息
  －－－－－－－－－－－－－－－－－*/
 #define FP_GetPortDesc(p) [NSString stringWithFormat:@"select  port.name||'/'||board.position as  description  from port inner join board on board.board_id = port.board_id where port.port_id = %@",p]
+
+#define FP_GetFiberInfo(p) [NSString stringWithFormat:@"select port1_id as port_id,port2_id as direction from fiber where port1_id = %@ or port2_id = %@",p,p]
 
 @interface SGPortPageBussiness()
 
@@ -97,8 +99,26 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
     
     SGPortInfo* portInfo = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortInfo(self.mainPortId)] withEntity:@"SGPortInfo"] objectAtIndex:0];
     
-    self.direction = portInfo.direction;
+    if ([portInfo.type isEqualToString:@"2"]) {
+        
+        NSArray* list = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberInfo(self.mainPortId)] withEntity:@"SGPortInfo"];
+        NSMutableArray* plist = [NSMutableArray array];
+        for(SGPortInfo *p in list){
+            [plist addObject:p.port_id];
+            [plist addObject:p.direction];
+        }
+        
+        for(NSString* p in plist){
+            SGPortInfo* portInfo = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortInfo(p)] withEntity:@"SGPortInfo"] objectAtIndex:0];
+            if (![portInfo.type isEqualToString:@"2"]) {
+                self.mainPortId = p;
+            }
+        }
+        
+        portInfo = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortInfo(self.mainPortId)] withEntity:@"SGPortInfo"] objectAtIndex:0];
+    }
     
+    self.direction = portInfo.direction;
     if ([portInfo.direction isEqualToString:@"0"]) {
         
         self.tmpInfoSetLists = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetInfoSetList0(self.mainPortId)] withEntity:@"SGInfoSetItem"];
@@ -122,8 +142,12 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
             
             self.cntedDeviceId = self.selectedInfoset.txied_id;
         }else{
-            
-//          显示列表让用户选择
+            NSMutableArray* ls = [NSMutableArray array];
+            for(SGInfoSetItem* item in self.tmpInfoSetLists){
+                NSString* deviceName = [self getDeviceInfoById:item.rxied_id];
+                [ls addObject:[NSString stringWithFormat:@"%@****%@",item.rxied_id,deviceName]];
+            }
+ 
         }
     }
     if ([portInfo.direction isEqualToString:@"1"]) {
@@ -149,9 +173,11 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
 
             self.cntedDeviceId = self.selectedInfoset.rxied_id;
         }else{
-            
-//           显示列表让用户选择
-            
+            NSMutableArray* ls = [NSMutableArray array];
+            for(SGInfoSetItem* item in self.tmpInfoSetLists){
+                NSString* deviceName = [self getDeviceInfoById:item.txied_id];
+                [ls addObject:[NSString stringWithFormat:@"%@****%@",item.txied_id,deviceName]];
+            }
         }
     }
 }
@@ -202,6 +228,10 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                 
                 for(SGVterminal* vterminalItem in obj2){
                     
+                    if ([vterminalItem.vterminal_id isEqualToString:@"104844"]) {
+                        NSLog(@"test");
+                    }
+                    
                     NSString* conditions;
                     if (idx2 == 0) {
                         conditions = [NSString stringWithFormat:@"rxvterminal_id = %@",vterminalItem.vterminal_id];
@@ -236,27 +266,39 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
 
                                 [child.mainProDes addObject:vterminalItem.pro_desc];
                                 
-                                NSArray* tmpVterminal = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalItem(vid2)] withEntity:@"SGVterminal"];
-                                SGVterminal* item = tmpVterminal[0];
+//                                NSArray* tmpVterminal = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalItem(vid2)] withEntity:@"SGVterminal"];
+//                                SGVterminal* item = tmpVterminal[0];
                                 
                                 [child.cntedProDes addObject:item.pro_desc];
 
                                 if (idx2 == 0) {
                                     if ([self.direction isEqualToString:@"0"]) {
-                                        child.centerPortId = self.selectedInfoset.rxiedport_id;
-                                        child.cntedPortId = self.selectedInfoset.txiedport_id;
+//                                        child.centerPortId = self.selectedInfoset.rxiedport_id;
+                                        child.centerPortId = [self getPortDesc:self.selectedInfoset.rxiedport_id];
+                                        
+//                                        child.cntedPortId = self.selectedInfoset.txiedport_id;
+                                        child.cntedPortId = [self getPortDesc:self.selectedInfoset.txiedport_id];
                                     }else{
-                                        child.centerPortId = self.groupInfoset.rxiedport_id;
-                                        child.cntedPortId = self.groupInfoset.txiedport_id;
+//                                        child.centerPortId = self.groupInfoset.rxiedport_id;
+                                        child.centerPortId = [self getPortDesc:self.groupInfoset.rxiedport_id];
+                                        
+//                                        child.cntedPortId = self.groupInfoset.txiedport_id;
+                                        child.cntedPortId = [self getPortDesc:self.groupInfoset.txiedport_id];
                                     }
                                 }
                                 if (idx2 == 1) {
                                     if ([self.direction isEqualToString:@"1"]) {
-                                        child.centerPortId = self.selectedInfoset.txiedport_id;
-                                        child.cntedPortId = self.selectedInfoset.rxiedport_id;
+//                                        child.centerPortId = self.selectedInfoset.txiedport_id;
+                                        child.centerPortId = [self getPortDesc:self.selectedInfoset.txiedport_id];
+                                        
+//                                        child.cntedPortId = self.selectedInfoset.rxiedport_id;
+                                        child.cntedPortId = [self getPortDesc:self.selectedInfoset.rxiedport_id];
                                     }else{
-                                        child.centerPortId = self.groupInfoset.txiedport_id;
-                                        child.cntedPortId = self.groupInfoset.rxiedport_id;
+//                                        child.centerPortId = self.groupInfoset.txiedport_id;
+                                        child.centerPortId = [self getPortDesc:self.groupInfoset.txiedport_id];
+
+//                                        child.cntedPortId = self.groupInfoset.rxiedport_id;
+                                        child.cntedPortId = [self getPortDesc:self.groupInfoset.rxiedport_id];
                                     }
                                 }
                                 
@@ -318,6 +360,14 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
     return infosetList;
 }
 
+-(NSString*)getPortDesc:(NSString*)portId{
+    NSArray* list = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortDesc(portId)] withEntity:@"SGInfoSetItem"];
+    if (list.count) {
+        SGInfoSetItem* item = list[0];
+        return item.description;
+    }
+    return nil;
+}
 -(NSArray*)queryAllInfoById:(NSString*)portId{
     
     
@@ -402,8 +452,13 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                                             SGPortPageChildData* child = [SGPortPageChildData new];
                                             child.cntedDeviceId = infoset.rxied_id;
                                             child.cntedDeviceName = [self getDeviceInfoById:child.cntedDeviceId];
-                                            child.cntedPortId = infoset.rxiedport_id;
-                                            child.centerPortId = infoset.txiedport_id;
+                                            
+//                                            child.cntedPortId = infoset.rxiedport_id;
+//                                            child.centerPortId = infoset.txiedport_id;
+                                            child.cntedPortId = [self getPortDesc:infoset.rxiedport_id];
+                                            child.centerPortId = [self getPortDesc:infoset.txiedport_id];
+                                            
+                                            
                                             [child.cntedProDes addObject:item.pro_desc];
                                             [child.mainProDes addObject:vterminalItem.pro_desc];
                                             
@@ -421,8 +476,14 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                                             SGPortPageChildData *child = [SGPortPageChildData new];
                                             child.cntedDeviceId = infoset.txied_id;
                                             child.cntedDeviceName = [self getDeviceInfoById:child.cntedDeviceId];
-                                            child.cntedPortId = infoset.txiedport_id;
-                                            child.centerPortId = infoset.rxiedport_id;
+                                            
+//                                            child.cntedPortId = infoset.txiedport_id;
+//                                            child.centerPortId = infoset.rxiedport_id;
+                                            
+                                            child.cntedPortId = [self getPortDesc:infoset.txiedport_id];
+                                            child.centerPortId = [self getPortDesc:infoset.rxiedport_id];
+                                            
+                                            
                                             [child.cntedProDes addObject:item.pro_desc];
                                             [child.mainProDes addObject:vterminalItem.pro_desc];
                                             
@@ -443,8 +504,13 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                                             SGPortPageChildData* child = [SGPortPageChildData new];
                                             child.cntedDeviceId = infoset.rxied_id;
                                             child.cntedDeviceName = [self getDeviceInfoById:child.cntedDeviceId];
-                                            child.cntedPortId = infoset.rxiedport_id;
-                                            child.centerPortId = infoset.txiedport_id;
+                                            
+//                                            child.cntedPortId = infoset.rxiedport_id;
+//                                            child.centerPortId = infoset.txiedport_id;
+                                            child.cntedPortId = [self getPortDesc:infoset.rxiedport_id];
+                                            child.centerPortId = [self getPortDesc:infoset.txiedport_id];
+                                            
+                                            
                                             [child.cntedProDes addObject:item.pro_desc];
                                             [child.mainProDes addObject:vterminalItem.pro_desc];
                                             
@@ -462,8 +528,13 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                                             SGPortPageChildData *child = [SGPortPageChildData new];
                                             child.cntedDeviceId = infoset.txied_id;
                                             child.cntedDeviceName = [self getDeviceInfoById:child.cntedDeviceId];
-                                            child.cntedPortId = infoset.txiedport_id;
-                                            child.centerPortId = infoset.rxiedport_id;
+                                            
+//                                            child.cntedPortId = infoset.txiedport_id;
+//                                            child.centerPortId = infoset.rxiedport_id;
+                                            
+                                            child.cntedPortId = [self getPortDesc:infoset.txiedport_id];
+                                            child.centerPortId = [self getPortDesc:infoset.rxiedport_id];
+                                            
                                             [child.cntedProDes addObject:item.pro_desc];
                                             [child.mainProDes addObject:vterminalItem.pro_desc];
                                             
