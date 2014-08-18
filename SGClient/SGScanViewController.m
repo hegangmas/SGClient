@@ -151,10 +151,6 @@
                  [mainController scanModeWithPortId:result[1]];
              }
          }
-         
-         
-         
-
        }];
 }
 

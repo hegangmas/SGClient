@@ -76,6 +76,12 @@ where switch1_id != 0 or switch1_txport_id != 0 or switch1_rxport_id != 0 or swi
 @property (nonatomic,strong) NSString* cntedDeviceId;
 @property (nonatomic,strong) NSString* cntedDeviceName;
 @property (nonatomic,strong) NSString* cntedPortId;
+@property (nonatomic,copy) finishBlock completeBlock;
+
+
+
+@property (nonatomic,assign) NSInteger multiIndex;
+@property (nonatomic,strong) NSMutableDictionary *cache;
 @end
 
 @implementation SGPortPageBussiness
@@ -83,9 +89,6 @@ where switch1_id != 0 or switch1_txport_id != 0 or switch1_rxport_id != 0 or swi
 GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
 
 
--(void)callBackWithSelectedIndex:(NSInteger)index{
-    
-}
 
 //获取设备名称
 -(NSString*)getDeviceInfoById:(NSString*)deviceId{
@@ -94,14 +97,51 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
     return portInfo.description;
 }
 
-
--(void)getCenterDeviceId{
+//入口
+-(void)queryResultWithType:(NSInteger)type portId:(NSString*)portId complete:(finishBlock)finish{
     
-    SGPortInfo* portInfo = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortInfo(self.mainPortId)] withEntity:@"SGPortInfo"] objectAtIndex:0];
+    self.dataModel0 = [SGPortPageDataModel new];
+    self.dataModel1 = [SGPortPageDataModel new];
+    self.dataModel0.type = @"0";
+    self.dataModel1.type = @"1";
+    self.completeBlock = finish;
     
+    //设置查询端口号 如果type为2找出非2端口
+    [self setMainId:portId];
+    if (type == 1) {
+        if ([self.cache valueForKey:self.mainPortId]) {
+            self.multiFlag = YES;
+        }else{
+            self.multiFlag = NO;
+        }
+    }
+    
+    NSArray* ret;
+    
+    //设定主设备ID NAME等
+    if ([self getCenterDeviceId]) {
+        
+        //type 0 非全部 1全部
+        switch (type) {
+            case 0:
+                //获取非全部列表
+                ret = [self queryByIdSub];
+                break;
+            case 1:
+                //获取全部列表
+                ret = [self queryAllSub];
+                break;
+        }
+    }
+    finish(ret);
+}
+//设置查询端口号 如果type为2找出非2端口
+-(void)setMainId:(NSString*)portId{
+    
+    SGPortInfo* portInfo = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortInfo(portId)] withEntity:@"SGPortInfo"] objectAtIndex:0];
     if ([portInfo.type isEqualToString:@"2"]) {
         
-        NSArray* list = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberInfo(self.mainPortId)] withEntity:@"SGPortInfo"];
+        NSArray* list = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberInfo(portId)] withEntity:@"SGPortInfo"];
         NSMutableArray* plist = [NSMutableArray array];
         for(SGPortInfo *p in list){
             [plist addObject:p.port_id];
@@ -114,18 +154,29 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                 self.mainPortId = p;
             }
         }
-        
-        portInfo = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortInfo(self.mainPortId)] withEntity:@"SGPortInfo"] objectAtIndex:0];
+    }else{
+        self.mainPortId = portId;
     }
+}
+
+//设定主设备ID NAME等
+-(BOOL)getCenterDeviceId{
+
+    SGPortInfo* portInfo = [[SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetPortInfo(self.mainPortId)] withEntity:@"SGPortInfo"] objectAtIndex:0];
     
     self.direction = portInfo.direction;
+    
     if ([portInfo.direction isEqualToString:@"0"]) {
         
         self.tmpInfoSetLists = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetInfoSetList0(self.mainPortId)] withEntity:@"SGInfoSetItem"];
         
-        if (self.tmpInfoSetLists.count == 1) {
+        if (self.tmpInfoSetLists.count == 1||self.multiFlag) {
             
             self.selectedInfoset = self.tmpInfoSetLists[0];
+            if (self.multiFlag) {
+                self.selectedInfoset = self.tmpInfoSetLists[self.multiIndex];
+            }
+            
             self.groupInfoset = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"][0];
             
             
@@ -147,15 +198,29 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                 NSString* deviceName = [self getDeviceInfoById:item.rxied_id];
                 [ls addObject:[NSString stringWithFormat:@"%@****%@",item.rxied_id,deviceName]];
             }
- 
+            
+            SGSelectViewController* select = [SGSelectViewController new];
+            [select setDelegate:self];
+            select.dataSource = ls;
+            select.modalPresentationStyle = UIModalPresentationFormSheet;
+            [self.controller presentViewController:select animated:YES completion:nil];
+            select.view.superview.frame = CGRectMake(0, 0, 600, 300);
+            select.view.superview.center = self.controller.view.center;
+            return NO;
+
         }
     }
     if ([portInfo.direction isEqualToString:@"1"]) {
         self.tmpInfoSetLists = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetInfoSetList1(self.mainPortId)] withEntity:@"SGInfoSetItem"];
         
-        if (self.tmpInfoSetLists.count == 1) {
+        if (self.tmpInfoSetLists.count == 1||self.multiFlag) {
             
             self.selectedInfoset = self.tmpInfoSetLists[0];
+            
+            if (self.multiFlag) {
+                self.selectedInfoset = self.tmpInfoSetLists[self.multiIndex];
+            }
+            
             self.groupInfoset = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"][0];
             
             
@@ -178,35 +243,77 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                 NSString* deviceName = [self getDeviceInfoById:item.txied_id];
                 [ls addObject:[NSString stringWithFormat:@"%@****%@",item.txied_id,deviceName]];
             }
+            
+            SGSelectViewController* select = [SGSelectViewController new];
+            [select setDelegate:self];
+            select.dataSource = ls;
+            select.modalPresentationStyle = UIModalPresentationFormSheet;
+            [self.controller presentViewController:select animated:YES completion:nil];
+            select.view.superview.frame = CGRectMake(0, 0, 600, 300);
+            select.view.superview.center = self.controller.view.center;
+            return NO;
+            
         }
     }
+    return YES;
 }
 
-/*－－－－－－－－－－－－－－－－－
- portId满足type!=2
- －－－－－－－－－－－－－－－－－*/
--(NSArray*)queryPortsInfoByPortId:(NSString*)portId{
-    
-    self.mainPortId = portId;
-    
-    self.dataModel0 = [SGPortPageDataModel new];
-    self.dataModel1 = [SGPortPageDataModel new];
-    self.dataModel0.type = @"0";
-    self.dataModel1.type = @"1";
-    
-    [self getCenterDeviceId];
-    
+-(void)userDidSelectItem:(NSInteger)index{
 
+    self.cache = [NSMutableDictionary dictionary];
+    [self.cache setValue:@"YES" forKey:self.mainPortId];
+    self.multiIndex = index;
+    
+    self.selectedInfoset = self.tmpInfoSetLists[index];
+    
+    if ([self.direction isEqualToString:@"0"]) {
+        
+        self.groupInfoset = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"][0];
+        
+        
+        self.dataModel0.mainDeviceId = self.selectedInfoset.rxied_id;
+        self.dataModel0.mainDeviceName = [self getDeviceInfoById:self.dataModel0.mainDeviceId];
+        self.dataModel0.mainPortId = self.mainPortId;
+        
+        
+        self.dataModel1.mainDeviceId = self.selectedInfoset.rxied_id;
+        self.dataModel1.mainDeviceName = [self getDeviceInfoById:self.dataModel1.mainDeviceId];
+        self.dataModel1.mainPortId = self.mainPortId;
+        self.cntedDeviceId = self.selectedInfoset.txied_id;
+    }
+    if ([self.direction isEqualToString:@"1"]) {
+
+        self.groupInfoset = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"][0];
+
+        self.dataModel0.mainDeviceId = self.selectedInfoset.txied_id;
+        self.dataModel0.mainDeviceName = [self getDeviceInfoById:self.dataModel0.mainDeviceId];
+        self.dataModel0.mainPortId = self.mainPortId;
+
+        self.dataModel1.mainDeviceId = self.selectedInfoset.txied_id;
+        self.dataModel1.mainDeviceName = [self getDeviceInfoById:self.dataModel1.mainDeviceId];
+        self.dataModel1.mainPortId = self.mainPortId;
+        
+        
+        self.cntedDeviceId = self.selectedInfoset.rxied_id;
+    }
+    
+    NSArray* ret = [self queryByIdSub];
+    self.completeBlock(ret);
+}
+
+
+-(NSArray*)queryByIdSub{
+    
     self.cntedDeviceName = [self getDeviceInfoById:self.cntedDeviceId];
     
     NSArray* vterminalList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalList(self.dataModel0.mainDeviceId)] withEntity:@"SGVterminal"];
     
-    if (!self.isShowAll) {
- 
+    if (YES) {
+        
         NSArray* type0list = [vterminalList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == '0'"]];
         NSArray* type1list = [vterminalList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == '1'"]];
         [@[type0list,type1list] enumerateObjectsUsingBlock:^(id obj1, NSUInteger idx1, BOOL *stop1) {
-
+            
             NSArray* d0list;
             NSArray* d1list;
             
@@ -240,7 +347,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                     }
                     
                     NSArray* tmpConnection = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalConnection(conditions)] withEntity:@"SGVterminalConnection"];
-
+                    
                     if (tmpConnection.count) {
                         
                         SGVterminalConnection* connection = tmpConnection[0];
@@ -263,48 +370,48 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                             SGVterminal* item = tmpVterminal[0];
                             
                             if ([item.device_id isEqualToString:self.cntedDeviceId]) {
-
+                                
                                 [child.mainProDes addObject:vterminalItem.pro_desc];
                                 
-//                                NSArray* tmpVterminal = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalItem(vid2)] withEntity:@"SGVterminal"];
-//                                SGVterminal* item = tmpVterminal[0];
+                                //                                NSArray* tmpVterminal = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalItem(vid2)] withEntity:@"SGVterminal"];
+                                //                                SGVterminal* item = tmpVterminal[0];
                                 
                                 [child.cntedProDes addObject:item.pro_desc];
-
+                                
                                 if (idx2 == 0) {
                                     if ([self.direction isEqualToString:@"0"]) {
-//                                        child.centerPortId = self.selectedInfoset.rxiedport_id;
+                                        //                                        child.centerPortId = self.selectedInfoset.rxiedport_id;
                                         child.centerPortId = [self getPortDesc:self.selectedInfoset.rxiedport_id];
                                         
-//                                        child.cntedPortId = self.selectedInfoset.txiedport_id;
+                                        //                                        child.cntedPortId = self.selectedInfoset.txiedport_id;
                                         child.cntedPortId = [self getPortDesc:self.selectedInfoset.txiedport_id];
                                     }else{
-//                                        child.centerPortId = self.groupInfoset.rxiedport_id;
+                                        //                                        child.centerPortId = self.groupInfoset.rxiedport_id;
                                         child.centerPortId = [self getPortDesc:self.groupInfoset.rxiedport_id];
                                         
-//                                        child.cntedPortId = self.groupInfoset.txiedport_id;
+                                        //                                        child.cntedPortId = self.groupInfoset.txiedport_id;
                                         child.cntedPortId = [self getPortDesc:self.groupInfoset.txiedport_id];
                                     }
                                 }
                                 if (idx2 == 1) {
                                     if ([self.direction isEqualToString:@"1"]) {
-//                                        child.centerPortId = self.selectedInfoset.txiedport_id;
+                                        //                                        child.centerPortId = self.selectedInfoset.txiedport_id;
                                         child.centerPortId = [self getPortDesc:self.selectedInfoset.txiedport_id];
                                         
-//                                        child.cntedPortId = self.selectedInfoset.rxiedport_id;
+                                        //                                        child.cntedPortId = self.selectedInfoset.rxiedport_id;
                                         child.cntedPortId = [self getPortDesc:self.selectedInfoset.rxiedport_id];
                                     }else{
-//                                        child.centerPortId = self.groupInfoset.txiedport_id;
+                                        //                                        child.centerPortId = self.groupInfoset.txiedport_id;
                                         child.centerPortId = [self getPortDesc:self.groupInfoset.txiedport_id];
-
-//                                        child.cntedPortId = self.groupInfoset.rxiedport_id;
+                                        
+                                        //                                        child.cntedPortId = self.groupInfoset.rxiedport_id;
                                         child.cntedPortId = [self getPortDesc:self.groupInfoset.rxiedport_id];
                                     }
                                 }
                                 
-                             }
-
-
+                            }
+                            
+                            
                         }
                     }
                 }
@@ -337,7 +444,159 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
         }];
     }
     return @[self.dataModel0,self.dataModel1];
+
 }
+
+/*－－－－－－－－－－－－－－－－－
+ portId满足type!=2
+ －－－－－－－－－－－－－－－－－*/
+//-(NSArray*)queryPortsInfoByPortId:(NSString*)portId{
+//    
+//    self.mainPortId = portId;
+//    [self getCenterDeviceId];
+//    
+//
+//    self.cntedDeviceName = [self getDeviceInfoById:self.cntedDeviceId];
+//    
+//    NSArray* vterminalList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalList(self.dataModel0.mainDeviceId)] withEntity:@"SGVterminal"];
+//    
+//    if (!self.isShowAll) {
+// 
+//        NSArray* type0list = [vterminalList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == '0'"]];
+//        NSArray* type1list = [vterminalList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == '1'"]];
+//        [@[type0list,type1list] enumerateObjectsUsingBlock:^(id obj1, NSUInteger idx1, BOOL *stop1) {
+//
+//            NSArray* d0list;
+//            NSArray* d1list;
+//            
+//            if (idx1 == 0) {
+//                d0list = [type0list filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"direction == '0'"]];
+//                d1list = [type0list filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"direction == '1'"]];
+//            }else{
+//                d0list = [type1list filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"direction == '0'"]];
+//                d1list = [type1list filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"direction == '1'"]];
+//            }
+//            
+//            [@[d0list,d1list] enumerateObjectsUsingBlock:^(id obj2, NSUInteger idx2, BOOL *stop2) {
+//                
+//                SGPortPageChildData* child = [SGPortPageChildData new];
+//                
+//                
+//                child.cntedDeviceId = self.cntedDeviceId;
+//                child.cntedDeviceName = self.cntedDeviceName;
+//                
+//                for(SGVterminal* vterminalItem in obj2){
+//                    
+//                    if ([vterminalItem.vterminal_id isEqualToString:@"104844"]) {
+//                        NSLog(@"test");
+//                    }
+//                    
+//                    NSString* conditions;
+//                    if (idx2 == 0) {
+//                        conditions = [NSString stringWithFormat:@"rxvterminal_id = %@",vterminalItem.vterminal_id];
+//                    }else {
+//                        conditions = [NSString stringWithFormat:@"txvterminal_id = %@",vterminalItem.vterminal_id];
+//                    }
+//                    
+//                    NSArray* tmpConnection = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalConnection(conditions)] withEntity:@"SGVterminalConnection"];
+//
+//                    if (tmpConnection.count) {
+//                        
+//                        SGVterminalConnection* connection = tmpConnection[0];
+//                        
+//                        NSString* vid1;
+//                        NSString* vid2;
+//                        
+//                        if ([vterminalItem.direction isEqualToString:@"1"]) {
+//                            vid1 = connection.rxvterminal_id;
+//                            vid2 = connection.txvterminal_id;
+//                        } else {
+//                            vid1 = connection.txvterminal_id;
+//                            vid2 = connection.rxvterminal_id;
+//                        }
+//                        
+//                        NSArray* tmpVterminal = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalItem(vid1)] withEntity:@"SGVterminal"];
+//                        
+//                        if ([tmpVterminal count]) {
+//                            
+//                            SGVterminal* item = tmpVterminal[0];
+//                            
+//                            if ([item.device_id isEqualToString:self.cntedDeviceId]) {
+//
+//                                [child.mainProDes addObject:vterminalItem.pro_desc];
+//                                
+////                                NSArray* tmpVterminal = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalItem(vid2)] withEntity:@"SGVterminal"];
+////                                SGVterminal* item = tmpVterminal[0];
+//                                
+//                                [child.cntedProDes addObject:item.pro_desc];
+//
+//                                if (idx2 == 0) {
+//                                    if ([self.direction isEqualToString:@"0"]) {
+////                                        child.centerPortId = self.selectedInfoset.rxiedport_id;
+//                                        child.centerPortId = [self getPortDesc:self.selectedInfoset.rxiedport_id];
+//                                        
+////                                        child.cntedPortId = self.selectedInfoset.txiedport_id;
+//                                        child.cntedPortId = [self getPortDesc:self.selectedInfoset.txiedport_id];
+//                                    }else{
+////                                        child.centerPortId = self.groupInfoset.rxiedport_id;
+//                                        child.centerPortId = [self getPortDesc:self.groupInfoset.rxiedport_id];
+//                                        
+////                                        child.cntedPortId = self.groupInfoset.txiedport_id;
+//                                        child.cntedPortId = [self getPortDesc:self.groupInfoset.txiedport_id];
+//                                    }
+//                                }
+//                                if (idx2 == 1) {
+//                                    if ([self.direction isEqualToString:@"1"]) {
+////                                        child.centerPortId = self.selectedInfoset.txiedport_id;
+//                                        child.centerPortId = [self getPortDesc:self.selectedInfoset.txiedport_id];
+//                                        
+////                                        child.cntedPortId = self.selectedInfoset.rxiedport_id;
+//                                        child.cntedPortId = [self getPortDesc:self.selectedInfoset.rxiedport_id];
+//                                    }else{
+////                                        child.centerPortId = self.groupInfoset.txiedport_id;
+//                                        child.centerPortId = [self getPortDesc:self.groupInfoset.txiedport_id];
+//
+////                                        child.cntedPortId = self.groupInfoset.rxiedport_id;
+//                                        child.cntedPortId = [self getPortDesc:self.groupInfoset.rxiedport_id];
+//                                    }
+//                                }
+//                                
+//                             }
+//
+//
+//                        }
+//                    }
+//                }
+//                switch (idx1) {
+//                    case 0:
+//                        switch (idx2) {
+//                            case 0:
+//                                [self.dataModel0.leftChilds addObject:child];
+//                                break;
+//                            case 1:
+//                                [self.dataModel0.rightChilds addObject:child];
+//                                break;
+//                        }
+//                        
+//                        break;
+//                    case 1:
+//                        switch (idx2) {
+//                            case 0:
+//                                [self.dataModel1.leftChilds addObject:child];
+//                                break;
+//                            case 1:
+//                                [self.dataModel1.rightChilds addObject:child];
+//                                break;
+//                        }
+//                        
+//                        
+//                        break;
+//                }
+//            }];
+//        }];
+//    }
+//    return @[self.dataModel0,self.dataModel1];
+//}
 
 
 -(NSArray*)queryInfosetForAllWithDeviceId1:(NSString*)deviceId1 deviceId2:(NSString*)deviceId2 type:(NSString*)type straight:(NSString*)straight{
@@ -368,29 +627,21 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
     }
     return nil;
 }
--(NSArray*)queryAllInfoById:(NSString*)portId{
-    
-    
+
+
+-(NSArray*)queryAllSub{
+ 
     NSMutableDictionary* type0LeftCache = [NSMutableDictionary dictionary];
     NSMutableDictionary* type0RightCache = [NSMutableDictionary dictionary];
     NSMutableDictionary* type1LeftCache = [NSMutableDictionary dictionary];
     NSMutableDictionary* type1RightCache = [NSMutableDictionary dictionary];
 
-    self.mainPortId = portId;
-    
-    self.dataModel0 = [SGPortPageDataModel new];
-    self.dataModel1 = [SGPortPageDataModel new];
-    self.dataModel0.type = @"0";
-    self.dataModel1.type = @"1";
-    
-    [self getCenterDeviceId];
-    
-    
-    self.cntedDeviceName = [self getDeviceInfoById:self.cntedDeviceId];
+//    [self getCenterDeviceId];
+//    self.cntedDeviceName = [self getDeviceInfoById:self.cntedDeviceId];
     
     NSArray* vterminalList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalList(self.dataModel0.mainDeviceId)] withEntity:@"SGVterminal"];
     
-    if (!self.isShowAll) {
+    if (YES) {
         
         NSArray* type0list = [vterminalList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == '0'"]];
         NSArray* type1list = [vterminalList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == '1'"]];
@@ -555,9 +806,6 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
         }];
     }
     return @[self.dataModel0,self.dataModel1];
-    
-    
-
 }
 
 

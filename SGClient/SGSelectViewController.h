@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SGPortPageBussinessDelegate <NSObject>
+-(void)userDidSelectItem:(NSInteger)index;
+@end
+
 @interface SGSelectViewController : UIViewController
 
 @property (nonatomic,strong) NSArray* dataSource;
+@property (nonatomic,weak) id<SGPortPageBussinessDelegate> delegate;
 @end

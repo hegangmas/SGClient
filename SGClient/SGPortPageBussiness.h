@@ -7,15 +7,20 @@
 //
 
 #import "SGBaseBussiness.h"
- 
+#import "SGSelectViewController.h"
 
-@interface SGPortPageBussiness : SGBaseBussiness
+typedef void(^finishBlock)(NSArray* result);
+
+
+
+@interface SGPortPageBussiness : SGBaseBussiness<SGPortPageBussinessDelegate>
 
 +(SGPortPageBussiness*)sharedSGPortPageBussiness;
 
--(NSArray*)queryPortsInfoByPortId:(NSString*)portId;
+-(void)queryResultWithType:(NSInteger)type portId:(NSString*)portId complete:(finishBlock)finish;
 
--(NSArray*)queryAllInfoById:(NSString*)portId;
 
-@property (nonatomic,assign) BOOL isShowAll;
+@property (nonatomic,strong) UIViewController* controller;
+@property (nonatomic,assign) BOOL multiFlag;
+
 @end

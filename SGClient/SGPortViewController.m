@@ -36,8 +36,16 @@
     [super viewDidLoad];
     self.title = @"设备虚端子连接图";
     self.showAll = NO;
-    self.result = [[SGPortPageBussiness sharedSGPortPageBussiness] queryPortsInfoByPortId:self.portId];
-    [self loadSVG];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [[SGPortPageBussiness sharedSGPortPageBussiness] setController:self];
+    [[SGPortPageBussiness sharedSGPortPageBussiness] setMultiFlag:NO];
+    [[SGPortPageBussiness sharedSGPortPageBussiness] queryResultWithType:0 portId:self.portId complete:^(NSArray *result) {
+        weakSelf.result = result;
+        [weakSelf loadSVG];
+    }];
+ 
 }
 
 -(void)loadSVG{
@@ -57,8 +65,6 @@
     
     [svgStr appendString:@"<marker id=\"triangle\" viewBox=\"0 0 10 10\" refX=\"0\" refY=\"5\" markerUnits=\"strokeWidth\" markerWidth=\"5\" markerHeight=\"4\" orient=\"auto\"> <path d=\"M 0 0 L 10 5 L 0 10 z\" /> </marker></defs>"];
 
-    
-    
     self.cubicleWidth = MAX([self getCubicleWidth:self.result[0]], [self getCubicleWidth:self.result[1]]);
     
     [svgStr appendString:[self generateDrawString:self.result[0]]];
@@ -78,7 +84,7 @@
     NSData *svgData = [result dataUsingEncoding:NSUTF8StringEncoding];
     NSString* dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)
                         objectAtIndex:0];
-    dbPath = [dbPath stringByAppendingPathComponent:@"dz.svg"];
+    dbPath = [dbPath stringByAppendingPathComponent:@"vport.svg"];
     [svgData writeToFile:dbPath atomically:YES];
     NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
     NSURL *baseURL = [[NSURL alloc] initFileURLWithPath:resourcePath isDirectory:YES];
@@ -168,9 +174,9 @@ float offsetY_ = 0;
     
     if ([dataModel.type isEqualToString:@"1"]) {
         [svgStr appendString:[NSString stringWithFormat:@"<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"stroke-dasharray: 9, 5;stroke: gray; stroke-width: 2;\"/>",margin_x_,
-                              offsetY_+20,
+                              offsetY_-5,
                               margin_x_ + 2000,
-                              offsetY_+20]];
+                              offsetY_]];
     }
  
     BOOL hasLeft = NO;//是否有左连接
@@ -240,6 +246,13 @@ float offsetY_ = 0;
     
     //取最长宽度
     float width = MAX(titleL, self.cubicleWidth);
+    
+    NSString* type = [dataModel.type isEqualToString:@"0"] ? @"GOOSE虚端子连接" : @"SV虚端子连接";
+    [svgStr appendString:DrawText(margin_x_,
+                                  margin_y_ + offsetY_ - 20 ,18,
+                                  @"navy",
+                                  @"italic",
+                                  type)];
     
     //画主设
     [svgStr appendString:DrawRectW(margin,
@@ -428,20 +441,31 @@ float offsetY_ = 0;
 
         NSString *portId = [[_url componentsSeparatedByString:@"@@@@"] objectAtIndex:1];
         
+        __weak typeof(self) weakSelf = self;
+        [[SGPortPageBussiness sharedSGPortPageBussiness] setController:self];
+        
         if (!self.showAll) {
-            self.result = [[SGPortPageBussiness sharedSGPortPageBussiness] queryAllInfoById:portId];
+
+            [[SGPortPageBussiness sharedSGPortPageBussiness] queryResultWithType:1 portId:portId complete:^(NSArray *result) {
+                weakSelf.result = result;
+                [weakSelf loadSVG];
+            }];
+
             self.showAll = YES;
             animation.subtype = kCATransitionFromLeft;
+            
         }else{
-            self.result = [[SGPortPageBussiness sharedSGPortPageBussiness] queryPortsInfoByPortId:portId];
+            [[SGPortPageBussiness sharedSGPortPageBussiness] queryResultWithType:0 portId:portId complete:^(NSArray *result) {
+                weakSelf.result = result;
+                [weakSelf loadSVG];
+            }];
+            
             self.showAll = NO;
             animation.subtype = kCATransitionFromRight;
         }
 
         
         [[self.view layer] addAnimation:animation forKey:@"animation"];
-        
-        [self loadSVG];
     }
     return YES;
 }
