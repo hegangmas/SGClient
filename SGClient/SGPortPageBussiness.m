@@ -177,7 +177,12 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                 self.selectedInfoset = self.tmpInfoSetLists[self.multiIndex];
             }
             
-            self.groupInfoset = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"][0];
+            NSArray* glist = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"];
+            if (glist.count>0) {
+                self.groupInfoset = glist[0];
+            }else{
+                self.groupInfoset = nil;
+            }
             
             
             self.dataModel0.mainDeviceId = self.selectedInfoset.rxied_id;
@@ -204,8 +209,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
             select.dataSource = ls;
             select.modalPresentationStyle = UIModalPresentationFormSheet;
             [self.controller presentViewController:select animated:YES completion:nil];
-            select.view.superview.frame = CGRectMake(0, 0, 600, 300);
-            select.view.superview.center = self.controller.view.center;
+            self.controller.view.frame  = CGRectInset(self.controller.view.superview.frame, 100, 50);
             return NO;
 
         }
@@ -221,7 +225,12 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                 self.selectedInfoset = self.tmpInfoSetLists[self.multiIndex];
             }
             
-            self.groupInfoset = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"][0];
+            NSArray* glist = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"];
+            if (glist.count>0) {
+                self.groupInfoset = glist[0];
+            }else{
+                self.groupInfoset = nil;
+            }
             
             
             self.dataModel0.mainDeviceId = self.selectedInfoset.txied_id;
@@ -249,8 +258,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
             select.dataSource = ls;
             select.modalPresentationStyle = UIModalPresentationFormSheet;
             [self.controller presentViewController:select animated:YES completion:nil];
-            select.view.superview.frame = CGRectMake(0, 0, 600, 300);
-            select.view.superview.center = self.controller.view.center;
+            self.controller.view.frame = CGRectInset(self.controller.view.superview.frame, 100, 50);
             return NO;
             
         }
@@ -268,7 +276,12 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
     
     if ([self.direction isEqualToString:@"0"]) {
         
-        self.groupInfoset = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"][0];
+        NSArray* glist = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"];
+        if (glist.count>0) {
+            self.groupInfoset = glist[0];
+        }else{
+            self.groupInfoset = nil;
+        }
         
         
         self.dataModel0.mainDeviceId = self.selectedInfoset.rxied_id;
@@ -283,7 +296,12 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
     }
     if ([self.direction isEqualToString:@"1"]) {
 
-        self.groupInfoset = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"][0];
+        NSArray* glist = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetGroupInfo(self.selectedInfoset.group,self.selectedInfoset.infoset_id)] withEntity:@"SGInfoSetItem"];
+        if (glist.count>0) {
+            self.groupInfoset = glist[0];
+        }else{
+            self.groupInfoset = nil;
+        }
 
         self.dataModel0.mainDeviceId = self.selectedInfoset.txied_id;
         self.dataModel0.mainDeviceName = [self getDeviceInfoById:self.dataModel0.mainDeviceId];
@@ -373,38 +391,23 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
                                 
                                 [child.mainProDes addObject:vterminalItem.pro_desc];
                                 
-                                //                                NSArray* tmpVterminal = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetVterminalItem(vid2)] withEntity:@"SGVterminal"];
-                                //                                SGVterminal* item = tmpVterminal[0];
-                                
                                 [child.cntedProDes addObject:item.pro_desc];
                                 
                                 if (idx2 == 0) {
                                     if ([self.direction isEqualToString:@"0"]) {
-                                        //                                        child.centerPortId = self.selectedInfoset.rxiedport_id;
                                         child.centerPortId = [self getPortDesc:self.selectedInfoset.rxiedport_id];
-                                        
-                                        //                                        child.cntedPortId = self.selectedInfoset.txiedport_id;
                                         child.cntedPortId = [self getPortDesc:self.selectedInfoset.txiedport_id];
                                     }else{
-                                        //                                        child.centerPortId = self.groupInfoset.rxiedport_id;
                                         child.centerPortId = [self getPortDesc:self.groupInfoset.rxiedport_id];
-                                        
-                                        //                                        child.cntedPortId = self.groupInfoset.txiedport_id;
                                         child.cntedPortId = [self getPortDesc:self.groupInfoset.txiedport_id];
                                     }
                                 }
                                 if (idx2 == 1) {
                                     if ([self.direction isEqualToString:@"1"]) {
-                                        //                                        child.centerPortId = self.selectedInfoset.txiedport_id;
                                         child.centerPortId = [self getPortDesc:self.selectedInfoset.txiedport_id];
-                                        
-                                        //                                        child.cntedPortId = self.selectedInfoset.rxiedport_id;
                                         child.cntedPortId = [self getPortDesc:self.selectedInfoset.rxiedport_id];
                                     }else{
-                                        //                                        child.centerPortId = self.groupInfoset.txiedport_id;
                                         child.centerPortId = [self getPortDesc:self.groupInfoset.txiedport_id];
-                                        
-                                        //                                        child.cntedPortId = self.groupInfoset.rxiedport_id;
                                         child.cntedPortId = [self getPortDesc:self.groupInfoset.rxiedport_id];
                                     }
                                 }

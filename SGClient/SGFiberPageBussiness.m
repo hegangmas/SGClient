@@ -182,6 +182,9 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                 default:
                     break;
             }
+        }else{
+            [self fillMiddleFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
+            [self fillOdfFieldWithSGResult:resultItem withSGFiberItem:fiberItem];
         }
   
         [retList addObject:resultItem];
