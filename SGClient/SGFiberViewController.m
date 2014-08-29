@@ -333,12 +333,13 @@ float rOffset = 10;
                 port = [self.fiberList[i] valueForKey:@"portId2"];
             }
 
-            if (s == 1) {
+            if ((s == 1) || [[self.fiberList[i] valueForKey:@"type2"] isEqualToString:@"备用"]) {
                 [svgStr appendString:DrawRectW(hOffset,
                                                margin_y + 30 + vOffset,
                                                [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
                                                60.0,@"")];
             }else{
+                
                 [svgStr appendString:DrawRectW(hOffset,
                                                margin_y + 30 + vOffset,
                                                [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,

@@ -66,6 +66,7 @@
     [svgStr appendString:@"<marker id=\"triangle\" viewBox=\"0 0 10 10\" refX=\"0\" refY=\"5\" markerUnits=\"strokeWidth\" markerWidth=\"5\" markerHeight=\"4\" orient=\"auto\"> <path d=\"M 0 0 L 10 5 L 0 10 z\" /> </marker></defs>"];
 
     self.cubicleWidth = MAX([self getCubicleWidth:self.result[0]], [self getCubicleWidth:self.result[1]]);
+    self.cubicleWidth+=20;
     
     [svgStr appendString:[self generateDrawString:self.result[0]]];
     [svgStr appendString:[self generateDrawString:self.result[1]]];
