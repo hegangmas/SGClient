@@ -15,7 +15,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    
+    sleep(3);
     [UINavigationBar appearance].tintColor = [UIColor darkGrayColor];
     [UIBarButtonItem appearance].tintColor = [UIColor darkGrayColor];
     [UITableViewCell appearance].tintColor = [UIColor darkGrayColor];
