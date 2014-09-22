@@ -15,17 +15,17 @@
  根据两个端口号 获取InfoSet表信息
  －－－－－－－－－－－－－－－－－*/
 #define FP_GetInfoSetList0(p) [NSString stringWithFormat:@"select infoset_id,name,description,type,[group],txiedport_id,switch1_rxport_id,switch1_txport_id,txied_id,rxied_id,\
-           switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,rxiedport_id from infoset \
+           switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,switch4_rxport_id,switch4_txport_id,rxiedport_id from infoset \
             where  switch1_rxport_id = %@   \
-                                    or switch2_rxport_id = %@ or switch3_rxport_id = %@ \
-                                    or rxiedport_id = %@",p,p,p,p]
+                                    or switch2_rxport_id = %@ or switch3_rxport_id = %@ or switch4_rxport_id = %@ \
+                                    or rxiedport_id = %@",p,p,p,p,p]
 
 
 #define FP_GetInfoSetList1(p) [NSString stringWithFormat:@"select infoset_id,name,description,type,[group],txiedport_id,switch1_rxport_id,switch1_txport_id,txied_id,rxied_id,\
-switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,rxiedport_id from infoset \
+switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,switch4_rxport_id,switch4_txport_id,rxiedport_id from infoset \
 where txiedport_id = %@  or switch1_txport_id = %@  \
 or switch2_txport_id = %@ \
-or switch3_txport_id = %@ ",p,p,p,p]
+or switch3_txport_id = %@ or switch4_txport_id = %@",p,p,p,p,p]
 
 
 #define FP_GetVterminalList(d) [NSString stringWithFormat:@"select vterminal_id,device_id,type,direction,vterminal_no,pro_desc from vterminal where device_id = %@",d]
@@ -40,16 +40,16 @@ or switch3_txport_id = %@ ",p,p,p,p]
 #define FP_GetDeviceInfo(d) [NSString stringWithFormat:@"select description from device where device_id = %@",d]
 
 #define FP_GetGroupInfo(g,i) [NSString stringWithFormat:@"select infoset_id,name,description,type,[group],txiedport_id,switch1_rxport_id,switch1_txport_id,txied_id,rxied_id,\
-switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,rxiedport_id from infoset where [group] = %@ and infoset_id!=%@",g,i]
+switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,switch4_rxport_id,switch4_txport_id,rxiedport_id from infoset where [group] = %@ and infoset_id!=%@",g,i]
 
 #define FP_GetInfoSetList2(d1,d2,t)  [NSString stringWithFormat:@"select infoset_id,name,description,type,[group],txiedport_id,switch1_rxport_id,switch1_txport_id,txied_id,rxied_id,\
-switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,rxiedport_id from infoset \
-where switch1_id == 0 and switch1_txport_id == 0 and switch1_rxport_id == 0 and switch2_id == 0 and switch2_txport_id == 0 and switch2_rxport_id == 0 and switch3_id == 0 and  switch3_txport_id == 0 and switch3_rxport_id == 0 and (type == %d or type == 4) and ((txied_id == %@ and rxied_id == %@) or (rxied_id == %@ and txied_id == %@))",t,d1,d2,d1,d2]
+switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,switch4_rxport_id,switch4_txport_id,rxiedport_id from infoset \
+where switch1_id == 0 and switch1_txport_id == 0 and switch1_rxport_id == 0 and switch2_id == 0 and switch2_txport_id == 0 and switch2_rxport_id == 0 and switch3_id == 0 and  switch3_txport_id == 0 and switch3_rxport_id == 0 and  switch4_id == 0 and switch4_txport_id == 0 and switch4_rxport_id == 0 and (type == %d or type == 4) and ((txied_id == %@ and rxied_id == %@) or (rxied_id == %@ and txied_id == %@))",t,d1,d2,d1,d2]
 
 
 #define FP_GetInfoSetList3(d1,d2,t)  [NSString stringWithFormat:@"select infoset_id,name,description,type,[group],txiedport_id,switch1_rxport_id,switch1_txport_id,txied_id,rxied_id,\
-switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,rxiedport_id from infoset \
-where switch1_id != 0 or switch1_txport_id != 0 or switch1_rxport_id != 0 or switch2_id != 0 or switch2_txport_id != 0 or switch2_rxport_id != 0 or switch3_id != 0 or  switch3_txport_id != 0 or switch3_rxport_id != 0 and (type == %d or type == 4) and ((txied_id == %@ and rxied_id == %@) or (rxied_id == %@ and txied_id == %@))",t,d1,d2,d1,d2]
+switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,switch4_rxport_id,switch4_txport_id,rxiedport_id from infoset \
+where switch1_id != 0 or switch1_txport_id != 0 or switch1_rxport_id != 0 or switch2_id != 0 or switch2_txport_id != 0 or switch2_rxport_id != 0 or switch3_id != 0 or  switch3_txport_id != 0 or switch3_rxport_id != 0 or switch4_id != 0 or  switch4_txport_id != 0 or switch4_rxport_id != 0 and (type == %d or type == 4) and ((txied_id == %@ and rxied_id == %@) or (rxied_id == %@ and txied_id == %@))",t,d1,d2,d1,d2]
 
 /*－－－－－－－－－－－－－－－－－
  根据端口号 获取port board信息

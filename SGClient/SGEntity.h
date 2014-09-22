@@ -26,6 +26,12 @@
 @property(nonatomic,strong) NSString* switch2_txport_id;
 @property(nonatomic,strong) NSString* switch3_rxport_id;
 @property(nonatomic,strong) NSString* switch3_txport_id;
+
+
+@property(nonatomic,strong) NSString* switch4_rxport_id;
+@property(nonatomic,strong) NSString* switch4_txport_id;
+
+
 @property(nonatomic,strong) NSString* rxiedport_id;
 @property(nonatomic,strong) NSString* rxied_id;
 @property(nonatomic,strong) NSString* txied_id;

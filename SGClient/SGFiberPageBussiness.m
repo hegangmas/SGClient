@@ -49,10 +49,10 @@
  根据两个端口号 获取InfoSet表信息
  －－－－－－－－－－－－－－－－－*/
 #define FP_GetInfoSetList(p1,p2) [NSString stringWithFormat:@"select infoset_id,name,description,type,[group],txiedport_id,switch1_rxport_id,switch1_txport_id,\
-             switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,rxiedport_id from infoset \
+             switch2_rxport_id,switch2_txport_id,switch3_rxport_id,switch3_txport_id,switch4_rxport_id,switch4_txport_id,rxiedport_id from infoset \
                  where txiedport_id in (%@,%@) or switch1_rxport_id in (%@,%@) or switch1_txport_id in (%@,%@)  \
                or switch2_rxport_id in (%@,%@) or switch2_txport_id in (%@,%@) or switch3_rxport_id in (%@,%@) \
-               or switch3_txport_id in (%@,%@) or rxiedport_id in (%@,%@)",p1,p2,p1,p2,p1,p2,p1,p2,p1,p2,p1,p2,p1,p2,p1,p2]
+               or switch3_txport_id in (%@,%@) or switch4_rxport_id in (%@,%@) or switch4_txport_id in (%@,%@) or rxiedport_id in (%@,%@)",p1,p2,p1,p2,p1,p2,p1,p2,p1,p2,p1,p2,p1,p2,p1,p2,p1,p2,p1,p2]
 
 /*－－－－－－－－－－－－－－－－－
  根据端口号 获取device信息
@@ -137,6 +137,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
                          @"switch2_txport_id",
                          @"switch3_rxport_id",
                          @"switch3_txport_id",
+                         @"switch4_rxport_id",
+                         @"switch4_txport_id",
                          @"rxiedport_id",nil];
     }
     return self;
@@ -609,7 +611,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
     for(int i = 0; i < outCount;i++){
         property = [NSString stringWithUTF8String:property_getName(properties[i])];
         
-        if ([[infoSetItem valueForKey:property] isEqualToString:port]) {
+        if ([[infoSetItem valueForKey:property] isEqualToString:port] && ![property isEqualToString:@"type"]) {
             return [self.infoSetOrder indexOfObject:property];
         }
     }
@@ -623,7 +625,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
     
     return ([infoSetItem.switch1_rxport_id isEqualToString:@"0"]&&[infoSetItem.switch1_txport_id isEqualToString:@"0"]&&
             [infoSetItem.switch2_rxport_id isEqualToString:@"0"]&&[infoSetItem.switch2_txport_id isEqualToString:@"0"]&&
-            [infoSetItem.switch3_rxport_id isEqualToString:@"0"]&&[infoSetItem.switch3_txport_id isEqualToString:@"0"]);
+            [infoSetItem.switch3_rxport_id isEqualToString:@"0"]&&[infoSetItem.switch3_txport_id isEqualToString:@"0"]&&
+            [infoSetItem.switch4_rxport_id isEqualToString:@"0"]&&[infoSetItem.switch4_txport_id isEqualToString:@"0"]);
 }
 
 /*－－－－－－－－－－－－－－－－－
