@@ -16,8 +16,21 @@
 {
     // Override point for customization after application launch.
     sleep(3);
-    [UINavigationBar appearance].tintColor = [UIColor darkGrayColor];
-    [UIBarButtonItem appearance].tintColor = [UIColor darkGrayColor];
+    
+//    UIImage *image = [UIImage imageNamed:@"bar.png"];
+//    [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"bar_s.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(30.0f, 2.0f, 30.0f,2.0f)] forBarMetrics:UIBarMetricsDefault];
+    
+    
+    [UINavigationBar appearance].tintColor = [UIColor whiteColor];
+    
+    [UINavigationBar appearance].titleTextAttributes = @{
+                                                         UITextAttributeTextColor : [UIColor whiteColor],
+                                                         };
+ 
+ 
+    [UIBarButtonItem appearance].tintColor = [UIColor whiteColor];
     [UITableViewCell appearance].tintColor = [UIColor darkGrayColor];
     
     [SGAPPConfig sharedSGAPPConfig];

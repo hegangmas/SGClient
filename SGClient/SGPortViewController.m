@@ -10,6 +10,8 @@
 #import "SGPortPageBussiness.h"
 #import "SGPortPageDataModel.h"
 #import <QuartzCore/QuartzCore.h>
+#import "MBProgressHUD.h"
+
 
 @interface SGPortViewController ()
 
@@ -18,6 +20,7 @@
 @property(nonatomic,assign) float cubicleWidth;
 
 @property(nonatomic,assign) BOOL showAll;
+
 @end
 
 @implementation SGPortViewController
@@ -93,6 +96,7 @@
                     MIMEType:@"image/svg+xml"
             textEncodingName:@"UTF-8"
                      baseURL:baseURL];
+ 
 }
 
 
@@ -470,4 +474,15 @@ float offsetY_ = 0;
     }
     return YES;
 }
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+}
+
 @end

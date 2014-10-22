@@ -30,7 +30,10 @@
         self = [arrayOfViews objectAtIndex:0];
         self.deviceListView.dataSource = self;
         self.deviceListView.delegate = self;
+        
         [self.deviceListView setBackgroundColor:RGB(107, 103, 185)];
+        [self.deviceListView setBackgroundColor:RGB(120, 170, 215)];
+ 
         
         UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapped)];
         [gesture setNumberOfTapsRequired:1];
@@ -80,6 +83,7 @@
     
     
     cell.contentView.backgroundColor = RGB(107, 103, 185);
+    cell.contentView.backgroundColor = RGB(120, 170, 215);
     cell.textLabel.font = [UIFont italicSystemFontOfSize:15.0];
     cell.textLabel.textColor = [UIColor whiteColor];
     id deviceobj = [self.data objectForKey:@"device"];

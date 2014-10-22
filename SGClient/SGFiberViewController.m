@@ -297,7 +297,7 @@ float rOffset = 10;
                 break;
         }
 
-        [svgStr appendString:DrawRect(hOffset,
+        [svgStr appendString:DrawRectH(hOffset,
                                        margin_y + 30,
                                        [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
                                        60.0)];
@@ -334,16 +334,32 @@ float rOffset = 10;
             }
 
             if ((s == 1) || [[self.fiberList[i] valueForKey:@"type2"] isEqualToString:@"备用"]) {
-                [svgStr appendString:DrawRectW(hOffset,
-                                               margin_y + 30 + vOffset,
-                                               [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
-                                               60.0,@"")];
-            }else{
                 
-                [svgStr appendString:DrawRectW(hOffset,
-                                               margin_y + 30 + vOffset,
-                                               [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
-                                               60.0,port)];
+                if (i%2 == 0) {
+                    [svgStr appendString:DrawRectW(hOffset,
+                                                   margin_y + 30 + vOffset,
+                                                   [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
+                                                   60.0,@"")];
+                }else{
+                    [svgStr appendString:DrawRectWD(hOffset,
+                                                   margin_y + 30 + vOffset,
+                                                   [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
+                                                   60.0,@"")];
+                }
+
+            }else{
+                if (i%2==0) {
+                    [svgStr appendString:DrawRectW(hOffset,
+                                                   margin_y + 30 + vOffset,
+                                                   [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
+                                                   60.0,port)];
+                }else{
+                    [svgStr appendString:DrawRectWD(hOffset,
+                                                   margin_y + 30 + vOffset,
+                                                   [self getTotalLengthForArray:_offsetList withBegin:beginIndex withEnd:endIndex] + rOffset,
+                                                   60.0,port)];
+                }
+
             }
 
             

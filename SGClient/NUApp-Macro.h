@@ -30,21 +30,41 @@
 #define DrawTextClicked(x,y,z,c,f,s,i) [NSString stringWithFormat:@"<text x=\"%f\" y=\"%f\" font-size=\"%d\" fill =\"%@\" font-style=\"%@\" onclick=\"self.location.href='@@@@%@'\">%@</text>",x,y,z,c,f,i,s]
 
 
-#define DrawRect(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:navy;stroke:black;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
+#define DrawRectH(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:navy;stroke:white;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
 
-#define DrawRectW(x,y,w,h,p) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:navy;stroke:white;stroke-width:1;opacity:0.5\" onclick=\"self.location.href='@@@@%@'\"/>",x,y,w,h,p]
+#define DrawRect(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:#5A5AAD;stroke:black;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
+
+#define DrawRectD(x,y,w,h) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:#B8B8DC;stroke:black;stroke-width:1;opacity:0.5\"/>",x,y,w,h]
+
+
+
+
+#define DrawRectW(x,y,w,h,p) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:#5A5AAD;stroke:white;stroke-width:1;opacity:0.5\" onclick=\"self.location.href='@@@@%@'\"/>",x,y,w,h,p]
+
+#define DrawRectWD(x,y,w,h,p) [NSString stringWithFormat:@"<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:#B8B8DC;stroke:white;stroke-width:1;opacity:0.5\" onclick=\"self.location.href='@@@@%@'\"/>",x,y,w,h,p]
+ 
+
+
 
 #define LineInfo(n,c,i,t) [NSString stringWithFormat:@"%@*%@*%d*%d",n,c,i,t]
 
-#define kDockComposeItemWidthL 130
+//#define kDockComposeItemWidthL 130
+
+#define kDockComposeItemWidthL 90
+
 
 #define kDockComposeItemHeightL kDockComposeItemWidthL
 
-#define kDockComposeItemWidthP 65
+//#define kDockComposeItemWidthP 65
+#define kDockComposeItemWidthP 40
 
-#define kDockComposeItemHeightP kDockComposeItemWidthP
+//#define kDockComposeItemHeightP kDockComposeItemWidthP
+//
+//#define kDockMenuItemHeight kDockComposeItemHeightP
 
-#define kDockMenuItemHeight kDockComposeItemHeightP
+#define kDockComposeItemHeightP 65
+
+#define kDockMenuItemHeight 65
 
 
 #define kGlobalBg kGetColor(46, 46, 46)

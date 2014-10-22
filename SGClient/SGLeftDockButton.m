@@ -53,13 +53,13 @@
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
 {
-    return CGRectMake(0, 0, kDockMenuItemHeight, kDockMenuItemHeight);
+    return CGRectMake(0, 12, 40, 40);
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect
 {
-    CGFloat width = contentRect.size.width - kDockMenuItemHeight;
-    return CGRectMake(kDockMenuItemHeight, 0, width, kDockMenuItemHeight);
+//    CGFloat width = contentRect.size.width - kDockMenuItemHeight;
+    return CGRectMake(40, 0, 60, kDockMenuItemHeight);
 }
 
 @end

@@ -43,7 +43,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = nil;
-    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     [self loadRoomData];
 }
 

@@ -618,7 +618,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGPortPageBussiness)
             infosetList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetInfoSetList2(deviceId1, deviceId2, _type)] withEntity:@"SGInfoSetItem"];
         }
     }
-    NSLog(@"------------>>>>>%@   %@",deviceId1,deviceId2);
+//    NSLog(@"------------>>>>>%@   %@",deviceId1,deviceId2);
     return infosetList;
 }
 

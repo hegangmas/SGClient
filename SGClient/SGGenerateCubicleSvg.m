@@ -83,10 +83,20 @@
                 
                 SGCableTmpItem* t = self.mergedCubicles[k];
                 
-                [svgStr appendString:DrawRect(margin_x+offsetTmp + cWidth + linelen,
-                                              offsetYTmp,
-                                              cWidth,
-                                              t.count*cHeight + (t.count-1)*cuVeMargin)];
+                
+                if (k%2 == 0) {
+                    [svgStr appendString:DrawRectD(margin_x+offsetTmp + cWidth + linelen,
+                                                  offsetYTmp,
+                                                  cWidth,
+                                                  t.count*cHeight + (t.count-1)*cuVeMargin)];
+                }else{
+                    [svgStr appendString:DrawRect(margin_x+offsetTmp + cWidth + linelen,
+                                                  offsetYTmp,
+                                                  cWidth,
+                                                  t.count*cHeight + (t.count-1)*cuVeMargin)];
+                }
+                
+ 
                 
                 
                 [svgStr appendString:DrawText(margin_x+offsetTmp + cWidth +  linelen + 10,
@@ -125,10 +135,18 @@
                         }
                     } else {
                         
-                        [svgStr appendString:DrawRect(margin_x  + hPosition*(cWidth+linelen),
-                                                      margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
-                                                      cWidth,
-                                                      cHeight)];
+                        if (vPostion%2==0) {
+                            [svgStr appendString:DrawRectD(margin_x  + hPosition*(cWidth+linelen),
+                                                          margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                          cWidth,
+                                                          cHeight)];
+                        }else{
+                            [svgStr appendString:DrawRect(margin_x  + hPosition*(cWidth+linelen),
+                                                          margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                          cWidth,
+                                                          cHeight)];
+                        }
+
                         
                         [svgStr appendString:DrawText(margin_x  + hPosition*(cWidth+linelen),
                                                       margin_y + vPostion*(cuVeMargin+cHeight)+offsetY + cHeight/2,14,
@@ -160,11 +178,18 @@
                             if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
                             }else{
                                 
-                                
-                                [svgStr appendString:DrawRect(margin_x + hPosition*(cWidth+linelen),
-                                                              margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
-                                                              cWidth,
-                                                              cHeight)];
+                                if (vPostion%2==0) {
+                                    [svgStr appendString:DrawRectD(margin_x + hPosition*(cWidth+linelen),
+                                                                  margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                                  cWidth,
+                                                                  cHeight)];
+                                }else{
+                                    [svgStr appendString:DrawRect(margin_x + hPosition*(cWidth+linelen),
+                                                                  margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                                  cWidth,
+                                                                  cHeight)];
+                                }
+
                                 
                                 
                                 [svgStr appendString:DrawText(margin_x  + hPosition*(cWidth+linelen),
@@ -193,11 +218,18 @@
                         if ([[cubicle valueForKey:@"cubicle_id"] isEqualToString:self.cubicleData[@"id"]]){
                         }else{
                             
-                            
-                            [svgStr appendString:DrawRect(margin_x + hPosition*(cWidth+linelen),
-                                                          margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
-                                                          cWidth,
-                                                          cHeight)];
+                            if (vPostion%2==0) {
+                                [svgStr appendString:DrawRectD(margin_x + hPosition*(cWidth+linelen),
+                                                              margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                              cWidth,
+                                                              cHeight)];
+                            }else{
+                                [svgStr appendString:DrawRect(margin_x + hPosition*(cWidth+linelen),
+                                                              margin_y + vPostion*(cuVeMargin+cHeight)+offsetY,
+                                                              cWidth,
+                                                              cHeight)];
+                            }
+
                             
                             
                             [svgStr appendString:DrawText(margin_x  + hPosition*(cWidth+linelen),
