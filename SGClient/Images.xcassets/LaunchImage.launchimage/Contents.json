@@ -19,7 +19,7 @@
       "idiom" : "ipad",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "pstart.png",
+      "filename" : "pstart_副本.png",
       "scale" : "2x"
     },
     {
@@ -27,7 +27,7 @@
       "idiom" : "ipad",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "启动界面.png",
+      "filename" : "启动界面_副本.png",
       "scale" : "2x"
     }
   ],

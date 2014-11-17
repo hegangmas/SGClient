@@ -16,6 +16,8 @@
     if (self) {
         
         
+        [self.roomInfo setNumberOfLines:-1];
+        
         // 初始化时加载collectionCell.xib文件
         NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"SGRoomCell" owner:self options: nil];
 

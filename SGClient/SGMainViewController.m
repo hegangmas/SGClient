@@ -101,8 +101,13 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSArray* cubicles = (NSArray*)[[self.roomList objectAtIndex:section] objectForKey:@"cubicle"];
-    return [cubicles count];
+    id cubicle = [[self.roomList objectAtIndex:section] objectForKey:@"cubicle"];
+    
+    if ([cubicle isKindOfClass:[NSDictionary class]]) {
+        return 1;
+    } else {
+        return [(NSArray*)cubicle count];
+    }
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

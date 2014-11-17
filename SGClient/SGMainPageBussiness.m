@@ -37,7 +37,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGMainPageBussiness)
  SQL 获得ROOM ID ＝ 0 设备列表
  INPUT: NULL
  －－－－－－－－－－－－－－－－－*/
-#define MP_GetDevicelistForOuterRoom  "select 0 as roomid, '户外' as roomname, cubicle.cubicle_id as cubicleid,cubicle.name as cubiclename,device.device_id as deviceid,device.description as devicename from device,cubicle where device.cubicle_id = cubicle.cubicle_id and cubicle.room_id = 0 and device.device_type !=2 order by  cubicle.cubicle_id, device.cubicle_pos"
+#define MP_GetDevicelistForOuterRoom  "select 9999 as roomid, '户外' as roomname, cubicle.cubicle_id as cubicleid,cubicle.name as cubiclename,device.device_id as deviceid,device.description as devicename from device,cubicle where device.cubicle_id = cubicle.cubicle_id and cubicle.room_id = 0 and device.device_type !=2 order by  cubicle.cubicle_id, device.cubicle_pos"
 
 #pragma mark - Query
 /*－－－－－－－－－－－－－－－－－

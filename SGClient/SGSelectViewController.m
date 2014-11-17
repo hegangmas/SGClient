@@ -34,6 +34,10 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)setDataSource:(NSArray *)dataSource{
+//    _dataSource = [dataSource valueForKeyPath:@"@distinctUnionOfObjects"];
+    _dataSource = dataSource;
+}
 
 #pragma mark - getter
 -(UIView*)headerView{
