@@ -7,6 +7,8 @@
 //
 
 #import "SGGenerateCubicleSvg.h"
+#import "SGCablePageBussiness.h"
+
 
 @implementation SGCableTmpItem
 @end
@@ -36,6 +38,21 @@
     
     [svgStr appendString:@"<defs><style type=\"text/css\"><![CDATA[ rect {fill:white;stroke:black;stroke-width:2;opacity:0.1;}]]></style></defs>"];
     
+    self.mergedCubicles = [self getMergedCubicles];
+    
+    //光缆连接如果全部是2个柜子没有3个柜子的情况下 合并
+    BOOL flag = YES;
+    for(NSArray* a in self.type0listSorted){
+        if (a.count!=2) {
+            flag = NO;
+        }
+    }
+    if (flag) {
+        for(SGCableTmpItem *item in self.mergedCubicles){
+            item.count = 1;
+        }
+    }
+    
     
     for(NSDictionary* _type in types){
     
@@ -61,24 +78,63 @@
         if (!drawFromLeft) {
             offsetTmp += (cWidth+linelen);
         }
+        if ([types indexOfObject:_type] == 0){
+            if (flag) {
+                //画主屏
+                [svgStr appendString:DrawRect(margin_x+offsetTmp,
+                                              margin_y + offsetY,
+                                              cWidth,
+                                              self.mergedCubicles.count*cHeight + (self.mergedCubicles.count-1)*cuVeMargin)];
+                
+                //主屏名称
+                [svgStr appendString:DrawText(margin_x+offsetTmp + 10,
+                                              margin_y + offsetY + (self.mergedCubicles.count*cHeight + (self.mergedCubicles.count-1)*cuVeMargin)/2,14,
+                                              @"white",
+                                              @"italic",
+                                              self.cubicleData[@"name"])];
+            }else{
+                //画主屏
+                [svgStr appendString:DrawRect(margin_x+offsetTmp,
+                                              margin_y + offsetY,
+                                              cWidth,
+                                              type.count*cHeight + (type.count-1)*cuVeMargin)];
+                
+                //主屏名称
+                [svgStr appendString:DrawText(margin_x+offsetTmp + 10,
+                                              margin_y + offsetY + (type.count*cHeight + (type.count-1)*cuVeMargin)/2,14,
+                                              @"white",
+                                              @"italic",
+                                              self.cubicleData[@"name"])];
+            }
+        }else{
+            //画主屏
+            [svgStr appendString:DrawRect(margin_x+offsetTmp,
+                                          margin_y + offsetY,
+                                          cWidth,
+                                          type.count*cHeight + (type.count-1)*cuVeMargin)];
+            
+            //主屏名称
+            [svgStr appendString:DrawText(margin_x+offsetTmp + 10,
+                                          margin_y + offsetY + (type.count*cHeight + (type.count-1)*cuVeMargin)/2,14,
+                                          @"white",
+                                          @"italic",
+                                          self.cubicleData[@"name"])];
+        }
+
         
-        //画主屏
-        [svgStr appendString:DrawRect(margin_x+offsetTmp,
-                                      margin_y + offsetY,
-                                      cWidth,
-                                      type.count*cHeight + (type.count-1)*cuVeMargin)];
+
         
-        //主屏名称
-        [svgStr appendString:DrawText(margin_x+offsetTmp + 10,
-                                      margin_y + offsetY + (type.count*cHeight + (type.count-1)*cuVeMargin)/2,14,
-                                      @"white",
-                                      @"italic",
-                                      self.cubicleData[@"name"])];
+        
+        
         
         if ([types indexOfObject:_type] == 0){
             //画光缆连接屏柜 连接线缆
             float offsetYTmp = margin_y + offsetY;
-            self.mergedCubicles = [self getMergedCubicles];
+            
+            
+            
+
+            
             for(int k = 0; k < self.mergedCubicles.count; k++){
                 
                 SGCableTmpItem* t = self.mergedCubicles[k];
@@ -105,6 +161,8 @@
                                               @"italic",
                                               t.cubicleName)];
                 
+                NSString* tmp = [NSString stringWithFormat:@"%@(%ld)",t.cableName,[[SGCablePageBussiness sharedSGCablePageBussiness] queryFiberCountWithCableId:t.cableId]];
+                
                 [svgStr appendString:DrawLine(margin_x+offsetTmp + cWidth,
                                               offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2,
                                               margin_x+offsetTmp + cWidth +linelen,
@@ -114,7 +172,7 @@
                                               offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2 - linetext_y_origin,14,
                                               @"gray",
                                               @"italic",
-                                              t.cableName,LineInfo(t.cableName,t.cableId, 0,[types indexOfObject:_type]))];
+                                              tmp,LineInfo(t.cableName,t.cableId, 0,[types indexOfObject:_type]))];
                 
                 offsetYTmp += t.count*(cHeight+cuVeMargin);
             }
@@ -253,7 +311,18 @@
         
         //累加高度
         if (type.count) {
-            offsetY += type.count*cHeight + (type.count-1)*cuVeMargin + margin_y;
+            if ([types indexOfObject:_type] == 0){
+                if (flag) {
+                    offsetY += self.mergedCubicles.count*cHeight + (self.mergedCubicles.count-1)*cuVeMargin + margin_y;
+                }else{
+                    offsetY += type.count*cHeight + (type.count-1)*cuVeMargin + margin_y;
+                }
+            }else{
+                offsetY += type.count*cHeight + (type.count-1)*cuVeMargin + margin_y;
+            }
+            
+
+            
         }
         
         if (!self.isForFiberPage) {

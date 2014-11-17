@@ -500,7 +500,9 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     
     for(int i = 0; i < outCount;i++){
         property = [NSString stringWithUTF8String:property_getName(properties[i])];
-        
+        if ([property isEqualToString:@"use_odf1"]||[property isEqualToString:@"use_odf2"]) {
+            continue;
+        }
         if ([[item valueForKey:property] integerValue] == cubcleId) {
             return [self.connectionOrder indexOfObject:property];
         }
@@ -698,6 +700,13 @@ where (fiber.port1_id = %@ and fiber.port2_id = %@) or (fiber.port2_id = %@ and 
 inner join board on device.device_id=board.device_id inner join port on board.board_id=port.board_id inner join cubicle on cubicle.cubicle_id = device.cubicle_id  \
  where port.port_id = %@",p]
 
+-(NSInteger)queryFiberCountWithCableId:(NSString*)cableId{
+    
+    NSArray* fiberList = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetFiberItemList(cableId)]
+                                               withEntity:@"SGFiberItem"];
+    
+    return fiberList.count;
+}
 -(void)handleType0list{
     
 

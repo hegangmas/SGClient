@@ -183,10 +183,21 @@
 -(void)scanModeWithCubicleId:(NSInteger)cubicleId withCableId:(NSInteger)cableId{
 
     for(NSDictionary* dic in self.roomList){
-        for(NSDictionary* subDic in dic[@"cubicle"]){
-            if ([subDic[@"id"] integerValue] == cubicleId) {
-                SGCableViewController* cableController = [[SGCableViewController alloc] initWithCubicleData:subDic withCubicleId:cubicleId withCableId:cableId];
-                [self.navigationController pushViewController:cableController animated:NO];
+        for(id subDic in dic[@"cubicle"]){
+            if ([subDic isKindOfClass:[NSDictionary class]]) {
+                if ([subDic[@"id"] integerValue] == cubicleId) {
+                    SGCableViewController* cableController = [[SGCableViewController alloc] initWithCubicleData:subDic withCubicleId:cubicleId withCableId:cableId];
+                    [self.navigationController pushViewController:cableController animated:NO];
+                    break;
+                }
+            }else{
+                
+                if ([dic[@"cubicle"][@"id"] integerValue] == cubicleId) {
+                    SGCableViewController* cableController = [[SGCableViewController alloc] initWithCubicleData:dic[@"cubicle"] withCubicleId:cubicleId withCableId:cableId];
+                    [self.navigationController pushViewController:cableController animated:NO];
+                    break;
+                }
+                
             }
         }
     }

@@ -79,7 +79,7 @@ where port.port_id = %@",p]
 /*－－－－－－－－－－－－－－－－－
  根据端口号 获取port board信息
  －－－－－－－－－－－－－－－－－*/
-#define FP_GetPortInfo(p) [NSString stringWithFormat:@"select  port.name||'/'||board.position as  description  from port inner join board on board.board_id = port.board_id where port.port_id = %@",p]
+#define FP_GetPortInfo(p) [NSString stringWithFormat:@"select  board.position||'/'||port.name as  description  from port inner join board on board.board_id = port.board_id where port.port_id = %@",p]
 
 /*－－－－－－－－－－－－－－－－－
  获取TX信息
@@ -495,7 +495,8 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
 -(void)getNewPairPortsByGroupForType2{
     
     NSArray* tmp = [self.portList copy];
-    self.portList = [NSMutableArray array];
+//    self.portList = [NSMutableArray array];
+    
     for(NSString* port in tmp){
         NSArray* portInfo = [SGUtility getResultlistForFMSet:[self.dataBase executeQuery:FP_GetTLGroupPort(port)]
                                                   withEntity:@"SGFiberItem"];

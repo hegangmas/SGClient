@@ -21,6 +21,7 @@
 
 -(SGCPDataItem*)queryCalbleInfoWithCableId:(NSInteger)cableId;
 
+-(NSInteger)queryFiberCountWithCableId:(NSString*)cableId;
 @end
 
 

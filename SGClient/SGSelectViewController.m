@@ -35,8 +35,8 @@
 }
 
 -(void)setDataSource:(NSArray *)dataSource{
-//    _dataSource = [dataSource valueForKeyPath:@"@distinctUnionOfObjects"];
-    _dataSource = dataSource;
+    _dataSource = [dataSource valueForKeyPath:@"@distinctUnionOfObjects.self"];
+//    _dataSource = dataSource;
 }
 
 #pragma mark - getter
