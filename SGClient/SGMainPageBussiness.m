@@ -62,7 +62,12 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGMainPageBussiness)
     
     FMResultSet * fmResultSet = [self.dataBase executeQuery:@MP_GetDevicelistForAllInnerRoom];
 
-    NSArray* resultList = [self getResultlistForFMSet:fmResultSet];
+    NSArray* tmp1 = [self getResultlistForFMSet:fmResultSet];
+    
+    fmResultSet = [self.dataBase executeQuery:@MP_GetDevicelistForOuterRoom];
+    NSArray *tmp2 = [self getResultlistForFMSet:fmResultSet];
+    
+    NSArray* resultList = [tmp1 arrayByAddingObjectsFromArray:tmp2];
 
     return [self buildXMLForResultSet:resultList];
 }

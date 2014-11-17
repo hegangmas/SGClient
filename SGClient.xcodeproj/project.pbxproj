@@ -17,6 +17,7 @@
 		3E96912C199B118E00E0A780 /* File.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E96912B199B118E00E0A780 /* File.strings */; };
 		3EA183BC19D45758005A458F /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EA183BB19D45758005A458F /* bar.png */; };
 		3EA183BE19D45C9D005A458F /* bar_s.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EA183BD19D45C9D005A458F /* bar_s.png */; };
+		3EDA19051A19BB48005951A4 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA19041A19BB48005951A4 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3EDB0F3C1972DFA500F9FE3C /* SGGenerateCubicleSvg.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDB0F3B1972DFA500F9FE3C /* SGGenerateCubicleSvg.m */; };
 		3EF45B5919593E5700488D28 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C4819170F5400355991 /* XCTest.framework */; };
 		3EF45B5A19593E5700488D28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F03C2919170F5400355991 /* Foundation.framework */; };
@@ -103,6 +104,8 @@
 		3E96912B199B118E00E0A780 /* File.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = File.strings; sourceTree = "<group>"; };
 		3EA183BB19D45758005A458F /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		3EA183BD19D45C9D005A458F /* bar_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_s.png; sourceTree = "<group>"; };
+		3EDA19031A19BB48005951A4 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		3EDA19041A19BB48005951A4 /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
 		3EDB0F3A1972DFA500F9FE3C /* SGGenerateCubicleSvg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGGenerateCubicleSvg.h; sourceTree = "<group>"; };
 		3EDB0F3B1972DFA500F9FE3C /* SGGenerateCubicleSvg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGGenerateCubicleSvg.m; sourceTree = "<group>"; };
 		3EF45B5819593E5700488D28 /* testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -389,6 +392,8 @@
 		C9EDB65F1951398200A62D08 /* GDataXML */ = {
 			isa = PBXGroup;
 			children = (
+				3EDA19031A19BB48005951A4 /* GDataXMLNode.h */,
+				3EDA19041A19BB48005951A4 /* GDataXMLNode.m */,
 			);
 			name = GDataXML;
 			sourceTree = "<group>";
@@ -765,6 +770,7 @@
 				C9F03C8919171C0700355991 /* SGAPPConfig.m in Sources */,
 				C9F03C731917108F00355991 /* FMDatabasePool.m in Sources */,
 				C9CF65E6194DCB7F00957BB1 /* SGSettingViewController.m in Sources */,
+				3EDA19051A19BB48005951A4 /* GDataXMLNode.m in Sources */,
 				C9DD683B194F19C7005776B5 /* SGSectionFooterView.m in Sources */,
 				3E837CEC199E06D30041F1C9 /* SGSelectViewController.m in Sources */,
 				C9CF6599194DC4FF00957BB1 /* SGLeftDock.m in Sources */,
@@ -957,8 +963,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = "SGClient/SGClient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = "智能标签";
 				PROVISIONING_PROFILE = "61E89224-1F91-466B-8DB1-FB5B31730AE6";
 				WRAPPER_EXTENSION = app;
@@ -974,8 +986,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = "SGClient/SGClient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = "智能标签";
 				PROVISIONING_PROFILE = "61E89224-1F91-466B-8DB1-FB5B31730AE6";
 				WRAPPER_EXTENSION = app;

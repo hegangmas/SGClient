@@ -29,6 +29,7 @@
 -(NSString*)queryDevicelistForOuterRoom;
 
 
+-(NSArray*)queryAllList;
 @end
 
 

@@ -57,7 +57,7 @@
     self.roomView.frame = CGRectMake(0,
                                      10,
                                      MainScreenWidth(self.interfaceOrientation),
-                                     MainScreenHeight(self.interfaceOrientation));
+                                     MainScreenHeight(self.interfaceOrientation)-64);
     
     
     if ([SGUtility getDBChangeFlag]) {
@@ -84,9 +84,9 @@
     flowLayout.sectionInset    = UIEdgeInsetsMake(5.0, 0.0, 5.0, 0.0);
 
      self.roomView = [[UICollectionView alloc] initWithFrame:CGRectMake(0,
-                                                                      10,
+                                                                      0,
                                                                       MainScreenWidth(self.interfaceOrientation),
-                                                                      MainScreenHeight(self.interfaceOrientation))
+                                                                      MainScreenHeight(self.interfaceOrientation) - 64)
                                       collectionViewLayout:flowLayout];
     [self.roomView setBackgroundColor:[UIColor whiteColor]];
  
@@ -112,11 +112,20 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"%ld-->%ld",indexPath.section,indexPath.row);
     SGRoomCell *cell = (SGRoomCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
-    NSArray* cubicles = (NSArray*) [[self.roomList objectAtIndex:indexPath.section] objectForKey:@"cubicle"];
     
-    [cell setData:[cubicles objectAtIndex:indexPath.row]];
-    [cell setDelegate:self];
+    id cubicles = [[self.roomList objectAtIndex:indexPath.section] objectForKey:@"cubicle"];
+    
+    if ([cubicles isKindOfClass:[NSArray class]]) {
+        [cell setData:[cubicles objectAtIndex:indexPath.row]];
+        [cell setDelegate:self];
+    }
+    if ([cubicles isKindOfClass:[NSDictionary class]]) {
+        [cell setData:cubicles];
+        [cell setDelegate:self];
+    }
+
     return cell;
 }
 
@@ -155,7 +164,7 @@
     self.roomView.frame = CGRectMake(0,
                                      0,
                                      MainScreenWidth(toInterfaceOrientation),
-                                     MainScreenHeight(toInterfaceOrientation));
+                                     MainScreenHeight(toInterfaceOrientation)-64);
     }
 
 #pragma mark - 用户点击入口 加载下一级界面
