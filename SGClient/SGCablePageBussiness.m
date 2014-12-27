@@ -500,7 +500,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGCablePageBussiness)
     
     for(int i = 0; i < outCount;i++){
         property = [NSString stringWithUTF8String:property_getName(properties[i])];
-        if ([property isEqualToString:@"use_odf1"]||[property isEqualToString:@"use_odf2"]) {
+        if ([property isEqualToString:@"use_odf1"]||[property isEqualToString:@"use_odf2"]||[property isEqualToString:@"connection_id"]) {
             continue;
         }
         if ([[item valueForKey:property] integerValue] == cubcleId) {

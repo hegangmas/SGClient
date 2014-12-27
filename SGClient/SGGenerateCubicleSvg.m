@@ -42,11 +42,14 @@
     
     //光缆连接如果全部是2个柜子没有3个柜子的情况下 合并
     BOOL flag = YES;
+    //判断是否都是两段式连接
     for(NSArray* a in self.type0listSorted){
         if (a.count!=2) {
             flag = NO;
+            break;
         }
     }
+    //如果都是两段式连接合并柜子 固定高度
     if (flag) {
         for(SGCableTmpItem *item in self.mergedCubicles){
             item.count = 1;
@@ -78,7 +81,10 @@
         if (!drawFromLeft) {
             offsetTmp += (cWidth+linelen);
         }
+        
+        //光缆下的主屏绘制
         if ([types indexOfObject:_type] == 0){
+            //如果需要合并
             if (flag) {
                 //画主屏
                 [svgStr appendString:DrawRect(margin_x+offsetTmp,
@@ -92,6 +98,7 @@
                                               @"white",
                                               @"italic",
                                               self.cubicleData[@"name"])];
+            //不需要合并
             }else{
                 //画主屏
                 [svgStr appendString:DrawRect(margin_x+offsetTmp,
@@ -106,6 +113,7 @@
                                               @"italic",
                                               self.cubicleData[@"name"])];
             }
+        //尾缆的主屏绘制
         }else{
             //画主屏
             [svgStr appendString:DrawRect(margin_x+offsetTmp,
@@ -126,20 +134,16 @@
         
         
         
-        
+        //光缆连接
         if ([types indexOfObject:_type] == 0){
             //画光缆连接屏柜 连接线缆
             float offsetYTmp = margin_y + offsetY;
-            
-            
-            
 
-            
             for(int k = 0; k < self.mergedCubicles.count; k++){
                 
                 SGCableTmpItem* t = self.mergedCubicles[k];
                 
-                
+                //交替色
                 if (k%2 == 0) {
                     [svgStr appendString:DrawRectD(margin_x+offsetTmp + cWidth + linelen,
                                                   offsetYTmp,
@@ -160,20 +164,21 @@
                                               @"white",
                                               @"italic",
                                               t.cubicleName)];
+                //获取光缆Fiber数量
+                NSString* tmp = [NSString stringWithFormat:@"%@(%ld)",t.cableName,(long)[[SGCablePageBussiness sharedSGCablePageBussiness] queryFiberCountWithCableId:t.cableId]];
                 
-                NSString* tmp = [NSString stringWithFormat:@"%@(%ld)",t.cableName,[[SGCablePageBussiness sharedSGCablePageBussiness] queryFiberCountWithCableId:t.cableId]];
-                
+                //画线
                 [svgStr appendString:DrawLine(margin_x+offsetTmp + cWidth,
                                               offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2,
                                               margin_x+offsetTmp + cWidth +linelen,
                                               offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2,LineInfo(t.cableName,t.cableId, 0,[types indexOfObject:_type]))];
-                
+                //绘制
                 [svgStr appendString:DrawTextClicked(margin_x+offsetTmp + cWidth,
                                               offsetYTmp + (t.count*cHeight + (t.count-1)*cuVeMargin)/2 - linetext_y_origin,14,
                                               @"gray",
                                               @"italic",
                                               tmp,LineInfo(t.cableName,t.cableId, 0,[types indexOfObject:_type]))];
-                
+                //累加高度
                 offsetYTmp += t.count*(cHeight+cuVeMargin);
             }
         }
@@ -387,7 +392,7 @@
         [svgStr appendString:@"</svg>"];
     }
     
-    
+    offsetY+= 50;
     NSString* result = [NSString stringWithString:svgStr];
     
     //计算出总高总宽并填回

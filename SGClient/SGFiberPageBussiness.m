@@ -612,7 +612,7 @@ GCD_SYNTHESIZE_SINGLETON_FOR_CLASS(SGFiberPageBussiness)
     for(int i = 0; i < outCount;i++){
         property = [NSString stringWithUTF8String:property_getName(properties[i])];
         
-        if ([[infoSetItem valueForKey:property] isEqualToString:port] && ![property isEqualToString:@"type"]) {
+        if ([[infoSetItem valueForKey:property] isEqualToString:port] && ![property isEqualToString:@"type"] && ![property isEqualToString:@"infoset_id"]&& ![property isEqualToString:@"group"]) {
             return [self.infoSetOrder indexOfObject:property];
         }
     }

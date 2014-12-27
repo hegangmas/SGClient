@@ -33,7 +33,7 @@
                                duration:(NSTimeInterval)duration{
     
     self.listView.frame = CGRectMake(0,
-                                     10,
+                                     0,
                                      MainScreenWidth(toInterfaceOrientation),
                                      MainScreenHeight(toInterfaceOrientation));
 }
@@ -43,7 +43,7 @@
 -(UITableView*)listView{
     if (!_listView) {
         _listView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                  10,
+                                                                  0,
                                                                   MainScreenWidth(self.interfaceOrientation),
                                                                   MainScreenHeight(self.interfaceOrientation))
                                                  style:UITableViewStyleGrouped];
@@ -157,7 +157,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.listView.frame = CGRectMake(0,
-                                     10,
+                                     0,
                                      MainScreenWidth(self.interfaceOrientation),
                                      MainScreenHeight(self.interfaceOrientation));
 }
