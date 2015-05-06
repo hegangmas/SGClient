@@ -106,7 +106,9 @@
         
         CGFloat width = kScreenWidth(toInterfaceOrientation) - _leftDock.frame.size.width;
         _currentChild.view.frame = CGRectMake(_leftDock.frame.size.width, 0, width, _leftDock.frame.size.height);
-    }];
+        
+        NSLog(@"width %f  height %f",[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height);
+     }];
 }
 
 - (void)dragNavView:(UIPanGestureRecognizer *)pan

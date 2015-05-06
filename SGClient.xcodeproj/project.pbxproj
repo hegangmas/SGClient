@@ -678,6 +678,9 @@
 					3EF45B5719593E5700488D28 = {
 						TestTargetID = C9F03C2519170F5400355991;
 					};
+					C9F03C2519170F5400355991 = {
+						DevelopmentTeam = W2S49VS6FE;
+					};
 					C9F03C4619170F5400355991 = {
 						TestTargetID = C9F03C2519170F5400355991;
 					};
@@ -959,8 +962,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -972,7 +975,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = "智能标签";
-				PROVISIONING_PROFILE = "61E89224-1F91-466B-8DB1-FB5B31730AE6";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -982,8 +985,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yang Fangfang (PHCYTA86TT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SGClient/SGClient-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -995,7 +998,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = "智能标签";
-				PROVISIONING_PROFILE = "61E89224-1F91-466B-8DB1-FB5B31730AE6";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

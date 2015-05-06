@@ -117,7 +117,6 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%ld-->%ld",indexPath.section,indexPath.row);
     SGRoomCell *cell = (SGRoomCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
     
     id cubicles = [[self.roomList objectAtIndex:indexPath.section] objectForKey:@"cubicle"];

@@ -68,8 +68,8 @@
 
 
 #define kGlobalBg kGetColor(46, 46, 46)
-#define kDockHeight(orientation) ((UIInterfaceOrientationIsLandscape(orientation)?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height) - 10)
-#define kScreenWidth(orientation) ((UIInterfaceOrientationIsLandscape(orientation)?[UIScreen mainScreen].bounds.size.height:[UIScreen mainScreen].bounds.size.width) - 5)
+#define kDockHeight(orientation) ((UIInterfaceOrientationIsLandscape(orientation)?768:1024) - 10)
+#define kScreenWidth(orientation) ((UIInterfaceOrientationIsLandscape(orientation)?1024:768) - 5)
 
 
 #define IS_IPAD     (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)

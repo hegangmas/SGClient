@@ -13,9 +13,9 @@
 
 #define DockWidth(v) (UIInterfaceOrientationIsLandscape(v)?kDockComposeItemWidthL: kDockComposeItemWidthP)
 
-#define MainScreenWidth(o) ((UIInterfaceOrientationIsLandscape(o)?[UIScreen mainScreen].bounds.size.height:[UIScreen mainScreen].bounds.size.width)) - DockWidth(o)
+#define MainScreenWidth(o) ((UIInterfaceOrientationIsLandscape(o)?1024:768)) - DockWidth(o)
 
-#define MainScreenHeight(o) ((UIInterfaceOrientationIsLandscape(o)?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height))
+#define MainScreenHeight(o) ((UIInterfaceOrientationIsLandscape(o)?768:1024))
 
 @interface SGBaseViewController : UIViewController
 

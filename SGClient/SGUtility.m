@@ -45,7 +45,6 @@ static NSString *DB_CHANGE_FLAG =@"DB_CHANGE_FLAG";
         Class _class = NSClassFromString(entity);
         id _entity = [[_class alloc] init];
         for(int i = 0; i < [fmResultSet columnCount];i++){
-            
             [_entity setValue:[fmResultSet stringForColumn:[fmResultSet columnNameForIndex:i]]
                        forKey:[fmResultSet columnNameForIndex:i]];
         }

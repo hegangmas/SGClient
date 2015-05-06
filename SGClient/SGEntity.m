@@ -9,6 +9,8 @@
 #import "SGEntity.h"
 
 @implementation SGInfoSetItem
+@synthesize description;
+
 @end
 @implementation SGEntity
 @end
@@ -19,4 +21,6 @@
 @implementation SGPortInfo
 @end
 @implementation SGDeviceInfo
+@synthesize description;
+
 @end
